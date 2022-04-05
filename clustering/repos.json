@@ -1,0 +1,56 @@
+{
+  "spring-projects/spring-boot": {
+    "size": 144970,
+    "stars": 59449,
+    "forks": 35543,
+    "open_issues": 574,
+    "devs": 0,
+    "commits": 0,
+    "files": 0
+  },
+  "vuejs/vue": {
+    "size": 27792,
+    "stars": 192768,
+    "forks": 31331,
+    "open_issues": 555,
+    "devs": 0,
+    "commits": 0,
+    "files": 0
+  },
+  "kamranahmedse/developer-roadmap": {
+    "size": 102664,
+    "stars": 185234,
+    "forks": 26682,
+    "open_issues": 104,
+    "devs": 0,
+    "commits": 0,
+    "files": 0
+  },
+  "microsoft/PowerToys": {
+    "size": 285565,
+    "stars": 67698,
+    "forks": 3799,
+    "open_issues": 70,
+    "devs": 0,
+    "commits": 0,
+    "files": 0
+  },
+  "laravel/laravel": {
+    "size": 10347,
+    "stars": 68183,
+    "forks": 22099,
+    "open_issues": 30,
+    "devs": 0,
+    "commits": 0,
+    "files": 0
+  },
+  "google/gson": {
+    "size": 11117,
+    "stars": 20537,
+    "forks": 3976,
+    "open_issues": 638,
+    "devs": 0,
+    "commits": 0,
+    "files": 0
+  }
+}
