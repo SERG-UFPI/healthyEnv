@@ -2,6 +2,7 @@ import json
 import math
 import numpy as np
 from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
 from model.repository import Repository
 
 
@@ -17,17 +18,15 @@ def load_repos():
 
 
 def pre_processing(repos):
-  # Obtendo (por enquanto) os valores de issues e de forks em uma lista com
-  # mesma ordem. # TODO não necessariamente x: issues e y: forks. usar PCA. 
-  issues_forks_data = []
+  repos_data = []
   for repo in repos:
-    issues_forks_data.append([repo.open_issues, repo.forks])
+    repos_data.append([repo.size, repo.stars, repo.forks, repo.open_issues, repo.developers, repo.commits, repo.files])
   
   # Aplicando Scaler
   scaler = StandardScaler()
-  issues_forks_data = scaler.fit_transform(issues_forks_data)
+  repos_data = scaler.fit_transform(repos_data)
   
-  return issues_forks_data
+  return repos_data
 
 
 def calc_distances(repos, data, selected_repo_name, n):
@@ -37,24 +36,37 @@ def calc_distances(repos, data, selected_repo_name, n):
     if repo.name == selected_repo_name:
       selected_repo_index = index
       break
-  
+
+  # Aplicando o PCA em uma lista separada para posteriormente colocar junto com
+  # os dados que serão retornados
+  pca = PCA(n_components=2)
+  data_pca = pca.fit_transform(data)
+
   # Separando o repositório selecionado para continuar o algoritmo
   selected_repo = repos[selected_repo_index]
   selected_repo_data = data[selected_repo_index]
+  selected_repo_pca = data_pca[selected_repo_index]
   repos.pop(selected_repo_index)
   data = data.tolist()
   data.pop(selected_repo_index)
+  data_pca = data_pca.tolist()
+  data_pca.pop(selected_repo_index)
   
   # Calcular a distância do repositório selecionado para os demais
   distances = []
   for index, repo_data in enumerate(data):
-    distance = math.sqrt((repo_data[0] - selected_repo_data[0]) ** 2
-        + (repo_data[1] - selected_repo_data[1]) ** 2)
+    distance = math.sqrt((repo_data[0] - selected_repo_data[0]) ** 2 
+        + (repo_data[1] - selected_repo_data[1]) ** 2 
+        + (repo_data[2] - selected_repo_data[2]) ** 2 
+        + (repo_data[3] - selected_repo_data[3]) ** 2 
+        + (repo_data[4] - selected_repo_data[4]) ** 2 
+        + (repo_data[5] - selected_repo_data[5]) ** 2 
+        + (repo_data[6] - selected_repo_data[6]) ** 2)
     distances.append({
       'name': repos[index].name,
       'distance': distance,
-      'x': repo_data[0],
-      'y': repo_data[1] })
+      'pca_x': data_pca[index][0],
+      'pca_y': data_pca[index][1] })
   
   # Ordenar os valores em ordem crescente por distância
   distances = sorted(distances, key=lambda d: d['distance'])
@@ -69,8 +81,8 @@ def calc_distances(repos, data, selected_repo_name, n):
   # Montar objeto para representar o repositório selecionado
   selected_repo_output = {
     'name': selected_repo.name,
-    'x': selected_repo_data[0],
-    'y': selected_repo_data[1],
+    'pca_x': selected_repo_pca[0],
+    'pca_y': selected_repo_pca[1],
   }
   
   return [selected_repo_output, distances]
@@ -96,7 +108,7 @@ if __name__ == '__main__':
   # Realiza escala nos dados para padronizar
   data = pre_processing(repos)
   
-  # Faz o cálculo das distâncias, separando n elementos mais próximos
+  #Faz o cálculo das distâncias, separando n elementos mais próximos
   n = 3
   selected_repo_name = 'google/gson'
   [selected_repo, other_repos] = calc_distances(repos, data, selected_repo_name, n)
