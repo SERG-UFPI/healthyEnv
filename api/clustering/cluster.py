@@ -3,12 +3,14 @@ import math
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
-from model.repository import Repository
+from .model.repository import Repository
+import os
 
-
-def load_repos():
+def _load_repos():
+  root_dir = os.path.abspath(os.path.join(__file__ ,"../../.."))
+  print(root_dir)
   repos = []
-  data = json.load(open('repos.json'))
+  data = json.load(open(root_dir + '/repos.json'))
   for repo, values in data.items():
     repos.append(Repository(repo, values['size'], values['stars'],
         values['forks'], values['open_issues'], values['devs'],
@@ -17,7 +19,7 @@ def load_repos():
   return repos
 
 
-def pre_processing(repos):
+def _pre_processing(repos):
   repos_data = []
   for repo in repos:
     repos_data.append([repo.size, repo.stars, repo.forks, repo.open_issues, repo.developers, repo.commits, repo.files])
@@ -29,7 +31,7 @@ def pre_processing(repos):
   return repos_data
 
 
-def calc_distances(repos, data, selected_repo_name, n):
+def _calc_distances(repos, data, selected_repo_name, n):
   # Pegando o index do repositório selecionado
   selected_repo_index = 0
   for index, repo in enumerate(repos):
@@ -88,7 +90,7 @@ def calc_distances(repos, data, selected_repo_name, n):
   return [selected_repo_output, distances]
 
 
-def save_results(selected_repo, other_repos):
+def _save_results(selected_repo, other_repos):
   # Montagem do dicionário completo que será o JSON com todas as informações
   # para serem enviadas à visualização
   results = {
@@ -101,18 +103,35 @@ def save_results(selected_repo, other_repos):
   return json_output
 
 
-if __name__ == '__main__':
-  # Carrega repositórios do arquivo JSON
-  repos = load_repos()
+def get_cluster(selected_repo_name: str, n: int):
+  repos = _load_repos()
   
   # Realiza escala nos dados para padronizar
-  data = pre_processing(repos)
+  data = _pre_processing(repos)
   
   #Faz o cálculo das distâncias, separando n elementos mais próximos
-  n = 3
-  selected_repo_name = 'google/gson'
-  [selected_repo, other_repos] = calc_distances(repos, data, selected_repo_name, n)
+  # n = 3
+  # selected_repo_name = 'google/gson'
+  [selected_repo, other_repos] = _calc_distances(repos, data, selected_repo_name, n)
   
   # Salva os resultados com as informações necessárias para realizar as análises
-  json_results = save_results(selected_repo, other_repos)
-  print(json_results)
+  json_results = _save_results(selected_repo, other_repos)
+  # print(json_results)
+  return json_results
+
+
+# if __name__ == '__main__':
+#   # Carrega repositórios do arquivo JSON
+#   repos = _load_repos()
+  
+#   # Realiza escala nos dados para padronizar
+#   data = _pre_processing(repos)
+  
+#   #Faz o cálculo das distâncias, separando n elementos mais próximos
+#   n = 3
+#   selected_repo_name = 'google/gson'
+#   [selected_repo, other_repos] = _calc_distances(repos, data, selected_repo_name, n)
+  
+#   # Salva os resultados com as informações necessárias para realizar as análises
+#   json_results = _save_results(selected_repo, other_repos)
+#   print(json_results)
