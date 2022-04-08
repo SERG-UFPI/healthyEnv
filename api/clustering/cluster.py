@@ -7,7 +7,7 @@ from .model.repository import Repository
 import os
 
 def _load_repos():
-  root_dir = os.path.abspath(os.path.join(__file__ ,"../../.."))
+  root_dir = os.path.abspath(os.path.join(__file__ ,"../.."))
   print(root_dir)
   repos = []
   data = json.load(open(root_dir + '/repos.json'))
