@@ -1,8 +1,12 @@
 import json
-from flask import Flask, Response, request
-app = Flask(__name__)
 from .clustering.cluster import get_cluster
 from .dataset_utils import check_repo, check_repos_count, get_all_repos
+
+from flask import Flask, Response, request
+from flask_cors import CORS
+app = Flask(__name__)
+CORS(app)
+
 
 @app.route('/cluster/<path:repo>')
 def cluters(repo):
