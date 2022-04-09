@@ -26,3 +26,12 @@ def check_repos_count():
   repos_count = len(data)
 
   return repos_count
+
+
+def get_all_repos():
+  data = _load_repos()
+  repos_name_list = []
+  for repo, values in data.items():
+    repos_name_list.append(repo)
+
+  return repos_name_list

@@ -1,7 +1,8 @@
+import json
 from flask import Flask, Response, request
 app = Flask(__name__)
 from .clustering.cluster import get_cluster
-from .dataset_utils import check_repo, check_repos_count
+from .dataset_utils import check_repo, check_repos_count, get_all_repos
 
 @app.route('/cluster/<path:repo>')
 def cluters(repo):
@@ -25,3 +26,11 @@ def cluters(repo):
   results = get_cluster(repo, int(near_n))
 
   return results
+
+@app.route('/repos')
+# TODO: Adicionar opções para retornar informações simplificadas ou detalhadas
+def repos():
+  repos = get_all_repos()
+  repos_json = json.dumps(repos, indent=2)
+  
+  return repos_json
