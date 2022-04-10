@@ -4,6 +4,8 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import dynamic from 'next/dynamic'
 import RepoInfos from "../../components/RepoInfos"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faExchange } from '@fortawesome/free-solid-svg-icons'
 const Plot = dynamic(() => import('react-plotly.js'), {
   ssr: false,
   loading: () => <div style={{
@@ -108,18 +110,27 @@ export default () => {
                   devs={repoInfo['devs']}
                   commits={repoInfo['commits']}
                   files={repoInfo['files']} />
+                <span style={{
+                  paddingTop: '10px',
+                  fontSize: 14,
+                }}>Algoritmo utilizado:</span>
+                <span style={{
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                }}>Distância Euclidiana com PCA para visualização</span>
+                <div style={{
+                  backgroundColor: '#EAEAEA',
+                  padding: '4px',
+                  borderRadius: '4px',
+                  width: 'fit-content',
+                }}>
+                  <FontAwesomeIcon icon={faExchange} />
+                  <span style={{ paddingLeft: 8 }}>Trocar algoritmo</span>
+                </div>
               </div>
+
               <Plot
                 data={[
-                  {
-                    x: clusteringInfo['near']['x'],
-                    y: clusteringInfo['near']['y'],
-                    type: 'scatter',
-                    mode: 'markers',
-                    text: clusteringInfo['near']['labels'],
-                    name: 'próximos',
-                    marker: { color: '#84ED66' },
-                  },
                   {
                     x: clusteringInfo['far']['x'],
                     y: clusteringInfo['far']['y'],
@@ -128,6 +139,15 @@ export default () => {
                     text: clusteringInfo['far']['labels'],
                     name: 'distantes',
                     marker: { color: '#E66E6E' },
+                  },
+                  {
+                    x: clusteringInfo['near']['x'],
+                    y: clusteringInfo['near']['y'],
+                    type: 'scatter',
+                    mode: 'markers',
+                    text: clusteringInfo['near']['labels'],
+                    name: 'próximos',
+                    marker: { color: '#84ED66' },
                   },
                   {
                     x: [repoInfo['pca_x']],
@@ -151,9 +171,10 @@ export default () => {
                   }
                 }}
               />
+
             </div>
             {/* Continuação da página aqui */}
-            <h1>Métricas</h1>
+            <span>Métricas</span>
           </div>
       }
     </div>
