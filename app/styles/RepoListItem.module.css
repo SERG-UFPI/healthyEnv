@@ -1,0 +1,20 @@
+.link {
+  font-size: 18px;
+  width: fit-content;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10px;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.chip-list {
+  display: flex;
+  flex-direction: row;
+  padding-top: 4px;
+}

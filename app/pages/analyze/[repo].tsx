@@ -6,6 +6,8 @@ import dynamic from 'next/dynamic'
 import RepoInfos from "../../components/RepoInfos"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExchange } from '@fortawesome/free-solid-svg-icons'
+import styles from '../../styles/AnalyzeRepo.module.css'
+
 const Plot = dynamic(() => import('react-plotly.js'), {
   ssr: false,
   loading: () => <div style={{
@@ -69,38 +71,21 @@ export default () => {
     setIsLoading(false)
   }
 
-  // TODO: Continuar desenvolvimento da página
-
   return (
     <div>
       <Header />
       {
         isLoading
           ? <span>Carregando...</span>
-          : <div style={{
-            padding: '16px',
-          }}>
-            <div style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between'
-            }}>
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-              }}>
-                <span style={{
-                  backgroundColor: '#2590DA',
-                  color: '#fff',
-                  borderRadius: '5px',
-                  padding: '3px',
-                  fontSize: 12,
-                  width: 'fit-content'
-                }}>Repositório do dataset</span>
-                <span style={{
-                  fontSize: 26,
-                  fontWeight: 'bold'
-                }}>{repoInfo['name']}</span>
+          : <div className={styles.container}>
+            <div className={styles['clustering-summary']}>
+              <div className={styles['selected-repo-info']}>
+                <span className={styles['repo-type-badge']}>
+                  Repositório do dataset
+                </span>
+                <span className={styles['repo-name']}>
+                  {repoInfo['name']}
+                </span>
                 <RepoInfos
                   language={repoInfo['language']}
                   size={repoInfo['size']}
@@ -110,25 +95,19 @@ export default () => {
                   devs={repoInfo['devs']}
                   commits={repoInfo['commits']}
                   files={repoInfo['files']} />
-                <span style={{
-                  paddingTop: '10px',
-                  fontSize: 14,
-                }}>Algoritmo utilizado:</span>
-                <span style={{
-                  fontSize: 18,
-                  fontWeight: 'bold',
-                }}>Distância Euclidiana com PCA para visualização</span>
-                <div style={{
-                  backgroundColor: '#EAEAEA',
-                  padding: '4px',
-                  borderRadius: '4px',
-                  width: 'fit-content',
-                }}>
+                <span className={styles['algorithm-hint']}>
+                  Algoritmo utilizado:
+                </span>
+                <span className={styles['algorithm-title']}>
+                  Distância Euclidiana com PCA para visualização
+                </span>
+                <div className={styles['change-algorithm-button']}>
                   <FontAwesomeIcon icon={faExchange} />
-                  <span style={{ paddingLeft: 8 }}>Trocar algoritmo</span>
+                  <span className={styles['button-label']}>
+                    Trocar algoritmo
+                  </span>
                 </div>
               </div>
-
               <Plot
                 data={[
                   {
@@ -177,6 +156,6 @@ export default () => {
             <span>Métricas</span>
           </div>
       }
-    </div>
+    </div >
   )
 }

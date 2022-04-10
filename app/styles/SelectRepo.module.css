@@ -1,0 +1,46 @@
+.container {
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 30px;
+  font-weight: bold;
+  color: #111111;
+}
+
+.subtitle {
+  font-size: 20px;
+  color: #111111;
+}
+
+.repo-list-top {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: 'row';
+  align-items: center;
+  justify-content: space-between;
+}
+
+.repo-list-top-title {
+  font-weight: bold;
+  color: #111111;
+  font-size: 22px;
+  padding-bottom: 10px;
+}
+
+.repo-list-top-search {
+  padding: 8px 5px;
+  border: solid;
+  border-color: #D8D8D8;
+  border-width: 1px;
+  border-radius: 4px;
+}
+
+.repo-list {
+  display: flex;
+  flex-direction: column;
+}

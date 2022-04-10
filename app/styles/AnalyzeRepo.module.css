@@ -1,0 +1,49 @@
+.container {
+  padding: 16px;
+}
+
+.clustering-summary {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.selected-repo-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.repo-type-badge {
+  background-color: #2590DA;
+  color: #ffffff;
+  border-radius: 5px;
+  padding: 3px;
+  font-size: 12px;
+  width: fit-content;
+}
+
+.repo-name {
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.algorithm-hint {
+  padding-top: 10px;
+  font-size: 14;
+}
+
+.algorithm-title {
+  font-size: 18;
+  font-weight: bold;
+}
+
+.change-algorithm-button {
+  background-color: #EAEAEA;
+  padding: 4px 6px;
+  border-radius: 4px;
+  width: fit-content;
+}
+
+.button-label {
+  padding-left: 8px;
+}
