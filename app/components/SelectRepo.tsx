@@ -18,12 +18,12 @@ export default () => {
     const reposItems = []
     response.data.forEach((element) => {
       reposItems.push(
-        <a href='/analyze' style={{
+        <a href={'/analyze/' + element['name'].split('/')[0] + '%2F' + element['name'].split('/')[1]} style={{
           fontSize: 18,
           width: 'fit-content',
         }}>
-          {element}
-        </a>
+          {element['name']}
+        </a >
       )
     });
 
