@@ -22,7 +22,29 @@ export default () => {
           fontSize: 18,
           width: 'fit-content',
         }}>
-          {element['name']}
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            paddingBottom: '10px'
+          }}>
+            <span style={{
+              fontWeight: 'bold',
+            }}>{element['name']}</span>
+            <div style={{
+              display: 'flex',
+              flexDirection: 'row',
+              paddingTop: '4px',
+            }}>
+              <Chip label={element['language']} />
+              <Chip label={element['size'] + ' de tamanho'} />
+              <Chip label={element['stars'] + ' estrelas'} />
+              <Chip label={element['forks'] + ' forks'} />
+              <Chip label={element['open_issues'] + ' issues abertas'} />
+              <Chip label={element['devs'] + ' devs'} />
+              <Chip label={element['commits'] + ' commits'} />
+              <Chip label={element['files'] + ' arquivos'} />
+            </div>
+          </div>
         </a >
       )
     });
@@ -54,7 +76,7 @@ export default () => {
         alignItems: 'center',
         justifyContent: 'space-between',
       }}>
-        <span style={{ fontWeight: 'bold', color: '#111111', fontSize: 20 }}>Selecione um repositório para continuar:</span>
+        <span style={{ fontWeight: 'bold', color: '#111111', fontSize: 22, paddingBottom: '10px' }}>Selecione um repositório para continuar:</span>
         <div style={{
           position: 'relative',
         }}>
@@ -83,6 +105,20 @@ export default () => {
             {repos}
           </div>
       }
+    </div>
+  )
+}
+
+const Chip = ({ label }) => {
+  return (
+    <div style={{
+      marginRight: '10px',
+      backgroundColor: '#EAEAEA',
+      padding: '4px 10px',
+      borderRadius: '20px',
+      fontSize: 14
+    }}>
+      {label}
     </div>
   )
 }
