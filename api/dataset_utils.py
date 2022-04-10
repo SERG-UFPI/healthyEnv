@@ -32,6 +32,16 @@ def get_all_repos():
   data = _load_repos()
   repos_name_list = []
   for repo, values in data.items():
-    repos_name_list.append(repo)
+    repos_name_list.append({
+      'name': repo,
+      'language': values['language'],
+      'size': values['size'],
+      'stars': values['stars'],
+      'forks': values['forks'],
+      'open_issues': values['open_issues'],
+      'devs': values['devs'],
+      'commits': values['commits'],
+      'files': values['files'],
+    })
 
   return repos_name_list

@@ -83,6 +83,14 @@ def _calc_distances(repos, data, selected_repo_name, n):
   # Montar objeto para representar o repositório selecionado
   selected_repo_output = {
     'name': selected_repo.name,
+    'language': selected_repo.language,
+    'size': selected_repo.size,
+    'stars': selected_repo.stars,
+    'forks': selected_repo.forks,
+    'open_issues': selected_repo.open_issues,
+    'devs': selected_repo.developers,
+    'commits': selected_repo.commits,
+    'files': selected_repo.files,
     'pca_x': selected_repo_pca[0],
     'pca_y': selected_repo_pca[1],
   }
