@@ -22,7 +22,7 @@ const Plot = dynamic(() => import('react-plotly.js'), {
 export default () => {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(true)
-  const [clusteringInfo, setClusteringInfo] = useState({})
+  const [clusteringInfo, setClusteringInfo] = useState([])
   const [repoInfo, setRepoInfo] = useState({})
 
   useEffect(() => {
@@ -36,38 +36,7 @@ export default () => {
       'http://localhost:5000/cluster/' + router.asPath.split('/')[2] + '?near_n=100'
     )
     setRepoInfo(response.data['selected'])
-
-    const near_x = []
-    const near_y = []
-    const near_labels = []
-    const far_x = []
-    const far_y = []
-    const far_labels = []
-    response.data['repos'].forEach((repo: any) => {
-      if (repo['near'] == true) {
-        near_x.push(repo['pca_x'])
-        near_y.push(repo['pca_y'])
-        near_labels.push(repo['name'])
-      } else {
-        far_x.push(repo['pca_x'])
-        far_y.push(repo['pca_y'])
-        far_labels.push(repo['name'])
-      }
-    })
-
-    setClusteringInfo({
-      'near': {
-        'x': near_x,
-        'y': near_y,
-        'labels': near_labels,
-      },
-      'far': {
-        'x': far_x,
-        'y': far_y,
-        'labels': far_labels,
-      }
-    })
-
+    setClusteringInfo(response.data['repos'])
     setIsLoading(false)
   }
 
@@ -111,30 +80,30 @@ export default () => {
               <Plot
                 data={[
                   {
-                    x: clusteringInfo['far']['x'],
-                    y: clusteringInfo['far']['y'],
+                    x: clusteringInfo.map((repo) => { if (!repo['near']) return repo['pca_x'] }),
+                    y: clusteringInfo.map((repo) => { if (!repo['near']) return repo['pca_y'] }),
+                    text: clusteringInfo.map((repo) => { if (!repo['near']) return repo['name'] }),
+                    name: 'distantes',
                     type: 'scatter',
                     mode: 'markers',
-                    text: clusteringInfo['far']['labels'],
-                    name: 'distantes',
                     marker: { color: '#E66E6E' },
                   },
                   {
-                    x: clusteringInfo['near']['x'],
-                    y: clusteringInfo['near']['y'],
+                    x: clusteringInfo.map((repo) => { if (repo['near']) return repo['pca_x'] }),
+                    y: clusteringInfo.map((repo) => { if (repo['near']) return repo['pca_y'] }),
+                    text: clusteringInfo.map((repo) => { if (repo['near']) return repo['name'] }),
+                    name: 'próximos',
                     type: 'scatter',
                     mode: 'markers',
-                    text: clusteringInfo['near']['labels'],
-                    name: 'próximos',
                     marker: { color: '#84ED66' },
                   },
                   {
                     x: [repoInfo['pca_x']],
                     y: [repoInfo['pca_y']],
-                    type: 'scatter',
-                    mode: 'markers',
                     text: [repoInfo['name']],
                     name: repoInfo['name'],
+                    type: 'scatter',
+                    mode: 'markers',
                     marker: { color: '#448A30' },
                   },
                 ]}
@@ -150,10 +119,38 @@ export default () => {
                   }
                 }}
               />
-
             </div>
+            <h1>Análise de métricas</h1>
+            <h2>Code changes: commits</h2>
+            <p>Esta métrica mostra a quantidade de commits que os repositórios possuem</p>
+            <Plot
+              data={[
+                {
+                  y: clusteringInfo.map((repo) => { if (repo['near']) return repo['code_changes_commits'] }),
+                  text: clusteringInfo.map((repo) => { if (repo['near']) return repo['name'] }),
+                  type: 'box',
+                  name: 'Metric',
+                  pointpos: -1.8,
+                  boxpoints: 'all',
+                },
+                {
+                  y: [repoInfo['code_changes_commits']],
+                  x: ['Metric'],
+                  text: [repoInfo['name']],
+                  name: repoInfo['name'],
+                  marker: {
+                    size: 8
+                  },
+                  pointpos: -1.8,
+                }
+              ]}
+              layout={{
+                width: 800,
+                height: 600,
+                // title: 'Repositórios próximos ao selecionado',
+              }}
+            />
             {/* Continuação da página aqui */}
-            <span>Métricas</span>
           </div>
       }
     </div >
