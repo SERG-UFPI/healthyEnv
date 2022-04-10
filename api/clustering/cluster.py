@@ -12,8 +12,8 @@ def _load_repos():
   repos = []
   data = json.load(open(root_dir + '/repos.json'))
   for repo, values in data.items():
-    repos.append(Repository(repo, values['size'], values['stars'],
-        values['forks'], values['open_issues'], values['devs'],
+    repos.append(Repository(repo, values['language'], values['size'],
+        values['stars'], values['forks'], values['open_issues'], values['devs'],
         values['commits'], values['files']))
   
   return repos
