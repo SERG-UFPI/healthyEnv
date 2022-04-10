@@ -70,6 +70,14 @@ export default () => {
                 <span className={styles['algorithm-title']}>
                   Distância Euclidiana com PCA para visualização
                 </span>
+                <span>
+                  Este algoritmo faz o cálculo da distância euclidiana para
+                  todos os atributos e pega os n mais próximos. A visualização
+                  gerada ao lado utiliza o algoritmo PCA para transformar os
+                  atributos em apenas 2, portanto pode não aparentar que o
+                  repositório selecionado esteja exatamente ao centro dos seus
+                  próximos.
+                </span>
                 <div className={styles['change-algorithm-button']}>
                   <FontAwesomeIcon icon={faExchange} />
                   <span className={styles['button-label']}>
