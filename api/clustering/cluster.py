@@ -6,17 +6,33 @@ from sklearn.decomposition import PCA
 from .model.repository import Repository
 import os
 
-def _load_repos():
+def _load_json_files():
   root_dir = os.path.abspath(os.path.join(__file__ ,"../.."))
   print(root_dir)
   repos = []
   data = json.load(open(root_dir + '/repos.json'))
+
+  ### Metrics files
+  code_changes_commits = json.load(open(root_dir + '/code-changes-commits.json'))
+  code_changes_lines_added = json.load(open(root_dir + '/code-changes-lines-added.json'))
+  code_changes_lines_removed = json.load(open(root_dir + '/code-changes-lines-removed.json'))
+  code_changes_lines_avg_lines_commit = json.load(open(root_dir + '/code-changes-lines-avg-lines-commit.json'))
+  code_changes_lines_avg_files_commit = json.load(open(root_dir + '/code-changes-lines-avg-files-commit.json'))
+  ## Metrics files
+
   for repo, values in data.items():
     repos.append(Repository(repo, values['language'], values['size'],
         values['stars'], values['forks'], values['open_issues'], values['devs'],
         values['commits'], values['files']))
   
-  return repos
+  return [
+    repos, 
+    code_changes_commits, 
+    code_changes_lines_added,
+    code_changes_lines_removed, 
+    code_changes_lines_avg_lines_commit, 
+    code_changes_lines_avg_files_commit
+  ]
 
 
 def _pre_processing(repos):
@@ -98,9 +114,22 @@ def _calc_distances(repos, data, selected_repo_name, n):
   return [selected_repo_output, distances]
 
 
-def _save_results(selected_repo, other_repos):
+def _save_results(selected_repo, other_repos, code_changes_commits, code_changes_lines_added, code_changes_lines_removed, code_changes_lines_avg_lines_commit, code_changes_lines_avg_files_commit):
   # Montagem do dicionário completo que será o JSON com todas as informações
   # para serem enviadas à visualização
+  selected_repo['code_changes_commits'] = code_changes_commits[selected_repo['name']]
+  selected_repo['code_changes_lines_added'] = code_changes_lines_added[selected_repo['name']]
+  selected_repo['code_changes_lines_removed'] = code_changes_lines_removed[selected_repo['name']]
+  selected_repo['code_changes_lines_avg_lines_commit'] = code_changes_lines_avg_lines_commit[selected_repo['name']]
+  selected_repo['code_changes_lines_avg_files_commit'] = code_changes_lines_avg_files_commit[selected_repo['name']]
+
+  for repo in other_repos:
+    repo['code_changes_commits'] = code_changes_commits[repo['name']]
+    repo['code_changes_lines_added'] = code_changes_lines_added[repo['name']]
+    repo['code_changes_lines_removed'] = code_changes_lines_removed[repo['name']]
+    repo['code_changes_lines_avg_lines_commit'] = code_changes_lines_avg_lines_commit[repo['name']]
+    repo['code_changes_lines_avg_files_commit'] = code_changes_lines_avg_files_commit[repo['name']]
+
   results = {
     'selected': selected_repo,
     'repos': other_repos,
@@ -112,7 +141,12 @@ def _save_results(selected_repo, other_repos):
 
 
 def get_cluster(selected_repo_name: str, n: int):
-  repos = _load_repos()
+  [ repos, 
+    code_changes_commits, 
+    code_changes_lines_added,
+    code_changes_lines_removed, 
+    code_changes_lines_avg_lines_commit, 
+    code_changes_lines_avg_files_commit ] = _load_json_files()
   
   # Realiza escala nos dados para padronizar
   data = _pre_processing(repos)
@@ -123,23 +157,6 @@ def get_cluster(selected_repo_name: str, n: int):
   [selected_repo, other_repos] = _calc_distances(repos, data, selected_repo_name, n)
   
   # Salva os resultados com as informações necessárias para realizar as análises
-  json_results = _save_results(selected_repo, other_repos)
+  json_results = _save_results(selected_repo, other_repos, code_changes_commits, code_changes_lines_added, code_changes_lines_removed, code_changes_lines_avg_lines_commit, code_changes_lines_avg_files_commit)
   # print(json_results)
   return json_results
-
-
-# if __name__ == '__main__':
-#   # Carrega repositórios do arquivo JSON
-#   repos = _load_repos()
-  
-#   # Realiza escala nos dados para padronizar
-#   data = _pre_processing(repos)
-  
-#   #Faz o cálculo das distâncias, separando n elementos mais próximos
-#   n = 3
-#   selected_repo_name = 'google/gson'
-#   [selected_repo, other_repos] = _calc_distances(repos, data, selected_repo_name, n)
-  
-#   # Salva os resultados com as informações necessárias para realizar as análises
-#   json_results = _save_results(selected_repo, other_repos)
-#   print(json_results)
