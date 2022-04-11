@@ -7,6 +7,7 @@ import RepoInfos from "../../components/RepoInfos"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExchange } from '@fortawesome/free-solid-svg-icons'
 import styles from '../../styles/AnalyzeRepo.module.css'
+import PlotGrid from "../../components/PlotGrid"
 
 const Plot = dynamic(() => import('react-plotly.js'), {
   ssr: false,
@@ -128,36 +129,8 @@ export default () => {
                 }}
               />
             </div>
-            <h1>Análise de métricas</h1>
-            <h2>Code changes: commits</h2>
-            <p>Esta métrica mostra a quantidade de commits que os repositórios possuem</p>
-            <Plot
-              data={[
-                {
-                  y: clusteringInfo.map((repo) => { if (repo['near']) return repo['code_changes_commits'] }),
-                  text: clusteringInfo.map((repo) => { if (repo['near']) return repo['name'] }),
-                  type: 'box',
-                  name: 'Metric',
-                  pointpos: -1.8,
-                  boxpoints: 'all',
-                },
-                {
-                  y: [repoInfo['code_changes_commits']],
-                  x: ['Metric'],
-                  text: [repoInfo['name']],
-                  name: repoInfo['name'],
-                  marker: {
-                    size: 8
-                  },
-                  pointpos: -1.8,
-                }
-              ]}
-              layout={{
-                width: 800,
-                height: 600,
-                // title: 'Repositórios próximos ao selecionado',
-              }}
-            />
+            <h1>Métricas</h1>
+            <PlotGrid repoInfo={repoInfo} clusteringInfo={clusteringInfo} />
             {/* Continuação da página aqui */}
           </div>
       }
