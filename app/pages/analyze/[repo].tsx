@@ -5,19 +5,15 @@ import axios from "axios"
 import dynamic from 'next/dynamic'
 import RepoInfos from "../../components/RepoInfos"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faExchange } from '@fortawesome/free-solid-svg-icons'
+import { faGear } from '@fortawesome/free-solid-svg-icons'
 import styles from '../../styles/AnalyzeRepo.module.css'
 import PlotGrid from "../../components/PlotGrid"
+import PlotLoadingIndicator from "../../components/PlotLoadingIndicator"
+import useWindowDimensions from "../../utils/useWindowDimensions"
 
 const Plot = dynamic(() => import('react-plotly.js'), {
   ssr: false,
-  loading: () => <div style={{
-    width: '600px',
-    height: '300px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }}>Carregando gráfico...</div>
+  loading: () => <PlotLoadingIndicator width={600} height={300} />,
 })
 
 export default () => {
@@ -41,13 +37,18 @@ export default () => {
     setIsLoading(false)
   }
 
+  const { width } = useWindowDimensions()
+  let pagePadding = width > 1320 ? ((width - 1320) / 2) + 16 : 16
+
+  var style = { '--padding-horizontal': `${pagePadding}px` } as React.CSSProperties
+
   return (
-    <div>
+    <>
       <Header />
       {
         isLoading
           ? <span>Carregando...</span>
-          : <div className={styles.container}>
+          : <div className={styles.container} style={style}>
             <div className={styles['clustering-summary']}>
               <div className={styles['selected-repo-info']}>
                 <span className={styles['repo-type-badge']}>
@@ -69,28 +70,27 @@ export default () => {
                   Algoritmo utilizado:
                 </span>
                 <span className={styles['algorithm-title']}>
-                  Distância Euclidiana com PCA para visualização
+                  Distância Euclidiana com PCA
                 </span>
                 <span>
-                  Este algoritmo faz o cálculo da distância euclidiana para
-                  todos os atributos e pega os n mais próximos. A visualização
-                  gerada ao lado utiliza o algoritmo PCA para transformar os
-                  atributos em apenas 2, portanto pode não aparentar que o
-                  repositório selecionado esteja exatamente ao centro dos seus
-                  próximos.
+                  Este algoritmo utiliza o PCA para reduzir a dimensionalidade
+                  dos dados e faz o cálculo da Distância Euclidiana do
+                  repositório selecionado para os demais do dataset. Após
+                  ordenar as distâncias obtidas em ordem crescente, obtém-se
+                  os <i>n</i> mais próximos.
                 </span>
                 <div className={styles['change-algorithm-button']}>
-                  <FontAwesomeIcon icon={faExchange} />
+                  <FontAwesomeIcon icon={faGear} />
                   <span className={styles['button-label']}>
-                    Trocar algoritmo
+                    Modificar algoritmo
                   </span>
                 </div>
               </div>
               <Plot
                 data={[
                   {
-                    x: clusteringInfo.map((repo) => { if (!repo['near']) return repo['pca_x'] }),
-                    y: clusteringInfo.map((repo) => { if (!repo['near']) return repo['pca_y'] }),
+                    x: clusteringInfo.map((repo) => { if (!repo['near']) return repo['x'] }),
+                    y: clusteringInfo.map((repo) => { if (!repo['near']) return repo['y'] }),
                     text: clusteringInfo.map((repo) => { if (!repo['near']) return repo['name'] }),
                     name: 'distantes',
                     type: 'scatter',
@@ -98,8 +98,8 @@ export default () => {
                     marker: { color: '#E66E6E' },
                   },
                   {
-                    x: clusteringInfo.map((repo) => { if (repo['near']) return repo['pca_x'] }),
-                    y: clusteringInfo.map((repo) => { if (repo['near']) return repo['pca_y'] }),
+                    x: clusteringInfo.map((repo) => { if (repo['near']) return repo['x'] }),
+                    y: clusteringInfo.map((repo) => { if (repo['near']) return repo['y'] }),
                     text: clusteringInfo.map((repo) => { if (repo['near']) return repo['name'] }),
                     name: 'próximos',
                     type: 'scatter',
@@ -107,8 +107,8 @@ export default () => {
                     marker: { color: '#84ED66' },
                   },
                   {
-                    x: [repoInfo['pca_x']],
-                    y: [repoInfo['pca_y']],
+                    x: [repoInfo['x']],
+                    y: [repoInfo['y']],
                     text: [repoInfo['name']],
                     name: repoInfo['name'],
                     type: 'scatter',
@@ -125,15 +125,21 @@ export default () => {
                   },
                   yaxis: {
                     showticklabels: false,
+                  },
+                  font: {
+                    family: 'Lato, sans-serif',
+                    color: '#111111'
                   }
                 }}
               />
             </div>
-            <h1>Métricas</h1>
+            <div className={styles['metrics-title']}>
+              <span>Métricas aplicadas ao grupo</span>
+            </div>
             <PlotGrid repoInfo={repoInfo} clusteringInfo={clusteringInfo} />
             {/* Continuação da página aqui */}
           </div>
       }
-    </div >
+    </>
   )
 }

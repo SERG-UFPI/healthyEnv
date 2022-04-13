@@ -1,0 +1,14 @@
+.grid {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: fit-content;
+  flex-wrap: wrap;
+  flex-basis: auto;
+}
+
+.grid::after {
+  /* width: 432px; */
+  width: var(--width);
+  content: "";
+}
