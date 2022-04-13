@@ -20,6 +20,7 @@ def _load_json_files():
   code_changes_lines_avg_files_commit = json.load(open(root_dir + '/code-changes-lines-avg-files-commit.json'))
   ## Metrics files
 
+  # Montagem da lista de repositórios
   for repo, values in data.items():
     repos.append(Repository(repo, values['language'], values['size'],
         values['stars'], values['forks'], values['open_issues'], values['devs'],
@@ -43,6 +44,10 @@ def _pre_processing(repos):
   # Aplicando Scaler
   scaler = StandardScaler()
   repos_data = scaler.fit_transform(repos_data)
+
+  # Aplicando PCA
+  pca = PCA(n_components=2)
+  repos_data = pca.fit_transform(repos_data)
   
   return repos_data
 
@@ -53,38 +58,23 @@ def _calc_distances(repos, data, selected_repo_name, n):
   for index, repo in enumerate(repos):
     if repo.name == selected_repo_name:
       selected_repo_index = index
-      break
-
-  # Aplicando o PCA em uma lista separada para posteriormente colocar junto com
-  # os dados que serão retornados
-  pca = PCA(n_components=2)
-  data_pca = pca.fit_transform(data)
+      break  
 
   # Separando o repositório selecionado para continuar o algoritmo
   selected_repo = repos[selected_repo_index]
   selected_repo_data = data[selected_repo_index]
-  selected_repo_pca = data_pca[selected_repo_index]
   repos.pop(selected_repo_index)
   data = data.tolist()
   data.pop(selected_repo_index)
-  data_pca = data_pca.tolist()
-  data_pca.pop(selected_repo_index)
-  
-  # Calcular a distância do repositório selecionado para os demais
+
   distances = []
   for index, repo_data in enumerate(data):
-    distance = math.sqrt((repo_data[0] - selected_repo_data[0]) ** 2 
-        + (repo_data[1] - selected_repo_data[1]) ** 2 
-        + (repo_data[2] - selected_repo_data[2]) ** 2 
-        + (repo_data[3] - selected_repo_data[3]) ** 2 
-        + (repo_data[4] - selected_repo_data[4]) ** 2 
-        + (repo_data[5] - selected_repo_data[5]) ** 2 
-        + (repo_data[6] - selected_repo_data[6]) ** 2)
+    distance = math.sqrt((repo_data[0] - selected_repo_data[0]) ** 2 + (repo_data[1] - selected_repo_data[1]) ** 2)
     distances.append({
       'name': repos[index].name,
       'distance': distance,
-      'pca_x': data_pca[index][0],
-      'pca_y': data_pca[index][1] })
+      'x': repo_data[0],
+      'y': repo_data[1]})
   
   # Ordenar os valores em ordem crescente por distância
   distances = sorted(distances, key=lambda d: d['distance'])
@@ -107,8 +97,8 @@ def _calc_distances(repos, data, selected_repo_name, n):
     'devs': selected_repo.developers,
     'commits': selected_repo.commits,
     'files': selected_repo.files,
-    'pca_x': selected_repo_pca[0],
-    'pca_y': selected_repo_pca[1],
+    'x': selected_repo_data[0],
+    'y': selected_repo_data[1],
   }
   
   return [selected_repo_output, distances]
@@ -117,18 +107,20 @@ def _calc_distances(repos, data, selected_repo_name, n):
 def _save_results(selected_repo, other_repos, code_changes_commits, code_changes_lines_added, code_changes_lines_removed, code_changes_lines_avg_lines_commit, code_changes_lines_avg_files_commit):
   # Montagem do dicionário completo que será o JSON com todas as informações
   # para serem enviadas à visualização
-  selected_repo['code_changes_commits'] = code_changes_commits[selected_repo['name']]
-  selected_repo['code_changes_lines_added'] = code_changes_lines_added[selected_repo['name']]
-  selected_repo['code_changes_lines_removed'] = code_changes_lines_removed[selected_repo['name']]
-  selected_repo['code_changes_lines_avg_lines_commit'] = code_changes_lines_avg_lines_commit[selected_repo['name']]
-  selected_repo['code_changes_lines_avg_files_commit'] = code_changes_lines_avg_files_commit[selected_repo['name']]
+  selected_repo['metrics'] = {}
+  selected_repo['metrics']['code_changes_commits'] = code_changes_commits[selected_repo['name']]
+  selected_repo['metrics']['code_changes_lines_added'] = code_changes_lines_added[selected_repo['name']]
+  selected_repo['metrics']['code_changes_lines_removed'] = code_changes_lines_removed[selected_repo['name']]
+  selected_repo['metrics']['code_changes_lines_avg_lines_commit'] = code_changes_lines_avg_lines_commit[selected_repo['name']]
+  selected_repo['metrics']['code_changes_lines_avg_files_commit'] = code_changes_lines_avg_files_commit[selected_repo['name']]
 
   for repo in other_repos:
-    repo['code_changes_commits'] = code_changes_commits[repo['name']]
-    repo['code_changes_lines_added'] = code_changes_lines_added[repo['name']]
-    repo['code_changes_lines_removed'] = code_changes_lines_removed[repo['name']]
-    repo['code_changes_lines_avg_lines_commit'] = code_changes_lines_avg_lines_commit[repo['name']]
-    repo['code_changes_lines_avg_files_commit'] = code_changes_lines_avg_files_commit[repo['name']]
+    repo['metrics'] = {}
+    repo['metrics']['code_changes_commits'] = code_changes_commits[repo['name']]
+    repo['metrics']['code_changes_lines_added'] = code_changes_lines_added[repo['name']]
+    repo['metrics']['code_changes_lines_removed'] = code_changes_lines_removed[repo['name']]
+    repo['metrics']['code_changes_lines_avg_lines_commit'] = code_changes_lines_avg_lines_commit[repo['name']]
+    repo['metrics']['code_changes_lines_avg_files_commit'] = code_changes_lines_avg_files_commit[repo['name']]
 
   results = {
     'selected': selected_repo,
