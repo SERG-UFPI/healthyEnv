@@ -1,13 +1,13 @@
 {
   "1": {
-    "name": "Dataset de reposit贸rios populares",
-    "description": "Dataset contendo 5 mil reposit贸rios das linguagens Java, JS, TS, PHP e C#. Cont茅m m茅tricas de code changes.",
+    "name": "Dataset de reposit髍ios populares",
+    "description": "Dataset contendo 5 mil reposit髍ios das linguagens Java, JS, TS, PHP e C#. Cont閙 m閠ricas de code changes.",
     "repo_count": 5000,
     "author": "Diego A Winter"
   },
   "2": {
-    "name": "Dataset de reposit贸rios de popularidade m茅dia",
-    "description": "Dataset contendo 250 reposit贸rios das linguagens Java, JS, TS, PHP e C#. Cont茅m m茅tricas obtidas a partir de informa莽玫es do reposit贸rio no GitHub.",
+    "name": "Dataset de reposit髍ios de popularidade m閐ia",
+    "description": "Dataset contendo 250 reposit髍ios das linguagens Java, JS, TS, PHP e C#. Cont閙 m閠ricas obtidas a partir de informa珲es do reposit髍io no GitHub.",
     "repo_count": 250,
     "author": "Diego A Winter"
   }
