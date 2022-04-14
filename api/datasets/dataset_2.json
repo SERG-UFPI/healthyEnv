@@ -1,0 +1,30 @@
+{
+  "user/repository1": {
+    "language": "Java",
+    "size": 0,
+    "stars": 0,
+    "forks": 0,
+    "open_issues": 0,
+    "devs": 0,
+    "commits": 0,
+    "files": 0,
+    "metrics": {
+      "metric1": 123,
+      "metric2": 123
+    }
+  },
+  "user/repository2": {
+    "language": "Java",
+    "size": 0,
+    "stars": 0,
+    "forks": 0,
+    "open_issues": 0,
+    "devs": 0,
+    "commits": 0,
+    "files": 0,
+    "metrics": {
+      "metric1": 123,
+      "metric2": 123
+    }
+  }
+}

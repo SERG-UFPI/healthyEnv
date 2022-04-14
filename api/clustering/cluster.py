@@ -6,19 +6,11 @@ from sklearn.decomposition import PCA
 from .model.repository import Repository
 import os
 
-def _load_json_files():
+def _load_json_files(dataset_id: int):
   root_dir = os.path.abspath(os.path.join(__file__ ,"../.."))
   print(root_dir)
   repos = []
-  data = json.load(open(root_dir + '/repos.json'))
-
-  ### Metrics files
-  code_changes_commits = json.load(open(root_dir + '/code-changes-commits.json'))
-  code_changes_lines_added = json.load(open(root_dir + '/code-changes-lines-added.json'))
-  code_changes_lines_removed = json.load(open(root_dir + '/code-changes-lines-removed.json'))
-  code_changes_lines_avg_lines_commit = json.load(open(root_dir + '/code-changes-lines-avg-lines-commit.json'))
-  code_changes_lines_avg_files_commit = json.load(open(root_dir + '/code-changes-lines-avg-files-commit.json'))
-  ## Metrics files
+  data = json.load(open(root_dir + '/datasets/dataset_' + str(dataset_id) + '.json'))
 
   # Montagem da lista de repositórios
   for repo, values in data.items():
@@ -26,14 +18,7 @@ def _load_json_files():
         values['stars'], values['forks'], values['open_issues'], values['devs'],
         values['commits'], values['files']))
   
-  return [
-    repos, 
-    code_changes_commits, 
-    code_changes_lines_added,
-    code_changes_lines_removed, 
-    code_changes_lines_avg_lines_commit, 
-    code_changes_lines_avg_files_commit
-  ]
+  return [repos, data]
 
 
 def _pre_processing(repos):
@@ -104,51 +89,32 @@ def _calc_distances(repos, data, selected_repo_name, n):
   return [selected_repo_output, distances]
 
 
-def _save_results(selected_repo, other_repos, code_changes_commits, code_changes_lines_added, code_changes_lines_removed, code_changes_lines_avg_lines_commit, code_changes_lines_avg_files_commit):
+def _save_results(raw_data, selected_repo, other_repos):
   # Montagem do dicionário completo que será o JSON com todas as informações
-  # para serem enviadas à visualização
-  selected_repo['metrics'] = {}
-  selected_repo['metrics']['code_changes_commits'] = code_changes_commits[selected_repo['name']]
-  selected_repo['metrics']['code_changes_lines_added'] = code_changes_lines_added[selected_repo['name']]
-  selected_repo['metrics']['code_changes_lines_removed'] = code_changes_lines_removed[selected_repo['name']]
-  selected_repo['metrics']['code_changes_lines_avg_lines_commit'] = code_changes_lines_avg_lines_commit[selected_repo['name']]
-  selected_repo['metrics']['code_changes_lines_avg_files_commit'] = code_changes_lines_avg_files_commit[selected_repo['name']]
-
+  selected_repo['metrics'] = raw_data[selected_repo['name']]['metrics']
   for repo in other_repos:
-    repo['metrics'] = {}
-    repo['metrics']['code_changes_commits'] = code_changes_commits[repo['name']]
-    repo['metrics']['code_changes_lines_added'] = code_changes_lines_added[repo['name']]
-    repo['metrics']['code_changes_lines_removed'] = code_changes_lines_removed[repo['name']]
-    repo['metrics']['code_changes_lines_avg_lines_commit'] = code_changes_lines_avg_lines_commit[repo['name']]
-    repo['metrics']['code_changes_lines_avg_files_commit'] = code_changes_lines_avg_files_commit[repo['name']]
-
+    repo['metrics'] = raw_data[repo['name']]['metrics']
+  
   results = {
     'selected': selected_repo,
     'repos': other_repos,
   }
-
+  
   json_output = json.dumps(results, indent=2)
-
+  
   return json_output
 
 
-def get_cluster(selected_repo_name: str, n: int):
-  [ repos, 
-    code_changes_commits, 
-    code_changes_lines_added,
-    code_changes_lines_removed, 
-    code_changes_lines_avg_lines_commit, 
-    code_changes_lines_avg_files_commit ] = _load_json_files()
+def get_cluster(dataset_id: int, selected_repo_name: str, n: int):
+  [repos, raw_data] = _load_json_files(dataset_id)
   
   # Realiza escala nos dados para padronizar
   data = _pre_processing(repos)
   
   #Faz o cálculo das distâncias, separando n elementos mais próximos
-  # n = 3
-  # selected_repo_name = 'google/gson'
   [selected_repo, other_repos] = _calc_distances(repos, data, selected_repo_name, n)
   
   # Salva os resultados com as informações necessárias para realizar as análises
-  json_results = _save_results(selected_repo, other_repos, code_changes_commits, code_changes_lines_added, code_changes_lines_removed, code_changes_lines_avg_lines_commit, code_changes_lines_avg_files_commit)
-  # print(json_results)
+  json_results = _save_results(raw_data, selected_repo, other_repos)
+  
   return json_results
