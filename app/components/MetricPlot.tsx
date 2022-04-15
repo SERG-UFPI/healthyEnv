@@ -5,19 +5,12 @@ import PlotLoadingIndicator from './PlotLoadingIndicator'
 const Plot = dynamic(() => import('react-plotly.js'), {
   ssr: false,
   loading: () => <PlotLoadingIndicator width={0} height={500} />
-  // loading: () => <div style={{
-  //   width: '600px',
-  //   height: '300px',
-  //   display: 'flex',
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // }}>Carregando gráfico...</div>
 })
 
 
 export default ({ y_all, y_selected, labels, name, title, width }) => {
   return (
-    <div className={styles.box} style={{ width: width - 10, height: 510 }} >
+    <div className={styles.box} style={{ width: `${(width - 10)}px`, height: `${510}px` }} >
       <Plot
         data={[
           {
@@ -47,6 +40,9 @@ export default ({ y_all, y_selected, labels, name, title, width }) => {
             family: 'Lato, sans-serif',
             color: '#111111'
           },
+          plot_bgcolor: '#fafafa',
+          paper_bgcolor: '#fafafa',
+
         }}
       />
     </div>

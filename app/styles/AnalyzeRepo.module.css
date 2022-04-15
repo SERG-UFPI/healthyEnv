@@ -1,6 +1,8 @@
 .container {
-  padding: 16px var(--padding-horizontal);
-  background-color: #f0f2f5;
+  padding: 16px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1280px;
 }
 
 .clustering-summary {

@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "pages/_document.js"  ],
+, "pages/_document.js", "components/RepoListItem.tsx"  ],
   "exclude": [
     "node_modules"
   ]

@@ -5,7 +5,7 @@ import styles from '../styles/PlotGrid.module.css'
 export default ({ repoInfo, clusteringInfo }) => {
   const { width } = useWindowDimensions()
 
-  let pagePadding = width > 1320 ? ((width - 1320) / 2) + 16 : 16
+  let pagePadding = width > 1280 ? ((width - 1280) / 2) + 16 : 16
   const maxPlotsPerRow = Math.floor((width - (pagePadding * 2)) / 400);
   let plotWidth = ((width - (pagePadding * 2)) / maxPlotsPerRow);
   var style = { '--width': `${plotWidth - 10}px` } as React.CSSProperties

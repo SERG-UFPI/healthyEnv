@@ -1,15 +1,15 @@
-import Header from "../../components/Header"
+import Header from "../../../../components/Header"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import dynamic from 'next/dynamic'
-import RepoInfos from "../../components/RepoInfos"
+import RepoInfos from "../../../../components/RepoInfos"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGear } from '@fortawesome/free-solid-svg-icons'
-import styles from '../../styles/AnalyzeRepo.module.css'
-import PlotGrid from "../../components/PlotGrid"
-import PlotLoadingIndicator from "../../components/PlotLoadingIndicator"
-import useWindowDimensions from "../../utils/useWindowDimensions"
+import styles from '../../../../styles/AnalyzeRepo.module.css'
+import PlotGrid from "../../../../components/PlotGrid"
+import PlotLoadingIndicator from "../../../../components/PlotLoadingIndicator"
+import useWindowDimensions from "../../../../utils/useWindowDimensions"
 
 const Plot = dynamic(() => import('react-plotly.js'), {
   ssr: false,
@@ -28,19 +28,19 @@ export default () => {
   }, [router.isReady])
 
   const loadRepo = async () => {
+    const datasetId = router.asPath.split('/')[2].split('/')[0]
+    const repoName = router.asPath.split('/')[4].split('?')[0]
+    const nValue = router.asPath.split('?near=')[1]
+
+
     console.log(router.asPath)
     const response = await axios.get(
-      'http://localhost:5000/cluster/' + router.asPath.split('/')[2] + '?near_n=100'
+      `http://localhost:5000/datasets/${datasetId}/cluster/${repoName}?near_n=${nValue}`
     )
     setRepoInfo(response.data['selected'])
     setClusteringInfo(response.data['repos'])
     setIsLoading(false)
   }
-
-  const { width } = useWindowDimensions()
-  let pagePadding = width > 1320 ? ((width - 1320) / 2) + 16 : 16
-
-  var style = { '--padding-horizontal': `${pagePadding}px` } as React.CSSProperties
 
   return (
     <>
@@ -48,7 +48,7 @@ export default () => {
       {
         isLoading
           ? <span>Carregando...</span>
-          : <div className={styles.container} style={style}>
+          : <div className={styles.container}>
             <div className={styles['clustering-summary']}>
               <div className={styles['selected-repo-info']}>
                 <span className={styles['repo-type-badge']}>
@@ -129,7 +129,9 @@ export default () => {
                   font: {
                     family: 'Lato, sans-serif',
                     color: '#111111'
-                  }
+                  },
+                  plot_bgcolor: '#fafafa',
+                  paper_bgcolor: '#fafafa',
                 }}
               />
             </div>
