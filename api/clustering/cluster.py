@@ -14,9 +14,9 @@ def _load_json_files(dataset_id: int):
 
   # Montagem da lista de repositórios
   for repo, values in data.items():
-    repos.append(Repository(repo, values['language'], values['size'],
+    repos.append(Repository(repo, values['language'], values['loc'],
         values['stars'], values['forks'], values['open_issues'], values['devs'],
-        values['commits'], values['files']))
+        values['commits']))
   
   return [repos, data]
 
@@ -24,7 +24,7 @@ def _load_json_files(dataset_id: int):
 def _pre_processing(repos):
   repos_data = []
   for repo in repos:
-    repos_data.append([repo.size, repo.stars, repo.forks, repo.open_issues, repo.developers, repo.commits, repo.files])
+    repos_data.append([repo.loc, repo.stars, repo.forks, repo.open_issues, repo.developers, repo.commits])
   
   # Aplicando Scaler
   scaler = StandardScaler()
@@ -75,13 +75,12 @@ def _calc_distances(repos, data, selected_repo_name, n):
   selected_repo_output = {
     'name': selected_repo.name,
     'language': selected_repo.language,
-    'size': selected_repo.size,
+    'loc': selected_repo.loc,
     'stars': selected_repo.stars,
     'forks': selected_repo.forks,
     'open_issues': selected_repo.open_issues,
     'devs': selected_repo.developers,
     'commits': selected_repo.commits,
-    'files': selected_repo.files,
     'x': selected_repo_data[0],
     'y': selected_repo_data[1],
   }

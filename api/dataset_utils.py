@@ -33,13 +33,12 @@ def get_all_repos(dataset_id: int):
     repos_name_list.append({
       'name': repo,
       'language': values['language'],
-      'size': values['size'],
+      'loc': values['loc'],
       'stars': values['stars'],
       'forks': values['forks'],
       'open_issues': values['open_issues'],
       'devs': values['devs'],
       'commits': values['commits'],
-      'files': values['files'],
     })
 
   return repos_name_list
@@ -48,7 +47,5 @@ def get_all_repos(dataset_id: int):
 def get_all_datasets():
   root_dir = os.path.abspath(os.path.join(__file__ ,".."))
   data = json.load(open(root_dir + '/datasets/dataset_summary.json'))
-
-  print(data)
   
   return data
