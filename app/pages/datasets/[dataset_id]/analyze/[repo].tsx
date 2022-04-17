@@ -59,13 +59,12 @@ export default () => {
                 </span>
                 <RepoInfos
                   language={repoInfo['language']}
-                  size={repoInfo['size']}
+                  loc={repoInfo['loc']}
                   stars={repoInfo['stars']}
                   forks={repoInfo['forks']}
                   openIssues={repoInfo['open_issues']}
                   devs={repoInfo['devs']}
-                  commits={repoInfo['commits']}
-                  files={repoInfo['files']} />
+                  commits={repoInfo['commits']} />
                 <span className={styles['algorithm-hint']}>
                   Algoritmo utilizado:
                 </span>
@@ -79,12 +78,12 @@ export default () => {
                   ordenar as distâncias obtidas em ordem crescente, obtém-se
                   os <i>n</i> mais próximos.
                 </span>
-                <div className={styles['change-algorithm-button']}>
+                {/* <div className={styles['change-algorithm-button']}>
                   <FontAwesomeIcon icon={faGear} />
                   <span className={styles['button-label']}>
                     Modificar algoritmo
                   </span>
-                </div>
+                </div> */}
               </div>
               <Plot
                 data={[

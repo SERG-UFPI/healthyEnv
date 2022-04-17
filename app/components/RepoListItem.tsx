@@ -13,13 +13,12 @@ export default ({ repo, datasetId, nValue }) => {
         </span>
         <div className={styles['chip-list']}>
           <Chip label={repo['language']} />
-          <Chip label={repo['size'] + ' de tamanho'} />
+          <Chip label={repo['loc'] + ' LOC'} />
           <Chip label={repo['stars'] + ' estrelas'} />
           <Chip label={repo['forks'] + ' forks'} />
           <Chip label={repo['open_issues'] + ' issues abertas'} />
           <Chip label={repo['devs'] + ' devs'} />
           <Chip label={repo['commits'] + ' commits'} />
-          <Chip label={repo['files'] + ' arquivos'} />
         </div>
       </div>
     </a >
