@@ -7,7 +7,7 @@
   },
   "2": {
     "name": "Dataset de repositórios de popularidade média",
-    "description": "Dataset contendo 250 repositórios das linguagens Java, JS, TS, PHP e C#. Contém métricas obtidas a partir de informações do repositório no GitHub.",
+    "description": "Dataset contendo 250 repositórios das linguagens Python, Java, JS, C# e PHP. Contém métricas obtidas a partir de informações do repositório no GitHub.",
     "repo_count": 250,
     "author": "Diego A Winter"
   }
