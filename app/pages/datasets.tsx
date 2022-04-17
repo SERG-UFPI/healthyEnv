@@ -9,12 +9,12 @@ export default () => {
   const [repos, setRepos] = useState([])
   const [datasets, setDatasets] = useState({})
   const [datasetsOptions, setDatasetsOptions] = useState([])
-  const [selectedDataset, setSelectedDataset] = useState(1)
+  // const [selectedDataset, setSelectedDataset] = useState(1)
   const [datasetRepoCount, setDatasetRepoCount] = useState(0)
   const [nValue, setNValue] = useState<number>(1)
 
   useEffect(() => {
-    loadDatasets().then(() => loadRepos(selectedDataset))
+    loadDatasets().then(() => loadRepos(1))
   }, [])
 
   const loadDatasets = async () => {
@@ -44,7 +44,7 @@ export default () => {
     const reposItems = []
     response.data.forEach((element: any) => {
       reposItems.push(
-        <RepoListItem key={element['name']} repo={element} datasetId={selectedDataset} nValue={nValue} />
+        <RepoListItem key={element['name']} repo={element} datasetId={dataset_id} nValue={nValue} />
       )
     });
 

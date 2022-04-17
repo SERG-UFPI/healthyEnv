@@ -6,7 +6,7 @@ export default ({ repo, datasetId, nValue }) => {
   const convertedRepoName = repo['name'].split('/')[0] + '%2F' + repo['name'].split('/')[1]
 
   return (
-    <a href={`dataset/${datasetId}/analyze/${convertedRepoName}?near=${nValue}`} className={styles.link}>
+    <a href={`datasets/${datasetId}/analyze/${convertedRepoName}?near=${nValue}`} className={styles.link}>
       <div className={styles.container}>
         <span className={styles.title}>
           {repo['name']}

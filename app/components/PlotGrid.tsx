@@ -19,6 +19,12 @@ export default ({ repoInfo, clusteringInfo }) => {
     const plots = []
 
     metricsKeys.forEach(key => {
+      const titleList = []
+      key.split('_').forEach((word: string) => {
+        titleList.push(word.charAt(0).toUpperCase() + word.slice(1))
+      })
+      const title = titleList.join(' ')
+
       plots.push(
         <MetricPlot
           key={key}
@@ -26,7 +32,7 @@ export default ({ repoInfo, clusteringInfo }) => {
           y_selected={repoInfo['metrics'][key]}
           labels={clusteringInfo.map((repo: any) => { if (repo['near']) return repo['name'] })}
           name={repoInfo['name']}
-          title={key}
+          title={title}
           width={plotWidth}
         />
       )
@@ -38,46 +44,6 @@ export default ({ repoInfo, clusteringInfo }) => {
   return (
     <div className={styles.grid} style={style}>
       {generatePlots()}
-      {/* <MetricPlot
-        y_all={clusteringInfo.map((repo: any) => { if (repo['near']) return repo['metrics']['code_changes_commits'] })}
-        y_selected={repoInfo['metrics']['code_changes_commits']}
-        labels={clusteringInfo.map((repo: any) => { if (repo['near']) return repo['name'] })}
-        name={repoInfo['name']}
-        title={'Code changes: commits'}
-        width={plotWidth}
-      />
-      <MetricPlot
-        y_all={clusteringInfo.map((repo: any) => { if (repo['near']) return repo['metrics']['code_changes_lines_added'] })}
-        y_selected={repoInfo['metrics']['code_changes_lines_added']}
-        labels={clusteringInfo.map((repo: any) => { if (repo['near']) return repo['name'] })}
-        name={repoInfo['name']}
-        title={'Code changes: lines added'}
-        width={plotWidth}
-      />
-      <MetricPlot
-        y_all={clusteringInfo.map((repo: any) => { if (repo['near']) return repo['metrics']['code_changes_lines_removed'] })}
-        y_selected={repoInfo['metrics']['code_changes_lines_removed']}
-        labels={clusteringInfo.map((repo: any) => { if (repo['near']) return repo['name'] })}
-        name={repoInfo['name']}
-        title={'Code changes: lines removed'}
-        width={plotWidth}
-      />
-      <MetricPlot
-        y_all={clusteringInfo.map((repo: any) => { if (repo['near']) return repo['metrics']['code_changes_lines_avg_lines_commit'] })}
-        y_selected={repoInfo['metrics']['code_changes_lines_avg_lines_commit']}
-        labels={clusteringInfo.map((repo: any) => { if (repo['near']) return repo['name'] })}
-        name={repoInfo['name']}
-        title={'Code changes: average lines per commit'}
-        width={plotWidth}
-      />
-      <MetricPlot
-        y_all={clusteringInfo.map((repo: any) => { if (repo['near']) return repo['metrics']['code_changes_lines_avg_files_commit'] })}
-        y_selected={repoInfo['metrics']['code_changes_lines_avg_files_commit']}
-        labels={clusteringInfo.map((repo: any) => { if (repo['near']) return repo['name'] })}
-        name={repoInfo['name']}
-        title={'Code changes: average files per commit'}
-        width={plotWidth}
-      /> */}
     </div>
   )
 }
