@@ -8,7 +8,7 @@ const Plot = dynamic(() => import('react-plotly.js'), {
 })
 
 
-export default ({ y_all, y_selected, labels, name, title, width }) => {
+const MetricPlot = ({ y_all, y_selected, labels, name, title, width }) => {
   return (
     <div className={styles.box} style={{ width: `${(width - 10)}px`, height: `${510}px` }} >
       <Plot
@@ -48,3 +48,5 @@ export default ({ y_all, y_selected, labels, name, title, width }) => {
     </div>
   )
 }
+
+export default MetricPlot

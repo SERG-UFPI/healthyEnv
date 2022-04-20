@@ -1,4 +1,4 @@
-export default ({ label }) => {
+const Chip = ({ label }) => {
   return (
     <div style={{
       marginRight: '10px',
@@ -11,3 +11,5 @@ export default ({ label }) => {
     </div>
   )
 }
+
+export default Chip

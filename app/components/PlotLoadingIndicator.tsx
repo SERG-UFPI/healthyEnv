@@ -1,7 +1,7 @@
 import { Dots } from 'react-activity'
 import "react-activity/dist/Dots.css";
 
-export default ({ width, height }) => {
+const PlotLoadingIndicator = ({ width, height }) => {
   return (
     <div style={{
       display: 'flex',
@@ -19,3 +19,5 @@ export default ({ width, height }) => {
     </div>
   )
 }
+
+export default PlotLoadingIndicator

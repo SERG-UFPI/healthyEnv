@@ -2,7 +2,7 @@ import Chip from "./Chip"
 import styles from '../styles/RepoListItem.module.css'
 import React, { useContext } from 'react';
 
-export default ({ repo, datasetId, nValue }) => {
+const RepoListItem = ({ repo, datasetId, nValue }) => {
   const convertedRepoName = repo['name'].split('/')[0] + '%2F' + repo['name'].split('/')[1]
 
   return (
@@ -24,3 +24,5 @@ export default ({ repo, datasetId, nValue }) => {
     </a >
   )
 }
+
+export default RepoListItem

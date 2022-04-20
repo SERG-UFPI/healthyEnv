@@ -2,7 +2,7 @@ import MetricPlot from "./MetricPlot"
 import useWindowDimensions from "../utils/useWindowDimensions"
 import styles from '../styles/PlotGrid.module.css'
 
-export default ({ repoInfo, clusteringInfo }) => {
+const PlotGrid = ({ repoInfo, clusteringInfo }) => {
   const { width } = useWindowDimensions()
 
   let pagePadding = width > 1280 ? ((width - 1280) / 2) + 16 : 16
@@ -47,3 +47,5 @@ export default ({ repoInfo, clusteringInfo }) => {
     </div>
   )
 }
+
+export default PlotGrid

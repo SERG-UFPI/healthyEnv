@@ -4,7 +4,7 @@ import styles from '../styles/Analyze.module.css'
 import RepoListItem from '../components/RepoListItem'
 import Header from '../components/Header'
 
-export default () => {
+const Datasets = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [repos, setRepos] = useState([])
   const [datasets, setDatasets] = useState({})
@@ -18,7 +18,7 @@ export default () => {
   }, [])
 
   const loadDatasets = async () => {
-    const response = await axios.get('http://localhost:5000/datasets')
+    const response = await axios.get('https://healthyenv.herokuapp.com/datasets')
 
     setDatasets(response.data)
 
@@ -39,7 +39,7 @@ export default () => {
 
   const loadRepos = async (dataset_id: number) => {
     setIsLoading(true)
-    const response = await axios.get(`http://localhost:5000/datasets/${dataset_id}/repos`)
+    const response = await axios.get(`https://healthyenv.herokuapp.com//datasets/${dataset_id}/repos`)
 
     const reposItems = []
     response.data.forEach((element: any) => {
@@ -117,3 +117,5 @@ export default () => {
     </>
   )
 }
+
+export default Datasets

@@ -1,4 +1,4 @@
-export default (
+const RepoInfos = (
   { language,
     loc,
     stars,
@@ -42,3 +42,5 @@ const RepoInfosItem = ({ title, content }) => {
     </div>
   )
 }
+
+export default RepoInfos

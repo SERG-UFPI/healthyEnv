@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import useWindowDimensions from '../utils/useWindowDimensions'
 
-export default () => {
+const Header = () => {
   return (
     <div style={{
       borderBottom: 'solid',
@@ -28,3 +28,5 @@ export default () => {
     </div>
   )
 }
+
+export default Header

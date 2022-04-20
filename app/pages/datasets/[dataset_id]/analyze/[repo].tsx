@@ -16,7 +16,7 @@ const Plot = dynamic(() => import('react-plotly.js'), {
   loading: () => <PlotLoadingIndicator width={600} height={300} />,
 })
 
-export default () => {
+const Repo = () => {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(true)
   const [clusteringInfo, setClusteringInfo] = useState([])
@@ -35,7 +35,7 @@ export default () => {
 
     console.log(router.asPath)
     const response = await axios.get(
-      `http://localhost:5000/datasets/${datasetId}/cluster/${repoName}?near_n=${nValue}`
+      `https://healthyenv.herokuapp.com//datasets/${datasetId}/cluster/${repoName}?near_n=${nValue}`
     )
     setRepoInfo(response.data['selected'])
     setClusteringInfo(response.data['repos'])
@@ -144,3 +144,5 @@ export default () => {
     </>
   )
 }
+
+export default Repo
