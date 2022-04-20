@@ -2,11 +2,11 @@ import Chip from "./Chip"
 import styles from '../styles/RepoListItem.module.css'
 import React, { useContext } from 'react';
 
-const RepoListItem = ({ repo, datasetId, nValue }) => {
+const RepoListItem = ({ repo, datasetId, getNValue }) => {
   const convertedRepoName = repo['name'].split('/')[0] + '%2F' + repo['name'].split('/')[1]
 
   return (
-    <a href={`datasets/${datasetId}/analyze/${convertedRepoName}?near=${nValue}`} className={styles.link}>
+    <a href={`datasets/${datasetId}/analyze/${convertedRepoName}?near=${getNValue()}`} className={styles.link}>
       <div className={styles.container}>
         <span className={styles.title}>
           {repo['name']}
