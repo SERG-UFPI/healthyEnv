@@ -1,0 +1,26 @@
+.link {
+  transition: color .3s;
+  font-size: 18px;
+  padding-right: 28px;
+  color: #585858;
+}
+
+.link:hover {
+  color: #111111;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: bold;
+  padding-right: 36px;
+}
+
+.icon {
+  font-size: 22px;
+  color: #585858;
+}
+
+.icon:hover {
+  transition: color .3s;
+  color: #111111;
+}

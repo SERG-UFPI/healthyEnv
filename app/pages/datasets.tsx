@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import styles from '../styles/Analyze.module.css'
+import styles from '../styles/Datasets.module.css'
 import RepoListItem from '../components/RepoListItem'
 import Header from '../components/Header'
 
@@ -53,7 +53,7 @@ const Datasets = () => {
 
   return (
     <>
-      <Header />
+      <Header selectedIndex={1} />
       <div className={styles.container}>
         <span className={styles.title}>
           Analisar Repositório
