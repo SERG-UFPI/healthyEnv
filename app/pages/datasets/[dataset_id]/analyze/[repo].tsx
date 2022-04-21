@@ -1,15 +1,14 @@
-import Header from "../../../../components/Header"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
-import axios from "axios"
 import dynamic from 'next/dynamic'
-import RepoInfos from "../../../../components/RepoInfos"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGear } from '@fortawesome/free-solid-svg-icons'
+import axios from "axios"
+import { useEffect, useState } from "react"
+import Header from "../../../../components/Header"
 import styles from '../../../../styles/AnalyzeRepo.module.css'
 import PlotGrid from "../../../../components/PlotGrid"
+import RepoInfos from "../../../../components/RepoInfos"
 import PlotLoadingIndicator from "../../../../components/PlotLoadingIndicator"
-import useWindowDimensions from "../../../../utils/useWindowDimensions"
+import { Dots } from 'react-activity'
+import "react-activity/dist/Dots.css";
 
 const Plot = dynamic(() => import('react-plotly.js'), {
   ssr: false,
@@ -47,7 +46,16 @@ const Repo = () => {
       <Header />
       {
         isLoading
-          ? <span>Carregando...</span>
+          ? <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '80vh'
+          }}>
+            <Dots color='#000000' size={18} speed={1} animating={true} />
+            Obtendo resultados...
+          </div>
           : <div className={styles.container}>
             <div className={styles['clustering-summary']}>
               <div className={styles['selected-repo-info']}>

@@ -87,7 +87,7 @@ const Datasets = () => {
                 name='nValue'
                 min='1'
                 max={datasetRepoCount - 2}
-                defaultValue={datasetRepoCount / 10}
+                defaultValue={nValue}
                 onChange={(e) => {
                   const value = Number(e.target.value)
                   if (value > (datasetRepoCount - 2)) {
