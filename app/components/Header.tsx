@@ -3,7 +3,11 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import Link from 'next/link'
 import styles from '../styles/Header.module.css'
 
-const Header = ({ selectedIndex }) => {
+interface SelectedIndex {
+  selectedIndex: number
+}
+
+const Header = ({ selectedIndex }: SelectedIndex) => {
   return (
     <div style={{
       borderBottom: 'solid',

@@ -45,7 +45,7 @@ const About = () => {
             contributors may be used to endorse or promote products derived from<br />
             this software without specific prior written permission.<br /><br />
 
-            THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"<br />
+            THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;<br />
             AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE<br />
             IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE<br />
             DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE<br />
@@ -77,7 +77,7 @@ const About = () => {
             contributors may be used to endorse or promote products derived from<br />
             this software without specific prior written permission.<br /><br />
 
-            THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"<br />
+            THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;<br />
             AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE<br />
             IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE<br />
             DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE<br />
@@ -96,7 +96,7 @@ const About = () => {
             Copyright (c) 2021 Plotly, Inc<br /><br />
 
             Permission is hereby granted, free of charge, to any person obtaining a copy<br />
-            of this software and associated documentation files (the "Software"), to deal<br />
+            of this software and associated documentation files (the &quot;Software&quot;), to deal<br />
             in the Software without restriction, including without limitation the rights<br />
             to use, copy, modify, merge, publish, distribute, sublicense, and/or sell<br />
             copies of the Software, and to permit persons to whom the Software is<br />
@@ -105,7 +105,7 @@ const About = () => {
             The above copyright notice and this permission notice shall be included in<br />
             all copies or substantial portions of the Software.<br /><br />
 
-            THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR<br />
+            THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR<br />
             IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,<br />
             FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE<br />
             AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER<br />
@@ -121,7 +121,7 @@ const About = () => {
             Copyright (c) 2022 Vercel, Inc.<br /><br />
 
             Permission is hereby granted, free of charge, to any person obtaining a copy<br />
-            of this software and associated documentation files (the "Software"), to deal<br />
+            of this software and associated documentation files (the &quot;Software&quot;), to deal<br />
             in the Software without restriction, including without limitation the rights<br />
             to use, copy, modify, merge, publish, distribute, sublicense, and/or sell<br />
             copies of the Software, and to permit persons to whom the Software is<br />
@@ -130,7 +130,7 @@ const About = () => {
             The above copyright notice and this permission notice shall be included in<br />
             all copies or substantial portions of the Software.<br /><br />
 
-            THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR<br />
+            THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR<br />
             IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,<br />
             FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE<br />
             AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER<br />

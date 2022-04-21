@@ -43,7 +43,7 @@ const Repo = () => {
 
   return (
     <>
-      <Header />
+      <Header selectedIndex={1} />
       {
         isLoading
           ? <div style={{
