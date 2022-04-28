@@ -1,6 +1,7 @@
 import json
 from .clustering.cluster import get_cluster
 from .dataset_utils import check_repo, check_repos_count, get_all_repos, get_all_datasets
+from .metrics_utils import get_all_metrics
 
 from flask import Flask, Response, request
 from flask_cors import CORS
@@ -46,7 +47,12 @@ def dataset_repos(dataset_id):
     return Response('<h2>Erro: Bad request</h2>\nO dataset de id ' 
         + str(dataset_id) + ' não existe.', status=400)
 
-# TODO: rota para obter todos os datasets disponíveis
+
 @app.route('/datasets')
 def datasets():
   return get_all_datasets()
+
+
+@app.route('/metrics')
+def metrics():
+  return get_all_metrics()

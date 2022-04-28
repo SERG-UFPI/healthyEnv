@@ -1,0 +1,97 @@
+{
+  "FNhzIJAQkt": {
+    "name": "code_changes_commits",
+    "description": "Quantos commits possui um repositório.",
+    "is_upper": false
+  },
+  "LVl1klYqh8": {
+    "name": "code_changes_lines_added",
+    "description": "Quantidade de linhas adicionadas ao alterar o código.",
+    "is_upper": false
+  },
+  "Hf1Ouu3eyQ": {
+    "name": "code_changes_lines_removed",
+    "description": "Quantidade de linhas removidas ao alterar o código.",
+    "is_upper": false
+  },
+  "57T2l544Ji": {
+    "name": "code_changes_lines_avg_lines_commit",
+    "description": "Média de linhas por commit.",
+    "is_upper": false
+  },
+  "dr8Rb5ukkU": {
+    "name": "code_changes_lines_avg_files_commit",
+    "description": "Média de arquivos por commit.",
+    "is_upper": false
+  },
+  "fwClNGBocC": {
+    "name": "avg_time_to_close",
+    "description": "Tempo médio para fechar uma issue.",
+    "is_upper": false
+  },
+  "sK4Xhc5xpg": {
+    "name": "avg_time_to_first_response",
+    "description": "Tempo médio para o primeiro retorno em uma issue.",
+    "is_upper": false
+  },
+  "GbQLAZ3Cqt": {
+    "name": "contributors",
+    "description": "Número de contribuidores do projeto.",
+    "is_upper": true
+  },
+  "sRIxBbBEDf": {
+    "name": "issues_active",
+    "description": "Quantidade de issues abertas no projeto.",
+    "is_upper": false
+  },
+  "oD00kl2u6O": {
+    "name": "issues_age_avg",
+    "description": "Tempo médio que uma issue permanece aberta.",
+    "is_upper": false
+  },
+  "vkELxuOOtM": {
+    "name": "issues_age_max",
+    "description": "Tempo máximo que uma issue passou aberta",
+    "is_upper": false
+  },
+  "Uzi_QQg1RQ": {
+    "name": "issues_age_median",
+    "description": "Mediana de tempo que uma issue passou aberta.",
+    "is_upper": false
+  },
+  "wPi1_kxvHc": {
+    "name": "issues_closed",
+    "description": "Quantidade de issues fechadas.",
+    "is_upper": true
+  },
+  "VLPRbFJ12z": {
+    "name": "median_time_to_close",
+    "description": "Mediana de tempo para fechar uma issue.",
+    "is_upper": false
+  },
+  "33Ht7Ca99H": {
+    "name": "median_time_to_first_response",
+    "description": "Mediana de tempo para dar um primeiro retorno a uma issue.",
+    "is_upper": false
+  },
+  "bOwjK67qRi": {
+    "name": "truck_factor",
+    "description": "Fator de distribuição do trabalho entre os contribuidores do projeto. \"Quantos contribuidores deveriam ser atropelados por um caminhão para que o projeto fracassasse?\"",
+    "is_upper": true
+  },
+  "U7S5Hh5Ojg": {
+    "name": "max_change_set",
+    "description": "A quantidade do maior conjunto de modificações realizado.",
+    "is_upper": false
+  },
+  "A79za5LrkK": {
+    "name": "avg_change_set",
+    "description": "A média dos conjuntos de modificações realizados.",
+    "is_upper": false
+  },
+  "oReVThP0K1": {
+    "name": "avg_highest_contributor_experience",
+    "description": "Média da experiência dos desenvolvedores mais experientes de cada arquivo.",
+    "is_upper": false
+  }
+}
