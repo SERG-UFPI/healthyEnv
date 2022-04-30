@@ -2,7 +2,7 @@ import MetricPlot from "./MetricPlot"
 import useWindowDimensions from "../utils/useWindowDimensions"
 import styles from '../styles/PlotGrid.module.css'
 
-const PlotGrid = ({ repoInfo, clusteringInfo }) => {
+const PlotGrid = ({ repoInfo, clusteringInfo, metricsInfo }) => {
   const { width } = useWindowDimensions()
 
   let pagePadding = width > 1280 ? ((width - 1280) / 2) + 16 : 16
@@ -19,8 +19,9 @@ const PlotGrid = ({ repoInfo, clusteringInfo }) => {
     const plots = []
 
     metricsKeys.forEach(key => {
+      const metricName = metricsInfo[key]['name']
       const titleList = []
-      key.split('_').forEach((word: string) => {
+      metricName.split('_').forEach((word: string) => {
         titleList.push(word.charAt(0).toUpperCase() + word.slice(1))
       })
       const title = titleList.join(' ')

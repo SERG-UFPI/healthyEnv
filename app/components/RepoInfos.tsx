@@ -10,7 +10,9 @@ const RepoInfos = (
   return (
     <div style={{
       display: 'flex',
-      flexDirection: 'row'
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      justifyContent: 'space-between',
     }}>
       <RepoInfosItem title='Linguagem' content={language} />
       <RepoInfosItem title='LOC' content={loc} />

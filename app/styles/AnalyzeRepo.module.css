@@ -34,16 +34,19 @@
 .repo-name {
   font-size: 26px;
   font-weight: bold;
+  padding-bottom: 10px;
 }
 
 .algorithm-hint {
-  padding-top: 10px;
-  font-size: 14px;
+  padding-top: 20px;
+  font-size: 16px;
+  padding-bottom: 5px;
 }
 
 .algorithm-title {
-  font-size: 18;
+  font-size: 18px;
   font-weight: bold;
+  padding-bottom: 5px;
 }
 
 .change-algorithm-button {
@@ -65,9 +68,42 @@
   padding-left: 8px;
 }
 
-.metrics-title {
+.section-title {
   font-size: 26px;
   font-weight: bold;
   padding-top: 28px;
   padding-bottom: 10px;
+}
+
+.request-details {
+  border: 1px solid #969696;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+}
+
+.request-method {
+  padding: 4px;
+  margin-right: 16px;
+  background-color: #CCCCCC;
+  border-radius: 5px;
+}
+
+.request-url {
+  color: #222222;
+}
+
+.body-title {
+  font-size: 18px;
+  color: #111111;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+.response-body-container {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #999999;
+  padding: 10px;
+  border-radius: 10px;
 }

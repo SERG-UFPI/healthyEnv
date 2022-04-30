@@ -20,6 +20,9 @@ const Repo = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [clusteringInfo, setClusteringInfo] = useState([])
   const [repoInfo, setRepoInfo] = useState({})
+  const [resultsInfo, setResultsInfo] = useState('')
+  const [metricsInfo, setMetricsInfo] = useState({})
+  const [requestUrl, setRequestUrl] = useState('')
 
   useEffect(() => {
     if (!router.isReady) return
@@ -31,14 +34,18 @@ const Repo = () => {
     const repoName = router.asPath.split('/')[4].split('?')[0]
     const nValue = router.asPath.split('?near=')[1]
 
-
     console.log(router.asPath)
-    const response = await axios.get(
-      `https://healthyenv.herokuapp.com//datasets/${datasetId}/cluster/${repoName}?near_n=${nValue}`
-    )
-    setRepoInfo(response.data['selected'])
-    setClusteringInfo(response.data['repos'])
-    setIsLoading(false)
+    const urlResults = `https://healthyenv.herokuapp.com/datasets/${datasetId}/cluster/${repoName}?near_n=${nValue}`
+    const urlMetrics = `https://healthyenv.herokuapp.com/metrics`
+    Promise.all([axios.get(urlResults), axios.get(urlMetrics)]).then((values) => {
+      setRepoInfo(values[0].data['selected'])
+      setClusteringInfo(values[0].data['repos'])
+      setResultsInfo(JSON.stringify(values[0].data, null, 2))
+      setMetricsInfo(values[1].data)
+      setRequestUrl(urlResults)
+      setIsLoading(false)
+      console.log(resultsInfo)
+    })
   }
 
   return (
@@ -142,11 +149,21 @@ const Repo = () => {
                 }}
               />
             </div>
-            <div className={styles['metrics-title']}>
+            <div className={styles['section-title']}>
               <span>Métricas aplicadas ao grupo</span>
             </div>
-            <PlotGrid repoInfo={repoInfo} clusteringInfo={clusteringInfo} />
-            {/* Continuação da página aqui */}
+            <PlotGrid repoInfo={repoInfo} clusteringInfo={clusteringInfo} metricsInfo={metricsInfo} />
+            <div className={styles['section-title']}>
+              <span>Detalhes da requisição</span>
+            </div>
+            <div className={styles['request-details']}>
+              <span className={styles['request-method']}>GET</span>
+              <span className={styles['request-url']}>{requestUrl}</span>
+            </div>
+            <div className={styles['response-body-container']}>
+              <span className={styles['body-title']}>Corpo da resposta</span>
+              <textarea rows={20} value={resultsInfo} spellCheck={false} />
+            </div>
           </div>
       }
     </>
