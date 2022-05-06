@@ -23,9 +23,9 @@ def cluters(dataset_id, repo):
           'quantidade de repositórios próximos.', status=400)
     near_n = request.args['near_n']
     repos_count = check_repos_count(dataset_id)
-    if (int(near_n) >= repos_count - 1):
-      return Response('<h2>Erro: Bad request</h2>\nA quantidade deve ser menor '
-          'que o total menos 1, que é <b>' + str(repos_count - 1) + '</b>. '
+    if (int(near_n) > repos_count - 1):
+      return Response('<h2>Erro: Bad request</h2>\nA quantidade deve ser menor ou '
+          'igual que o total menos 1, que é <b>' + str(repos_count - 1) + '</b>. '
           '(Solicitado: ' + near_n + ')', status=400)
 
     # Obtendo os resultados do algoritmo e retornando a response
