@@ -46,22 +46,30 @@ def cluters(dataset_id, repo):
     
     # Verificando a quantidade desejada de repositórios próximos
     if request.args.get('near_n') == None:
-      return Response('<h2>Erro: Bad request</h2>\nDeve ser fornecido uma '
-          'quantidade de repositórios próximos.', status=400)
+      return Response(
+        json.dumps({
+          'message': 'Bad request - missing near_n', 
+          'description': 'You must provide an amount for near repositories.'
+        }, indent=2), status=400, mimetype='application/json')
     near_n = request.args['near_n']
     repos_count = check_repos_count(dataset_id)
     if (int(near_n) > repos_count - 1):
-      return Response('<h2>Erro: Bad request</h2>\nA quantidade deve ser menor ou '
-          'igual que o total menos 1, que é <b>' + str(repos_count - 1) + '</b>. '
-          '(Solicitado: ' + near_n + ')', status=400)
+      return Response(
+        json.dumps({
+          'message': 'Bad request - too much near repositories', 
+          'description': 'The amount of near repositories must be less than the dataset size, which is ' + str(repos_count) + '.'
+        }, indent=2), status=400, mimetype='application/json')
 
     # Obtendo os resultados do algoritmo e retornando a response
     results = get_cluster(dataset_id, repo, int(near_n))
 
     return results
   except FileNotFoundError:
-    return Response('<h2>Erro: Bad request</h2>\nO dataset de id ' 
-        + str(dataset_id) + ' não existe.', status=400)
+    return Response(
+        json.dumps({
+          'message': 'Bad request - non-existent dataset', 
+          'description': 'The dataset provided does not match any existing dataset.'
+        }, indent=2), status=400, mimetype='application/json')
 
 
 @app.route('/datasets/<int:dataset_id>/repos')
@@ -71,8 +79,11 @@ def dataset_repos(dataset_id):
     repos_json = json.dumps(repos, indent=2)
     return repos_json
   except FileNotFoundError:
-    return Response('<h2>Erro: Bad request</h2>\nO dataset de id ' 
-        + str(dataset_id) + ' não existe.', status=400)
+    return Response(
+        json.dumps({
+          'message': 'Bad request - non-existent dataset', 
+          'description': 'The dataset provided does not match any existing dataset.'
+        }, indent=2), status=400, mimetype='application/json')
 
 
 @app.route('/datasets')
