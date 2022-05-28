@@ -3,7 +3,7 @@ import math
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
-from .model.repository import Repository
+from model.repository import Repository
 import os
 
 def _load_json_files(dataset_id: int):
@@ -14,7 +14,7 @@ def _load_json_files(dataset_id: int):
 
   # Montagem da lista de repositórios
   for repo, values in data.items():
-    repos.append(Repository(repo, values['language'], values['loc'],
+    repos.append(Repository(1, repo, values['language'], values['loc'],
         values['stars'], values['forks'], values['open_issues'], values['devs'],
         values['commits']))
   
