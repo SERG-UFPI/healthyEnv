@@ -12,11 +12,11 @@ class Repository(db.Model):
   stars = db.Column(db.Integer)
   forks = db.Column(db.Integer)
   open_issues = db.Column(db.Integer)
-  developers = db.Column(db.Integer)
+  contributors = db.Column(db.Integer)
   commits = db.Column(db.Integer)
 
 
-  def __init__(self, id, name, language, loc, stars, forks, open_issues, developers, commits, metrics_values = []):
+  def __init__(self, id, name, language, loc, stars, forks, open_issues, contributors, commits, metrics_values = []):
     self.id = id
     self.name = name
     self.language = language
@@ -24,6 +24,6 @@ class Repository(db.Model):
     self.stars = stars
     self.forks = forks
     self.open_issues = open_issues
-    self.developers = developers
+    self.contributors = contributors
     self.commits = commits
     self.metrics_values = metrics_values
