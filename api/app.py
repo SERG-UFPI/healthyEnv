@@ -3,9 +3,11 @@ import json
 from model.dataset import DatasetModel
 from model.metric import MetricModel
 from model.repository import RepositoryModel
+from model.analysis_request import AnalysisRequestModel
 from clustering.cluster import get_cluster
 from dotenv import load_dotenv
 from db import db
+from nanoid import generate
 
 # Flask settings
 from flask import Flask, Response, request
@@ -33,6 +35,7 @@ def create_db():
     from model.repository import RepositoryModel
     from model.metric import MetricModel
     from model.metric_repo import MetricRepoModel
+    from model.analysis_request import AnalysisRequestModel
     db.create_all()
 
 
@@ -105,6 +108,35 @@ def metrics():
   return Response(
     json.dumps(MetricModel.get_all_metrics_json(), indent=2),
     status=200, mimetype='application/json')
+
+
+# Route to create a new analysis request
+@app.route('/datasets/<dataset_id>/request', methods=['POST'])
+def analysis_request(dataset_id: str):
+  # Check if the provided dataset id matches an existent dataset
+  if request.method == 'POST':
+    if not DatasetModel.find_dataset(dataset_id):
+      return Response(
+        json.dumps({
+          'message': 'Bad request - non-existent dataset', 
+          'description': 'The provided dataset ID does not match any existing dataset.'
+        }, indent=2), status=400, mimetype='application/json')
+    
+    # Get the data and save to database
+    data = request.get_json(force=True)
+    try:
+      analysis_request = AnalysisRequestModel(generate(size=10), dataset_id, data['name'], data['email'], data['repo_url'])
+      analysis_request.create_request()
+    except KeyError:
+      return Response(
+        json.dumps({
+          'message': 'Bad request - missing information', 
+          'description': "The body must provide 'name', 'email' and 'repo_url' values."
+        }, indent=2), status=400, mimetype='application/json')
+
+    return Response(
+      json.dumps(analysis_request.json(), indent=2),
+      status=200, mimetype='application/json')
 
 
 if __name__ == '__main__':
