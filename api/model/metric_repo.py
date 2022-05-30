@@ -13,5 +13,10 @@ class MetricRepoModel(db.Model):
   def __init__(self, id, id_metric, id_repo, value):
     self.id = id
     self.id_metric = id_metric
-    self.id_repo = id_metric
+    self.id_repo = id_repo
     self.value = value
+
+
+  @classmethod
+  def get_repos_metrics(cls, ids_list: list):
+    return list(cls.query.filter(MetricRepoModel.id_repo.in_(ids_list)).all())

@@ -1,6 +1,6 @@
 from db import db
 
-class Dataset(db.Model):
+class DatasetModel(db.Model):
   __tablename__ = 'dataset'
 
   id = db.Column(db.String(10), primary_key=True)
@@ -10,10 +10,48 @@ class Dataset(db.Model):
   author = db.Column(db.String(40))
 
 
-  def __init__(self, id, name, description, repo_count, author, repos_snapshot = []):
+  def __init__(self, id, name, description, repo_count, author):
     self.id = id
     self.name = name
     self.description = description
     self.repo_count = repo_count
     self.author = author
-    self.repos_snapshot = repos_snapshot
+
+
+  def json(self):
+    return {
+      self.id: {
+        'name': self.name,
+        'description': self.description,
+        'repo_count': self.repo_count,
+        'author': self.author,
+      }
+    }
+
+
+  @classmethod
+  def get_all_datasets_json(cls):
+    datasets = cls.query.all()
+
+    json = {
+      'dataset_count': len(datasets),
+      'datasets': {}
+    }
+    for dataset in datasets:
+      json['datasets'][dataset.id] = {
+        'name': dataset.name,
+        'description': dataset.description,
+        'repo_count': dataset.repo_count,
+        'author': dataset.author,
+      }
+
+    return json
+
+
+  @classmethod
+  def find_dataset(cls, dataset_id: str):
+    dataset = cls.query.filter_by(id=dataset_id).first()
+    if dataset:
+      return dataset.json()
+    else:
+      return None
