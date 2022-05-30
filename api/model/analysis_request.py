@@ -1,6 +1,13 @@
 from ast import For
-from sqlalchemy import ForeignKey
+import enum
+import json
+from sqlalchemy import ForeignKey, Enum
 from db import db
+
+class AnalysisStatusEnum(enum.Enum):
+  RECEIVED = 'RECEIVED'
+  IN_PROGRESS = 'IN PROGRESS'
+  DONE = 'DONE'
 
 class AnalysisRequestModel(db.Model):
   __tablename__ = 'analysis_request'
@@ -10,16 +17,18 @@ class AnalysisRequestModel(db.Model):
   name = db.Column(db.String(80))
   email = db.Column(db.String(80))
   repo_url = db.Column(db.String(180))
+  status = db.Column(Enum(AnalysisStatusEnum))
 
 
-  def __init__(self, id,id_target_dataset, name, email, repo_url):
+  def __init__(self, id,id_target_dataset, name, email, repo_url, status = AnalysisStatusEnum.RECEIVED):
     self.id = id
     self.id_target_dataset = id_target_dataset
     self.name = name
     self.email = email
     self.repo_url = repo_url
+    self.status = status
 
-  
+
   def json(self):
     return {
       self.id: {
@@ -27,6 +36,7 @@ class AnalysisRequestModel(db.Model):
         'name': self.name,
         'email': self.email,
         'repo_url': self.repo_url,
+        'status': str(self.status).split('.')[1],
       }
     }
 
