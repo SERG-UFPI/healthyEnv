@@ -4,7 +4,7 @@ const RepoInfos = (
     stars,
     forks,
     openIssues,
-    devs,
+    contributors,
     commits, }
 ) => {
   return (
@@ -19,7 +19,7 @@ const RepoInfos = (
       <RepoInfosItem title='Estrelas' content={stars} />
       <RepoInfosItem title='Forks' content={forks} />
       <RepoInfosItem title='Issues abertas' content={openIssues} />
-      <RepoInfosItem title='Devs' content={devs} />
+      <RepoInfosItem title='Contribuidores' content={contributors} />
       <RepoInfosItem title='Commits' content={commits} />
     </div>
   )

@@ -78,7 +78,7 @@ const Repo = () => {
                   stars={repoInfo['stars']}
                   forks={repoInfo['forks']}
                   openIssues={repoInfo['open_issues']}
-                  devs={repoInfo['devs']}
+                  contributors={repoInfo['contributors']}
                   commits={repoInfo['commits']} />
                 <span className={styles['algorithm-hint']}>
                   Algoritmo utilizado:
@@ -162,7 +162,7 @@ const Repo = () => {
             </div>
             <div className={styles['response-body-container']}>
               <span className={styles['body-title']}>Corpo da resposta</span>
-              <textarea rows={20} value={resultsInfo} spellCheck={false} />
+              <textarea rows={20} value={resultsInfo} spellCheck={false} readOnly={true} />
             </div>
           </div>
       }

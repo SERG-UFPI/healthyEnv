@@ -6,15 +6,16 @@ import Header from '../components/Header'
 
 const Datasets = () => {
   const [isLoading, setIsLoading] = useState(false)
-  const [repos, setRepos] = useState([])
+  const [repos, setRepos] = useState({})
   const [datasets, setDatasets] = useState({})
   const [datasetsOptions, setDatasetsOptions] = useState([])
   const [datasetRepoCount, setDatasetRepoCount] = useState(0)
-  const [selectedDataset, setSelectedDataset] = useState(1)
+  const [selectedDataset, setSelectedDataset] = useState()
   const [nValue, setNValue] = useState(1)
+  const datasetsIdList = []
 
   useEffect(() => {
-    loadDatasets().then(() => loadRepos(1))
+    loadDatasets().then(() => loadRepos(datasetsIdList[0]))
   }, [])
 
   const loadDatasets = async () => {
@@ -23,16 +24,18 @@ const Datasets = () => {
     setDatasets(response.data)
 
     const optionList = []
-    Object.keys(response.data).forEach((key: string, index: number) => {
+    Object.keys(response.data['datasets']).forEach((key: string, index: number) => {
+      datasetsIdList.push(key)
       if (index == 0) {
-        setDatasetRepoCount(response.data[key]['repo_count'])
+        setDatasetRepoCount(response.data['datasets'][key]['repo_count'])
       }
       optionList.push(
         <option value={key} key={key}>
-          {Buffer.from(response.data[key]['name'], 'utf-8').toString()}
+          {Buffer.from(response.data['datasets'][key]['name'], 'utf-8').toString()}
         </option>
       )
     })
+    setSelectedDataset(datasetsIdList[0])
 
     setDatasetsOptions([...optionList])
   }
@@ -41,13 +44,15 @@ const Datasets = () => {
     return nValue
   }
 
-  const loadRepos = async (dataset_id: number) => {
+  const loadRepos = async (dataset_id: string) => {
     setIsLoading(true)
     const response = await axios.get(`https://healthyenv.herokuapp.com/datasets/${dataset_id}/repos`)
 
-    setDatasetRepoCount(response.data.length)
-    setNValue(response.data.length / 10)
-    setRepos([...response.data])
+    Object.keys(response.data)
+
+    setDatasetRepoCount(response.data['repository_count'])
+    setNValue(response.data['repository_count'] / 10)
+    setRepos(response.data['repositories'])
     setIsLoading(false)
   }
 
@@ -69,9 +74,10 @@ const Datasets = () => {
                 className={styles.inputs}
                 id='dataset'
                 onChange={(e) => {
-                  setSelectedDataset(Number(e.target.value))
-                  loadRepos(Number(e.target.value))
-                  setDatasetRepoCount(datasets[e.target.value]['repo_count'])
+                  console.log(datasetsIdList[Number(e.target.value)])
+                  setSelectedDataset(datasetsIdList[Number(e.target.value)])
+                  loadRepos(datasetsIdList[Number(e.target.value)])
+                  // setDatasetRepoCount(datasetsIdList[Number(e.target.value)]['repository_count'])
                 }}
                 style={{ padding: '7px 5px' }}
               >
@@ -107,9 +113,11 @@ const Datasets = () => {
           isLoading
             ? <span>Carregando repositórios do dataset...</span>
             : <div className={styles['repo-list']}>
-              {repos.map((repo) => {
-                return (<RepoListItem key={repo['name']} repo={repo} datasetId={selectedDataset} getNValue={getNValue} />)
+              {Object.keys(repos).map((key, index) => {
+                return (<RepoListItem key={repos[key]['name']} repo={repos[key]} datasetId={selectedDataset} getNValue={getNValue} />)
               })}
+
+
             </div>
         }
       </div>

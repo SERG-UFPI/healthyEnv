@@ -19,7 +19,7 @@ const PlotGrid = ({ repoInfo, clusteringInfo, metricsInfo }) => {
     const plots = []
 
     metricsKeys.forEach(key => {
-      const metricName = metricsInfo[key]['name']
+      const metricName = metricsInfo['metrics'][key]['name']
       const titleList = []
       metricName.split('_').forEach((word: string) => {
         titleList.push(word.charAt(0).toUpperCase() + word.slice(1))
