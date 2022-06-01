@@ -29,8 +29,9 @@ const PlotGrid = ({ repoInfo, clusteringInfo, metricsInfo }) => {
       plots.push(
         <MetricPlot
           key={key}
-          y_all={clusteringInfo.map((repo: any) => { if (repo['near']) return repo['metrics'][key] })}
+          y_all={clusteringInfo.filter((repo: any) => { return repo['near'] }).map((repo: any) => { return repo['metrics'][key] })}
           y_selected={repoInfo['metrics'][key]}
+          is_upper={metricsInfo['metrics'][key]['is_upper']}
           labels={clusteringInfo.map((repo: any) => { if (repo['near']) return repo['name'] })}
           name={repoInfo['name']}
           title={title}
