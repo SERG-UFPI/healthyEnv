@@ -1,3 +1,5 @@
+from unicodedata import category
+from sqlalchemy import ForeignKey
 from db import db
 
 class MetricModel(db.Model):
@@ -7,13 +9,15 @@ class MetricModel(db.Model):
   name = db.Column(db.String(80))
   description = db.Column(db.String(300))
   is_upper = db.Column(db.Boolean)
+  category_id = db.Column(db.String(10), ForeignKey('metric_category.id'))
 
 
-  def __init__(self, id, name, description, is_upper):
+  def __init__(self, id, name, description, is_upper, category_id):
     self.id = id
     self.name = name
     self.description = description
     self.is_upper = is_upper
+    self.category_id = category_id
 
   
   def json(self):
@@ -22,6 +26,7 @@ class MetricModel(db.Model):
         'name': self.name,
         'description': self.description,
         'is_upper': self.is_upper,
+        'category_id': self.category_id,
       }
     }
 
@@ -39,6 +44,7 @@ class MetricModel(db.Model):
         'name': metric.name,
         'description': metric.description,
         'is_upper': metric.is_upper,
+        'category_id': metric.category_id,
       }
 
     return json

@@ -4,6 +4,7 @@ from model.dataset import DatasetModel
 from model.metric import MetricModel
 from model.repository import RepositoryModel
 from model.analysis_request import AnalysisRequestModel
+from model.metric_category import MetricCategory
 from clustering.cluster import get_cluster
 from dotenv import load_dotenv
 from db import db
@@ -25,6 +26,7 @@ db_host = os.environ['DB_HOST']
 db_name = os.environ['DB_NAME']
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{db_user}:{db_password}@{db_host}/{db_name}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db.init_app(app)
 
 
 # Creates database tables after first request
@@ -36,6 +38,7 @@ def create_db():
     from model.metric import MetricModel
     from model.metric_repo import MetricRepoModel
     from model.analysis_request import AnalysisRequestModel
+    from model.metric_category import MetricCategory
     db.create_all()
 
 
@@ -139,6 +142,13 @@ def analysis_request(dataset_id: str):
       status=200, mimetype='application/json')
 
 
+# Route to get all metric categories
+@app.route('/metrics/categories')
+def metric_categories():
+  return Response(
+    json.dumps(MetricCategory.get_all_metrics_categories_json(), indent=2),
+    status=200, mimetype='application/json')
+
+
 if __name__ == '__main__':
-  db.init_app(app)
   app.run(debug=True)
