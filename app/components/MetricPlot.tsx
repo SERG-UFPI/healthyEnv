@@ -20,6 +20,8 @@ const MetricPlot = ({ y_all, y_selected, labels, name, title, width }) => {
             name: 'Métrica',
             pointpos: -1.8,
             boxpoints: 'all',
+            jitter: 0.3,
+            boxmean: true,
           },
           {
             y: [y_selected],
@@ -42,7 +44,12 @@ const MetricPlot = ({ y_all, y_selected, labels, name, title, width }) => {
           },
           plot_bgcolor: '#fafafa',
           paper_bgcolor: '#fafafa',
-
+          yaxis: {
+            type: "log",
+            autorange: true,
+            showgrid: false,
+            zeroline: true,
+          }
         }}
       />
     </div>
