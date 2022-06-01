@@ -21,8 +21,9 @@ const Repo = () => {
   const [clusteringInfo, setClusteringInfo] = useState([])
   const [repoInfo, setRepoInfo] = useState({})
   const [resultsInfo, setResultsInfo] = useState('')
-  const [metricsInfo, setMetricsInfo] = useState({})
+  const [metricsInfo, setMetricsInfo] = useState([])
   const [requestUrl, setRequestUrl] = useState('')
+  const [metricsCategories, setMetricsCategories] = useState({})
 
   useEffect(() => {
     if (!router.isReady) return
@@ -37,11 +38,23 @@ const Repo = () => {
     console.log(router.asPath)
     const urlResults = `https://healthyenv.herokuapp.com/datasets/${datasetId}/cluster/${repoName}?near_n=${nValue}`
     const urlMetrics = `https://healthyenv.herokuapp.com/metrics`
-    Promise.all([axios.get(urlResults), axios.get(urlMetrics)]).then((values) => {
+    const urlCategoriesMetrics = `https://healthyenv.herokuapp.com/metrics/categories`
+    Promise.all([axios.get(urlResults), axios.get(urlMetrics), axios.get(urlCategoriesMetrics)]).then((values) => {
       setRepoInfo(values[0].data['selected'])
       setClusteringInfo(values[0].data['repos'])
       setResultsInfo(JSON.stringify(values[0].data, null, 2))
-      setMetricsInfo(values[1].data)
+      const metricsInfoList = []
+      Object.keys(values[1].data['metrics']).forEach(metricKey => {
+        metricsInfoList.push({
+          'id': metricKey,
+          'name': values[1].data['metrics'][metricKey]['name'],
+          'description': values[1].data['metrics'][metricKey]['description'],
+          'is_upper': values[1].data['metrics'][metricKey]['is_upper'],
+          'category_id': values[1].data['metrics'][metricKey]['category_id'],
+        })
+      })
+      setMetricsInfo(metricsInfoList)
+      setMetricsCategories(values[2].data['metric_categories'])
       setRequestUrl(urlResults)
       setIsLoading(false)
       console.log(resultsInfo)
@@ -152,7 +165,20 @@ const Repo = () => {
             <div className={styles['section-title']}>
               <span>Métricas aplicadas ao grupo</span>
             </div>
-            <PlotGrid repoInfo={repoInfo} clusteringInfo={clusteringInfo} metricsInfo={metricsInfo} />
+            {
+              Object.keys(metricsCategories).map((key) => {
+                return <PlotGrid
+                  repoInfo={repoInfo}
+                  clusteringInfo={clusteringInfo}
+                  metricsInfo={metricsInfo.filter(metric => {
+                    return metric['category_id'] === key
+                  })}
+                  metricCategory={metricsCategories[key]}
+                />
+              })
+            }
+            {/* <PlotGrid repoInfo={repoInfo} clusteringInfo={clusteringInfo} metricsInfo={metricsInfo} />
+            <PlotGrid repoInfo={repoInfo} clusteringInfo={clusteringInfo} metricsInfo={metricsInfo} /> */}
             <div className={styles['section-title']}>
               <span>Detalhes da requisição</span>
             </div>

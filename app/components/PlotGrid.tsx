@@ -2,7 +2,7 @@ import MetricPlot from "./MetricPlot"
 import useWindowDimensions from "../utils/useWindowDimensions"
 import styles from '../styles/PlotGrid.module.css'
 
-const PlotGrid = ({ repoInfo, clusteringInfo, metricsInfo }) => {
+const PlotGrid = ({ repoInfo, clusteringInfo, metricsInfo, metricCategory }) => {
   const { width } = useWindowDimensions()
 
   let pagePadding = width > 1280 ? ((width - 1280) / 2) + 16 : 16
@@ -18,23 +18,17 @@ const PlotGrid = ({ repoInfo, clusteringInfo, metricsInfo }) => {
   const generatePlots = () => {
     const plots = []
 
-    metricsKeys.forEach(key => {
-      const metricName = metricsInfo['metrics'][key]['name']
-      const titleList = []
-      metricName.split('_').forEach((word: string) => {
-        titleList.push(word.charAt(0).toUpperCase() + word.slice(1))
-      })
-      const title = titleList.join(' ')
-
+    metricsInfo.forEach((metric: object, index: number) => {
+      const metricName = metric['name']
       plots.push(
         <MetricPlot
-          key={key}
-          y_all={clusteringInfo.filter((repo: any) => { return repo['near'] }).map((repo: any) => { return repo['metrics'][key] })}
-          y_selected={repoInfo['metrics'][key]}
-          is_upper={metricsInfo['metrics'][key]['is_upper']}
+          key={metric['id'] + Math.random()}
+          y_all={clusteringInfo.filter((repo: any) => { return repo['near'] }).map((repo: any) => { return repo['metrics'][metric['id']] })}
+          y_selected={repoInfo['metrics'][metric['id']]}
+          is_upper={metric['is_upper']}
           labels={clusteringInfo.map((repo: any) => { if (repo['near']) return repo['name'] })}
           name={repoInfo['name']}
-          title={title}
+          title={metricName}
           width={plotWidth}
         />
       )
@@ -44,8 +38,25 @@ const PlotGrid = ({ repoInfo, clusteringInfo, metricsInfo }) => {
   }
 
   return (
-    <div className={styles.grid} style={style}>
-      {generatePlots()}
+    <div>{
+      metricsInfo.length > 0
+        ? (
+          <div className={styles.metricCategory}>
+            <span className={styles.workingGroup}>
+              {metricCategory['working_group']}
+            </span>
+            <span className={styles.description}>
+              {metricCategory['description']}
+            </span>
+          </div>
+        )
+        : false
+    }
+      {metricsInfo.length > 0 ? (
+        <div className={styles.grid} style={style}>
+          {generatePlots()}
+        </div>
+      ) : false}
     </div>
   )
 }
