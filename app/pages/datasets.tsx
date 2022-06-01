@@ -3,9 +3,12 @@ import axios from 'axios'
 import styles from '../styles/Datasets.module.css'
 import RepoListItem from '../components/RepoListItem'
 import Header from '../components/Header'
+import { Dots } from 'react-activity'
+import "react-activity/dist/Dots.css";
 
 const Datasets = () => {
   const [isLoading, setIsLoading] = useState(false)
+  const [isLoadingDatasets, setIsLoadingDatasets] = useState(true)
   const [repos, setRepos] = useState({})
   const [datasets, setDatasets] = useState({})
   const [datasetsOptions, setDatasetsOptions] = useState([])
@@ -19,10 +22,9 @@ const Datasets = () => {
   }, [])
 
   const loadDatasets = async () => {
+    setIsLoadingDatasets(true)
     const response = await axios.get('https://healthyenv.herokuapp.com/datasets')
-
     setDatasets(response.data)
-
     const optionList = []
     Object.keys(response.data['datasets']).forEach((key: string, index: number) => {
       datasetsIdList.push(key)
@@ -36,8 +38,8 @@ const Datasets = () => {
       )
     })
     setSelectedDataset(datasetsIdList[0])
-
     setDatasetsOptions([...optionList])
+    setIsLoadingDatasets(false)
   }
 
   const getNValue = () => {
@@ -61,64 +63,84 @@ const Datasets = () => {
       <Header selectedIndex={1} />
       <div className={styles.container}>
         <span className={styles.title}>
-          Analisar Repositório
+          Datasets e análise
         </span>
         <span className={styles.subtitle}>
           Faça a análise da saúde de um repositório baseando-se em repositórios semelhantes
         </span>
-        <div className={styles['repo-list-top']}>
-          <div className={styles['dataset-n']}>
-            <div className={styles['inputs-container']} style={{ paddingRight: '20px' }}>
-              <label htmlFor='dataset' className={styles.labels}>Dataset </label>
-              <select
-                className={styles.inputs}
-                id='dataset'
-                onChange={(e) => {
-                  console.log(datasetsIdList[Number(e.target.value)])
-                  setSelectedDataset(datasetsIdList[Number(e.target.value)])
-                  loadRepos(datasetsIdList[Number(e.target.value)])
-                  // setDatasetRepoCount(datasetsIdList[Number(e.target.value)]['repository_count'])
-                }}
-                style={{ padding: '7px 5px' }}
-              >
-                {datasetsOptions}
-              </select>
+        <span className={styles.description}>
+          Utilizando um método semelhante a algoritmos de Aprendizado de Máquina não supervisionado,
+          o HealthyEnv obtém um grupo de repositórios semelhantes ao selecionado para análise
+          e mostra como estão suas métricas baseando-se em valores de referência formados pelas
+          métricas de tais semelhantes.
+        </span>
+        {!isLoadingDatasets
+          ? <div className={styles['repo-list-top']}>
+            <div className={styles['dataset-n']}>
+              <div className={styles['inputs-container']} style={{ paddingRight: '20px' }}>
+                <label htmlFor='dataset' className={styles.labels}>Dataset </label>
+                <select
+                  className={styles.inputs}
+                  id='dataset'
+                  onChange={(e) => {
+                    console.log(datasetsIdList[Number(e.target.value)])
+                    setSelectedDataset(datasetsIdList[Number(e.target.value)])
+                    loadRepos(datasetsIdList[Number(e.target.value)])
+                  }}
+                  style={{ padding: '7px 5px' }}
+                >
+                  {datasetsOptions}
+                </select>
+              </div>
+              <div className={styles['inputs-container']}>
+                <label htmlFor='nValue' className={styles.labels}>Quantidade de repositórios próximos </label>
+                <input
+                  className={styles.inputs}
+                  type='number'
+                  id='nValue'
+                  name='nValue'
+                  min='1'
+                  max={datasetRepoCount - 2}
+                  defaultValue={nValue}
+                  onChange={(e) => {
+                    const value = Number(e.target.value)
+                    if (value > (datasetRepoCount - 2)) {
+                      e.target.value = Number(datasetRepoCount - 2).toString()
+                    }
+                    setNValue(value)
+                  }}
+                  style={{ width: '100px' }}
+                />
+              </div>
             </div>
             <div className={styles['inputs-container']}>
-              <label htmlFor='nValue' className={styles.labels}>Quantidade de repositórios próximos </label>
-              <input
-                className={styles.inputs}
-                type='number'
-                id='nValue'
-                name='nValue'
-                min='1'
-                max={datasetRepoCount - 2}
-                defaultValue={nValue}
-                onChange={(e) => {
-                  const value = Number(e.target.value)
-                  if (value > (datasetRepoCount - 2)) {
-                    e.target.value = Number(datasetRepoCount - 2).toString()
-                  }
-                  setNValue(value)
-                }}
-                style={{ width: '100px' }}
-              />
+              <label htmlFor='search' className={styles.labels}>Filtrar </label>
+              <input type='text' id='search' placeholder='Nome do repositório' className={styles.inputs} />
             </div>
           </div>
-          <div className={styles['inputs-container']}>
-            <label htmlFor='search' className={styles.labels}>Filtrar </label>
-            <input type='text' id='search' placeholder='Nome do repositório' className={styles.inputs} />
-          </div>
-        </div>{
-          isLoading
-            ? <span>Carregando repositórios do dataset...</span>
-            : <div className={styles['repo-list']}>
-              {Object.keys(repos).map((key, index) => {
-                return (<RepoListItem key={repos[key]['name']} repo={repos[key]} datasetId={selectedDataset} getNValue={getNValue} />)
-              })}
-
-
+          : (
+            <div className={styles.loading}>
+              <Dots color='#000000' size={18} speed={1} animating={true} />
+              <span style={{
+                fontSize: 14
+              }}>Carregando datasets...</span>
             </div>
+          )
+        }
+        {!isLoading
+          ? <div className={styles['repo-list']}>
+            {Object.keys(repos).map((key, index) => {
+              return (<RepoListItem key={repos[key]['name']} repo={repos[key]} datasetId={selectedDataset} getNValue={getNValue} />)
+            })}
+          </div>
+          : (
+            <div className={styles.loading}>
+              <Dots color='#000000' size={18} speed={1} animating={true} />
+              <span style={{
+                fontSize: 14
+              }}>Carregando repositórios...</span>
+            </div>
+          )
         }
       </div>
     </>

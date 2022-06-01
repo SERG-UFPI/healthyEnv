@@ -6,15 +6,18 @@
 .container {
   display: flex;
   flex-direction: column;
-  padding-bottom: 10px;
+  padding-top: 8px;
+  padding-bottom: 12px;
 }
 
 .title {
   font-weight: bold;
+  padding-bottom: 2px;
 }
 
 .chip-list {
   display: flex;
   flex-direction: row;
-  padding-top: 4px;
+  flex-wrap: wrap;
+  /* padding-top: 4px; */
 }

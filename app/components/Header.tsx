@@ -9,11 +9,7 @@ interface SelectedIndex {
 
 const Header = ({ selectedIndex }: SelectedIndex) => {
   return (
-    <div style={{
-      borderBottom: 'solid',
-      borderWidth: '1px',
-      borderColor: '#EAEAEA',
-    }}>
+    <div className={styles.header}>
       <div style={{
         marginLeft: 'auto',
         marginRight: 'auto',
@@ -29,7 +25,7 @@ const Header = ({ selectedIndex }: SelectedIndex) => {
         }}>
           <Link href='/'>
             <a>
-              <span className={styles.title}>healthyEnv</span>
+              <span className={styles.title}>HealthyEnv</span>
             </a>
           </Link>
           <Link href='/datasets'>
@@ -39,11 +35,18 @@ const Header = ({ selectedIndex }: SelectedIndex) => {
                 : <span className={styles.link}>Datasets e análise</span>}
             </a>
           </Link>
-          <Link href='/about'>
+          <Link href='/request'>
             <a>
               {selectedIndex == 2
-                ? <span className={styles.link} style={{ color: '#2590DA', fontWeight: 'bold' }}>Sobre o projeto</span>
-                : <span className={styles.link}>Sobre o projeto</span>}
+                ? <span className={styles.link} style={{ color: '#2590DA', fontWeight: 'bold' }}>Solicitar inclusão de repositório</span>
+                : <span className={styles.link}>Solicitar inclusão de repositório</span>}
+            </a>
+          </Link>
+          <Link href='/about'>
+            <a>
+              {selectedIndex == 3
+                ? <span className={styles.link} style={{ color: '#2590DA', fontWeight: 'bold' }}>Sobre</span>
+                : <span className={styles.link}>Sobre</span>}
             </a>
           </Link>
         </div>

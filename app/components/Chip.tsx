@@ -2,6 +2,7 @@ const Chip = ({ label }) => {
   return (
     <div style={{
       marginRight: '10px',
+      marginTop: '5px',
       backgroundColor: '#EAEAEA',
       padding: '4px 10px',
       borderRadius: '20px',

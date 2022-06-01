@@ -4,7 +4,7 @@ import styles from '../styles/About.module.css'
 const About = () => {
   return (
     <>
-      <Header selectedIndex={2} />
+      <Header selectedIndex={3} />
       <div className={styles.container}>
         <h1>Sobre o healthyEnv</h1>
         <p>
