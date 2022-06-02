@@ -35,7 +35,7 @@ const Header = ({ selectedIndex }: SelectedIndex) => {
                 : <span className={styles.link}>Datasets e análise</span>}
             </a>
           </Link>
-          <Link href='/request'>
+          <Link href='/requests'>
             <a>
               {selectedIndex == 2
                 ? <span className={styles.link} style={{ color: '#2590DA', fontWeight: 'bold' }}>Solicitar inclusão de repositório</span>

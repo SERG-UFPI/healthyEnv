@@ -168,6 +168,7 @@ const Repo = () => {
             {
               Object.keys(metricsCategories).map((key) => {
                 return <PlotGrid
+                  key={key}
                   repoInfo={repoInfo}
                   clusteringInfo={clusteringInfo}
                   metricsInfo={metricsInfo.filter(metric => {
