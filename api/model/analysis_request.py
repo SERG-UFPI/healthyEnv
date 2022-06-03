@@ -44,3 +44,25 @@ class AnalysisRequestModel(db.Model):
   def create_request(self):
     db.session.add(self)
     db.session.commit()
+
+
+  @classmethod
+  def get_requests_by_id_json(cls, email):
+    requests = cls.query.filter_by(email=email).all()
+
+    json = {
+      'requests_count': len(requests),
+      'requests': {}
+    }
+
+    for request in requests:
+      json['requests'][request.id] = {
+        'id_dataset': request.id_target_dataset,
+        'name': request.name,
+        'email': request.email,
+        'repo_url': request.repo_url,
+        'status': str(request.status).split('.')[1],
+      }
+    
+    return json
+    

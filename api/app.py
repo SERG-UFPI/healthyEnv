@@ -142,6 +142,14 @@ def analysis_request(dataset_id: str):
       status=200, mimetype='application/json')
 
 
+# Route to get all requests of an user by email
+@app.route('/requests/<email>')
+def user_requests(email):
+  return Response(
+    json.dumps(AnalysisRequestModel.get_requests_by_id_json(email), indent=2),
+    status=200, mimetype='application/json')
+
+
 # Route to get all metric categories
 @app.route('/metrics/categories')
 def metric_categories():
