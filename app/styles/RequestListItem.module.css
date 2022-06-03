@@ -1,0 +1,41 @@
+.requestListItem {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.nameAndEmail {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 5px;
+}
+
+.status {
+  /* width: 70px; */
+  font-size: 18px;
+}
+
+.name {
+  font-size: 18px;
+  font-weight: bold;
+  padding-right: 5px;
+  
+}
+
+.email {
+  font-size: 18px;
+  padding-left: 5px;
+}
+
+.url {
+  text-decoration: underline;
+}

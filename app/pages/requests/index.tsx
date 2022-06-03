@@ -11,6 +11,7 @@ const Requests = () => {
   const [selectedDataset, setSelectedDataset] = useState()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [emailCheckSubmission, setEmailCheckSubmission] = useState('')
   const datasetsIdList = []
   let formData: object = {
     name: '',
@@ -132,9 +133,13 @@ const Requests = () => {
             </span>
           </div>
           <div className={styles.formCheckSubmission}>
-            <input placeholder='E-mail' className={styles.formInput} />
+            <input placeholder='E-mail' type='email' className={styles.formInput}
+              onChange={(e) => {
+                setEmailCheckSubmission(e.target.value)
+                console.log(emailCheckSubmission)
+              }} />
             <div className={styles.button}>
-              <Link href='/datasets'>
+              <Link href={`/requests/${emailCheckSubmission}`}>
                 <a>Verificar solicitações</a>
               </Link>
             </div>
