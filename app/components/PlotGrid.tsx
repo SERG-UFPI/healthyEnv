@@ -2,7 +2,11 @@ import MetricPlot from "./MetricPlot"
 import useWindowDimensions from "../utils/useWindowDimensions"
 import styles from '../styles/PlotGrid.module.css'
 
-const PlotGrid = ({ repoInfo, clusteringInfo, metricsInfo, metricCategory }) => {
+interface PlotGridProps {
+  data: object
+}
+
+const PlotGrid = (props: PlotGridProps) => {
   const { width } = useWindowDimensions()
 
   let pagePadding = width > 1280 ? ((width - 1280) / 2) + 16 : 16
@@ -10,53 +14,40 @@ const PlotGrid = ({ repoInfo, clusteringInfo, metricsInfo, metricCategory }) => 
   let plotWidth = ((width - (pagePadding * 2)) / maxPlotsPerRow);
   var style = { '--width': `${plotWidth - 10}px` } as React.CSSProperties
 
-  const metricsKeys = []
-  for (let metricKey in repoInfo['metrics']) {
-    metricsKeys.push(metricKey)
-  }
-
   const generatePlots = () => {
     const plots = []
-
-    metricsInfo.forEach((metric: object, index: number) => {
-      const metricName = metric['name']
+    props.data['metrics'].forEach((metric: object) => {
       plots.push(
         <MetricPlot
           key={metric['id'] + Math.random()}
-          y_all={clusteringInfo.filter((repo: any) => { return repo['near'] }).map((repo: any) => { return repo['metrics'][metric['id']] })}
-          y_selected={repoInfo['metrics'][metric['id']]}
-          is_upper={metric['is_upper']}
-          labels={clusteringInfo.map((repo: any) => { if (repo['near']) return repo['name'] })}
-          name={repoInfo['name']}
-          title={metricName}
+          yAll={metric['values']['reference'].map((value: any) => value['value'])}
+          ySelected={metric['values']['selected']['value']}
+          labels={metric['values']['reference'].map((value: any) => value['name'])}
+          name={metric['values']['selected']['name']}
+          title={metric['name']}
           width={plotWidth}
+          situation={metric['situation']}
         />
       )
-    })
+    });
 
     return plots
   }
 
   return (
     <div>{
-      metricsInfo.length > 0
-        ? (
-          <div className={styles.metricCategory}>
-            <span className={styles.workingGroup}>
-              {metricCategory['working_group']}
-            </span>
-            <span className={styles.description}>
-              {metricCategory['description']}
-            </span>
-          </div>
-        )
-        : false
+      <div className={styles.metricCategory}>
+        <span className={styles.workingGroup}>
+          {props.data['working_group']}
+        </span>
+        <span className={styles.description}>
+          {props.data['description']}
+        </span>
+      </div>
     }
-      {metricsInfo.length > 0 ? (
-        <div className={styles.grid} style={style}>
-          {generatePlots()}
-        </div>
-      ) : false}
+      <div className={styles.grid} style={style}>
+        {generatePlots()}
+      </div>
     </div>
   )
 }
