@@ -10,13 +10,7 @@ import { useEffect, useState } from "react"
 import { getFirstQuartile, getMedian, getThirdQuartile } from "../../../../functions/stats"
 import "react-activity/dist/Dots.css";
 import MetricsHint from "../../../../components/MetricsHint"
-import dynamic from "next/dynamic"
-import PlotLoadingIndicator from "../../../../components/PlotLoadingIndicator"
-
-const Plot = dynamic(() => import('react-plotly.js'), {
-  ssr: false,
-  loading: () => <PlotLoadingIndicator width={600} height={300} />,
-})
+import AnalysisSummarySection from "../../../../components/AnalysisSummarySection"
 
 enum MetricSituation {
   Ok = 'OK',
@@ -214,34 +208,8 @@ const Repo = () => {
             <div className={styles['section-title']}>
               <span>Resumo da avaliação</span>
             </div>
-            <div className={styles.analysisSummary}>
-              <Plot
-                data={[{
-                  values: [analysisSummary['okMetricsCount'], analysisSummary['reasonableMetricsCount'], analysisSummary['badMetricsCount']],
-                  labels: ['Métricas boas', 'Métricas razoáveis', 'Métricas ruins'],
-                  marker: {
-                    colors: ['#c4ffcc', '#fceec2', '#fad6d6'],
-                  },
-                  type: 'pie',
-                }]}
-                layout={{
-                  width: 600,
-                  height: 300,
-                }}
-              />
-              <div className={styles.analysisValues}>
-                <span className={styles.analysisTitle}>Métricas com valores saudáveis</span>
-                <span className={styles.analysisSubtitle}>{analysisSummary['okMetricsCount']}</span>
-                <span className={styles.analysisTitle}>Métricas com valores razoáveis</span>
-                <span className={styles.analysisSubtitle}>{analysisSummary['reasonableMetricsCount']}</span>
-                <span className={styles.analysisTitle}>Métricas com valores ruins</span>
-                <span className={styles.analysisSubtitle}>{analysisSummary['badMetricsCount']}</span>
-                <span className={styles.analysisTitle}>Taxa de saúde</span>
-                <span className={styles.analysisSubtitle}>~{
-                  Math.round((analysisSummary['okMetricsCount']) * 100 / (analysisSummary['okMetricsCount'] + analysisSummary['reasonableMetricsCount'] + analysisSummary['badMetricsCount']))
-                }%</span>
-              </div>
-            </div>
+            <AnalysisSummarySection metricsCount={analysisSummary} />
+
             <div className={styles['section-title']}>
               <span>Detalhes da requisição</span>
             </div>

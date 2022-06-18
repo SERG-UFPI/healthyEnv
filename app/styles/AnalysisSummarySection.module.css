@@ -1,0 +1,23 @@
+.analysisSummary {
+  display: flex;
+  flex-direction: row;
+}
+
+.analysisValues {
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.analysisTitle {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.analysisSubtitle {
+  font-size: 24px;
+  padding-bottom: 10px;
+}
