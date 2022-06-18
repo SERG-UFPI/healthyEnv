@@ -9,6 +9,14 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { getFirstQuartile, getMedian, getThirdQuartile } from "../../../../functions/stats"
 import "react-activity/dist/Dots.css";
+import MetricsHint from "../../../../components/MetricsHint"
+import dynamic from "next/dynamic"
+import PlotLoadingIndicator from "../../../../components/PlotLoadingIndicator"
+
+const Plot = dynamic(() => import('react-plotly.js'), {
+  ssr: false,
+  loading: () => <PlotLoadingIndicator width={600} height={300} />,
+})
 
 enum MetricSituation {
   Ok = 'OK',
@@ -24,6 +32,7 @@ const Repo = () => {
   const [referenceReposInfo, setReferenceReposInfo] = useState([])
   const [metricsData, setMetricsData] = useState([])
   const [requestPayloads, setRequestPayloads] = useState([])
+  const [analysisSummary, setAnalysisSummary] = useState({})
 
   useEffect(() => {
     if (!router.isReady) return
@@ -59,6 +68,7 @@ const Repo = () => {
 
       // Make an list with all necessary data to perform an analysis
       const metricsData = []
+      let okMetricsCount = 0, reasonableMetricsCount = 0, badMetricsCount = 0
       Object.keys(metricsCategoriesResponse['metric_categories']).forEach(categoryKey => {
         const metricInfo = []
         Object.keys(metricsInfoResponse.metrics).forEach(metricKey => {
@@ -82,21 +92,26 @@ const Repo = () => {
             const firstQuartile = getFirstQuartile(valuesArray)
             const thirdQuartile = getThirdQuartile(valuesArray)
 
-            let metricSituation = MetricSituation.Ok
+            let metricSituation: MetricSituation
             if ((resultsResponse.selected['metrics'][metricKey] > median ? true : false) == metricsInfoResponse.metrics[metricKey]['is_upper']) {
               metricSituation = MetricSituation.Ok
+              okMetricsCount++
             } else {
               if (metricsInfoResponse.metrics[metricKey]['is_upper']) {
                 if (resultsResponse.selected['metrics'][metricKey] >= firstQuartile) {
                   metricSituation = MetricSituation.Reasonable
+                  reasonableMetricsCount++
                 } else {
                   metricSituation = MetricSituation.Bad
+                  badMetricsCount++
                 }
               } else {
                 if (resultsResponse.selected['metrics'][metricKey] <= thirdQuartile) {
                   metricSituation = MetricSituation.Reasonable
+                  reasonableMetricsCount++
                 } else {
                   metricSituation = MetricSituation.Bad
+                  badMetricsCount++
                 }
               }
             }
@@ -124,12 +139,12 @@ const Repo = () => {
       })
 
       setMetricsData(metricsData)
+      setAnalysisSummary({ okMetricsCount, reasonableMetricsCount, badMetricsCount })
     })
 
     setIsLoading(false)
   }
 
-  console.log(metricsData)
   return (
     <>
       <Header selectedIndex={1} />
@@ -184,8 +199,9 @@ const Repo = () => {
               </div>
               <NearReposPlot selectedRepoInfo={selectedRepoInfo} referenceReposInfo={referenceReposInfo} />
             </div>
-            <div className={styles['section-title']}>
-              <span>Métricas aplicadas ao grupo</span>
+            <div className={styles.sectionHeader}>
+              <span className={styles['section-title']}>Métricas aplicadas ao grupo</span>
+              <MetricsHint />
             </div>
             {
               metricsData.map((metricCategory: object) => {
@@ -195,6 +211,37 @@ const Repo = () => {
                 />
               })
             }
+            <div className={styles['section-title']}>
+              <span>Resumo da avaliação</span>
+            </div>
+            <div className={styles.analysisSummary}>
+              <Plot
+                data={[{
+                  values: [analysisSummary['okMetricsCount'], analysisSummary['reasonableMetricsCount'], analysisSummary['badMetricsCount']],
+                  labels: ['Métricas boas', 'Métricas razoáveis', 'Métricas ruins'],
+                  marker: {
+                    colors: ['#c4ffcc', '#fceec2', '#fad6d6'],
+                  },
+                  type: 'pie',
+                }]}
+                layout={{
+                  width: 600,
+                  height: 300,
+                }}
+              />
+              <div className={styles.analysisValues}>
+                <span className={styles.analysisTitle}>Métricas com valores saudáveis</span>
+                <span className={styles.analysisSubtitle}>{analysisSummary['okMetricsCount']}</span>
+                <span className={styles.analysisTitle}>Métricas com valores razoáveis</span>
+                <span className={styles.analysisSubtitle}>{analysisSummary['reasonableMetricsCount']}</span>
+                <span className={styles.analysisTitle}>Métricas com valores ruins</span>
+                <span className={styles.analysisSubtitle}>{analysisSummary['badMetricsCount']}</span>
+                <span className={styles.analysisTitle}>Taxa de saúde</span>
+                <span className={styles.analysisSubtitle}>~{
+                  Math.round((analysisSummary['okMetricsCount']) * 100 / (analysisSummary['okMetricsCount'] + analysisSummary['reasonableMetricsCount'] + analysisSummary['badMetricsCount']))
+                }%</span>
+              </div>
+            </div>
             <div className={styles['section-title']}>
               <span>Detalhes da requisição</span>
             </div>

@@ -1,0 +1,36 @@
+.metricsHint {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 10px;
+  align-items: center;
+}
+
+.title {
+  font-size: 40;
+  font-weight: bold;
+  padding-right: 16px;
+}
+
+.hintBoxOk {
+  height: 14px;
+  width: 16px;
+  background-color: #c4ffcc;
+}
+
+.hintBoxReasonable {
+  height: 14px;
+  width: 16px;
+  background-color: #fceec2;
+}
+
+.hintBoxBad {
+  height: 14px;
+  width: 16px;
+  background-color: #fad6d6;
+}
+
+.hintText {
+  font-size: 16;
+  padding-left: 5px;
+  padding-right: 14px;
+}
