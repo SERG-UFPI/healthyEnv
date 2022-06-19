@@ -11,6 +11,10 @@ import { getFirstQuartile, getMedian, getThirdQuartile } from "../../../../funct
 import "react-activity/dist/Dots.css";
 import MetricsHint from "../../../../components/MetricsHint"
 import AnalysisSummarySection from "../../../../components/AnalysisSummarySection"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faArrowRightArrowLeft, faArrowsRotate } from "@fortawesome/free-solid-svg-icons"
+import Popup from "reactjs-popup"
+import ChangeRepoModal from "../../../../components/ChangeRepoModal"
 
 enum MetricSituation {
   Ok = 'OK',
@@ -27,23 +31,23 @@ const Repo = () => {
   const [metricsData, setMetricsData] = useState([])
   const [requestPayloads, setRequestPayloads] = useState([])
   const [analysisSummary, setAnalysisSummary] = useState({})
+  const [nValue, setNValue] = useState(1)
+
+  // Modal
+  const [open, setOpen] = useState(false)
+  const closeModal = () => setOpen(false)
 
   useEffect(() => {
     if (!router.isReady) return
-    loadRepo()
+    loadRepo(router.query.datasetId, router.query.repo, +router.query.near)
   }, [router.isReady])
 
   // Load a repo's analysis
-  const loadRepo = async () => {
+  const loadRepo = async (datasetId: string | string[], repoName: string | string[], n: number) => {
     setIsLoading(true)
 
-    // URL parameters
-    const datasetId = router.query.datasetId
-    const repoName = router.query.repo
-    const nValue = +router.query.near
-
     // API URLs
-    const urlResults = `https://healthyenv.herokuapp.com/datasets/${datasetId}/cluster/${repoName}?near_n=${nValue}`
+    const urlResults = `https://healthyenv.herokuapp.com/datasets/${datasetId}/cluster/${repoName}?near_n=${n}`
     const urlMetricsInfo = `https://healthyenv.herokuapp.com/metrics`
     const urlMetricsCategories = `https://healthyenv.herokuapp.com/metrics/categories`
 
@@ -139,6 +143,10 @@ const Repo = () => {
     setIsLoading(false)
   }
 
+  const refreshAnalysis = (dataset: string, repo: string, n: number): void => {
+    loadRepo(dataset, repo, n)
+  }
+
   return (
     <>
       <Header selectedIndex={1} />
@@ -171,25 +179,55 @@ const Repo = () => {
                   openIssues={selectedRepoInfo['open_issues']}
                   contributors={selectedRepoInfo['contributors']}
                   commits={selectedRepoInfo['commits']} />
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <div className={styles['change-algorithm-button']} onClick={() => setOpen(true)}>
+                    <FontAwesomeIcon icon={faArrowRightArrowLeft} />
+                    <span className={styles['button-label']}>
+                      Trocar repositório
+                    </span>
+                  </div>
+
+                  <div className={styles['change-algorithm-button']} >
+                    {/* <span style={{ paddingRight: 10 }}>Semelhantes: </span>
+                    <div>
+                      <input
+                        style={{
+                          width: 60,
+                          marginRight: 10
+                        }}
+                        type='number'
+                        id='nValue'
+                        name='nValue'
+                        min='1'
+                        //TODO: max={datasetRepoCount - 2}
+                        defaultValue={router.query.near}
+                        onChange={(e) => {
+                          const value = Number(e.target.value)
+                          // if (value > (datasetRepoCount - 2)) {
+                          //   e.target.value = Number(datasetRepoCount - 2).toString()
+                          // }
+                          setNValue(value)
+                        }}
+                      />
+                    </div> */}
+                    <FontAwesomeIcon icon={faArrowsRotate} />
+                    <span className={styles['button-label']}>
+                      Alterar quantidade de semelhantes
+                    </span>
+                  </div>
+                </div>
                 <span className={styles['algorithm-hint']}>
                   Algoritmo utilizado:
                 </span>
                 <span className={styles['algorithm-title']}>
-                  Distância Euclidiana com PCA
+                  Semelhança baseada em distância
                 </span>
                 <span>
-                  Este algoritmo utiliza o PCA para reduzir a dimensionalidade
-                  dos dados e faz o cálculo da Distância Euclidiana do
-                  repositório selecionado para os demais do dataset. Após
-                  ordenar as distâncias obtidas em ordem crescente, obtém-se
-                  os <i>n</i> mais próximos.
+                  Este algoritmo busca no dataset os repositórios mais
+                  semelhantes ao repositório selecionado, baseando-se na
+                  distância deles no plano.
                 </span>
-                {/* <div className={styles['change-algorithm-button']}>
-                  <FontAwesomeIcon icon={faGear} />
-                  <span className={styles['button-label']}>
-                    Modificar algoritmo
-                  </span>
-                </div> */}
+                <span className={styles.nearHint}>Obtendo <b>{+router.query.near}</b> projetos semelhantes.</span>
               </div>
               <NearReposPlot selectedRepoInfo={selectedRepoInfo} referenceReposInfo={referenceReposInfo} />
             </div>
@@ -209,7 +247,6 @@ const Repo = () => {
               <span>Resumo da avaliação</span>
             </div>
             <AnalysisSummarySection metricsCount={analysisSummary} />
-
             <div className={styles['section-title']}>
               <span>Detalhes da requisição</span>
             </div>
@@ -223,6 +260,9 @@ const Repo = () => {
             </div>
           </div>
       }
+      <Popup open={open} onClose={closeModal} >
+        <ChangeRepoModal closeModal={closeModal} refreshAnalysis={refreshAnalysis} datasetId={router.query.datasetId} n={+router.query.near} />
+      </Popup>
     </>
   )
 }

@@ -53,7 +53,7 @@ const Datasets = () => {
     Object.keys(response.data)
 
     setDatasetRepoCount(response.data['repository_count'])
-    setNValue(response.data['repository_count'] / 10)
+    setNValue(Math.round(response.data['repository_count'] / 10))
     setRepos(response.data['repositories'])
     setIsLoading(false)
   }
@@ -78,7 +78,7 @@ const Datasets = () => {
           ? <div className={styles['repo-list-top']}>
             <div className={styles['dataset-n']}>
               <div className={styles['inputs-container']} style={{ paddingRight: '20px' }}>
-                <label htmlFor='dataset' className={styles.labels}>Dataset </label>
+                {/* <label htmlFor='dataset' className={styles.labels}>Dataset </label> */}
                 <select
                   className={styles.inputs}
                   id='dataset'
@@ -87,35 +87,15 @@ const Datasets = () => {
                     setSelectedDataset(datasetsIdList[Number(e.target.value)])
                     loadRepos(datasetsIdList[Number(e.target.value)])
                   }}
-                  style={{ padding: '7px 5px' }}
+                  style={{ padding: '7px 5px', width: 450 }}
                 >
                   {datasetsOptions}
                 </select>
               </div>
-              <div className={styles['inputs-container']}>
-                <label htmlFor='nValue' className={styles.labels}>Quantidade de repositórios próximos </label>
-                <input
-                  className={styles.inputs}
-                  type='number'
-                  id='nValue'
-                  name='nValue'
-                  min='1'
-                  max={datasetRepoCount - 2}
-                  defaultValue={nValue}
-                  onChange={(e) => {
-                    const value = Number(e.target.value)
-                    if (value > (datasetRepoCount - 2)) {
-                      e.target.value = Number(datasetRepoCount - 2).toString()
-                    }
-                    setNValue(value)
-                  }}
-                  style={{ width: '100px' }}
-                />
-              </div>
             </div>
             <div className={styles['inputs-container']}>
-              <label htmlFor='search' className={styles.labels}>Filtrar </label>
-              <input type='text' id='search' placeholder='Nome do repositório' className={styles.inputs} />
+              {/* <label htmlFor='search' className={styles.labels}>Filtrar </label> */}
+              <input type='text' id='search' placeholder='Filtrar repositórios deste dataset...' className={styles.inputs} style={{ width: 300 }} />
             </div>
           </div>
           : (

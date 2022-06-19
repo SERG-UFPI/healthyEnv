@@ -1,0 +1,24 @@
+.link {
+  font-size: 16px;
+  width: fit-content;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding-top: 4px;
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+
+.title {
+  font-weight: bold;
+  padding-bottom: 2px;
+}
+
+.chip-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  /* padding-top: 4px; */
+}
