@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowRightArrowLeft, faArrowsRotate } from "@fortawesome/free-solid-svg-icons"
 import Popup from "reactjs-popup"
 import ChangeRepoModal from "../../../../components/ChangeRepoModal"
+import ChangeNModal from "../../../../components/ChangeNModal"
 
 enum MetricSituation {
   Ok = 'OK',
@@ -35,7 +36,9 @@ const Repo = () => {
 
   // Modal
   const [open, setOpen] = useState(false)
-  const closeModal = () => setOpen(false)
+  const closeModalRepo = () => setOpen(false)
+  const [openN, setOpenN] = useState(false)
+  const closeModalN = () => setOpenN(false)
 
   useEffect(() => {
     if (!router.isReady) return
@@ -186,30 +189,7 @@ const Repo = () => {
                       Trocar repositório
                     </span>
                   </div>
-
-                  <div className={styles['change-algorithm-button']} >
-                    {/* <span style={{ paddingRight: 10 }}>Semelhantes: </span>
-                    <div>
-                      <input
-                        style={{
-                          width: 60,
-                          marginRight: 10
-                        }}
-                        type='number'
-                        id='nValue'
-                        name='nValue'
-                        min='1'
-                        //TODO: max={datasetRepoCount - 2}
-                        defaultValue={router.query.near}
-                        onChange={(e) => {
-                          const value = Number(e.target.value)
-                          // if (value > (datasetRepoCount - 2)) {
-                          //   e.target.value = Number(datasetRepoCount - 2).toString()
-                          // }
-                          setNValue(value)
-                        }}
-                      />
-                    </div> */}
+                  <div className={styles['change-algorithm-button']} onClick={() => setOpenN(true)}>
                     <FontAwesomeIcon icon={faArrowsRotate} />
                     <span className={styles['button-label']}>
                       Alterar quantidade de semelhantes
@@ -260,8 +240,11 @@ const Repo = () => {
             </div>
           </div>
       }
-      <Popup open={open} onClose={closeModal} >
-        <ChangeRepoModal closeModal={closeModal} refreshAnalysis={refreshAnalysis} datasetId={router.query.datasetId} n={+router.query.near} />
+      <Popup open={open} onClose={closeModalRepo} >
+        <ChangeRepoModal closeModal={closeModalRepo} refreshAnalysis={refreshAnalysis} datasetId={router.query.datasetId} n={+router.query.near} />
+      </Popup>
+      <Popup open={openN} onClose={closeModalN} >
+        <ChangeNModal closeModal={closeModalN} refreshAnalysis={refreshAnalysis} currNValue={+router.query.near} datasetCount={referenceReposInfo.length} datasetId={router.query.datasetId} repoName={router.query.repo} />
       </Popup>
     </>
   )

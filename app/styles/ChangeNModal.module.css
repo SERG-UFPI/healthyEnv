@@ -1,0 +1,94 @@
+@keyframes anvil {
+  0% {
+    transform: scale(1) translateY(0px);
+    opacity: 0;
+    box-shadow: 0 0 0 rgba(241, 241, 241, 0);
+  }
+  1% {
+    transform: scale(0.96) translateY(10px);
+    opacity: 0;
+    box-shadow: 0 0 0 rgba(241, 241, 241, 0);
+  }
+  100% {
+    transform: scale(1) translateY(0px);
+    opacity: 1;
+    box-shadow: 0 0 500px rgba(241, 241, 241, 0);
+  }
+}
+.popupContent {
+  animation: anvil 0.3s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+  -webkit-animation: anvil 0.3s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+}
+
+.changeNModal {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  background-color: #353535a9;
+  align-items: center;
+  justify-content: center;
+}
+
+.popupContent {
+  width: 90%;
+  /* height: 40%; */
+  max-width: 400px;
+  background-color: #fafafa;
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  width: 100%;
+}
+
+.title {
+  font-size: 18;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+.input {
+  width: 90px;
+  margin-top: 80px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid black;
+  background-color: #ebebeb;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.closeButton {
+  width: fit-content;
+  position: absolute;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 3px;
+  border: 1px solid #dadada;
+}
+
+.button {
+  margin-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 38px;
+  background-color: #111111;
+  color: #ffffff;
+  border-radius: 20px;
+  display: flex;
+  padding-top: 8px;
+  justify-content: center;
+  cursor: pointer;
+}
