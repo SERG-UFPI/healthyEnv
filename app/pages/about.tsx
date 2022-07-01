@@ -1,9 +1,13 @@
+import Head from "next/head"
 import Header from "../components/Header"
 import styles from '../styles/About.module.css'
 
 const About = () => {
   return (
     <>
+      <Head>
+        <title>HealthyEnv - Sobre</title>
+      </Head>
       <Header selectedIndex={3} />
       <div className={styles.container}>
         <h1>Sobre o healthyEnv</h1>

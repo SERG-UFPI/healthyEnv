@@ -6,6 +6,7 @@ import RequestListItem from '../../components/RequestListItem'
 import styles from '../../styles/RequestsByEmail.module.css'
 import { Dots } from 'react-activity'
 import "react-activity/dist/Dots.css";
+import Head from 'next/head'
 
 const RequestsByEmail = () => {
   const router = useRouter()
@@ -39,6 +40,9 @@ const RequestsByEmail = () => {
 
   return (
     <>
+      <Head>
+        <title>{`HealthyEnv - Solicitações de ${router.query.email}`}</title>
+      </Head>
       <Header selectedIndex={2} />
       <div className={styles.requestByEmail}>
         <div className={styles.info}>

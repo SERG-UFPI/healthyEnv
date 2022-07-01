@@ -5,6 +5,7 @@ import RepoListItem from '../components/RepoListItem'
 import Header from '../components/Header'
 import { Dots } from 'react-activity'
 import "react-activity/dist/Dots.css";
+import Head from 'next/head'
 
 const Datasets = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -60,6 +61,9 @@ const Datasets = () => {
 
   return (
     <>
+      <Head>
+        <title>HealthyEnv - Datasets e análise</title>
+      </Head>
       <Header selectedIndex={1} />
       <div className={styles.container}>
         <span className={styles.title}>

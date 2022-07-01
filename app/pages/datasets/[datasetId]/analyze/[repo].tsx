@@ -16,6 +16,7 @@ import { faArrowRightArrowLeft, faArrowsRotate } from "@fortawesome/free-solid-s
 import Popup from "reactjs-popup"
 import ChangeRepoModal from "../../../../components/ChangeRepoModal"
 import ChangeNModal from "../../../../components/ChangeNModal"
+import Head from "next/head"
 
 enum MetricSituation {
   Ok = 'OK',
@@ -152,6 +153,9 @@ const Repo = () => {
 
   return (
     <>
+      <Head>
+        <title>{`HealthyEnv - Análise de ${router.query.repo}`} </title>
+      </Head>
       <Header selectedIndex={1} />
       {
         isLoading

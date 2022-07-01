@@ -1,10 +1,14 @@
 import Header from '../components/Header'
 import styles from '../styles/Home.module.css'
 import Link from 'next/link'
+import Head from 'next/head'
 
 export default function Home() {
   return (
     <>
+      <Head>
+        <title>HealthyEnv - Ferramenta para avaliação de repositórios de software</title>
+      </Head>
       <Header selectedIndex={0} />
       <div className={styles.container}>
         <div className={styles.presentation}>

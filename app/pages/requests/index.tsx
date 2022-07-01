@@ -1,4 +1,5 @@
 import axios from "axios";
+import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Header from "../../components/Header";
@@ -62,6 +63,9 @@ const Requests = () => {
 
   return (
     <>
+      <Head>
+        <title>HealthyEnv - Solicitar inclusão de repositório</title>
+      </Head>
       <Header selectedIndex={2} />
       <div className={styles.requests}>
         <div className={styles.submission}>
