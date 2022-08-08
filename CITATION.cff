@@ -1,0 +1,50 @@
+cff-version: 1.2.0
+message: "If you use this tool in your work, please cite it as below."
+authors:
+- family-names: "Winter"
+  given-names: "Diego"
+  orcid: "https://orcid.org/0000-0002-7980-5228"
+  email: diegowinter@ufpi.edu.br
+  affiliation: Federal University of Piaui (UFPI)
+- family-names: "Avelino"
+  given-names: "Guilherme"
+  orcid: "https://orcid.org/0000-0002-8203-0638"
+  email: gaa@ufpi.edu.br
+  affiliation: Federal University of Piaui (UFPI)
+title: "HealthyEnv"
+version: 1.0.0
+# doi: 10.1145/3555228.3555279
+date-released: 2022-08-08
+url: "https://github.com/SERG-UFPI/healthyEnv"
+keywords: 
+  - software repository mining
+  - machine learning
+  - software quality
+preferred-citation:
+  type: conference-paper
+  authors:
+  - family-names: "Winter"
+    given-names: "Diego"
+    orcid: "https://orcid.org/0000-0002-7980-5228"
+    email: diegowinter@ufpi.edu.br
+    affiliation: Federal University of Piaui (UFPI)
+  - family-names: "Avelino"
+    given-names: "Guilherme"
+    orcid: "https://orcid.org/0000-0002-8203-0638"
+    email: gaa@ufpi.edu.br
+    affiliation: Federal University of Piaui (UFPI)
+  - family-names: "Miranda"
+    given-names: "Charles"
+    orcid: "https://orcid.org/0000-0001-5455-4437"
+    email: charlesmiranda@ufpi.edu.br
+    affiliation: Federal University of Piaui (UFPI)
+  doi: "10.1145/3555228.3555279"
+#   journal: ""
+  collection-title: "XXXVI Brazilian Symposium on Software Engineering (SBES 2022)"
+#   month: 9
+#   start: 1 # First page number
+#   end: 10 # Last page number
+  title: "HealthyEnv: a tool to assist in health assessment of software repositories"
+#   issue: 1
+#   volume: 1
+  year: 2022
