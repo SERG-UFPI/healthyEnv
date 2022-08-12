@@ -93,6 +93,7 @@ const Repo = () => {
             const median = getMedian(valuesArray)
             const firstQuartile = getFirstQuartile(valuesArray)
             const thirdQuartile = getThirdQuartile(valuesArray)
+            // const { median, firstQuartile, thirdQuartile } = funcaoQueRetornaTodosNumObjecto(valuesArray);
 
             let metricSituation: MetricSituation
             if ((resultsResponse.selected['metrics'][metricKey] > median ? true : false) == metricsInfoResponse.metrics[metricKey]['is_upper']) {
@@ -220,10 +221,11 @@ const Repo = () => {
               <MetricsHint />
             </div>
             {
-              metricsData.map((metricCategory: object) => {
+              metricsData.map((metricCategory: any) => {
                 return <PlotGrid
                   key={metricCategory['id']}
                   data={metricCategory}
+
                 />
               })
             }

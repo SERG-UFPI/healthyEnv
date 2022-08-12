@@ -1,12 +1,14 @@
-const RepoInfos = (
-  { language,
-    loc,
-    stars,
-    forks,
-    openIssues,
-    contributors,
-    commits, }
-) => {
+interface RepoInfosProps {
+  language: string
+  loc: string
+  stars: string
+  forks: string
+  openIssues: string
+  contributors: string
+  commits: string
+}
+
+const RepoInfos = (props: RepoInfosProps) => {
   return (
     <div style={{
       display: 'flex',
@@ -14,13 +16,13 @@ const RepoInfos = (
       flexWrap: 'wrap',
       justifyContent: 'space-between',
     }}>
-      <RepoInfosItem title='Linguagem' content={language} />
-      <RepoInfosItem title='LOC' content={loc} />
-      <RepoInfosItem title='Estrelas' content={stars} />
-      <RepoInfosItem title='Forks' content={forks} />
-      <RepoInfosItem title='Issues abertas' content={openIssues} />
-      <RepoInfosItem title='Contribuidores' content={contributors} />
-      <RepoInfosItem title='Commits' content={commits} />
+      <RepoInfosItem title='Linguagem' content={props.language} />
+      <RepoInfosItem title='LOC' content={props.loc} />
+      <RepoInfosItem title='Estrelas' content={props.stars} />
+      <RepoInfosItem title='Forks' content={props.forks} />
+      <RepoInfosItem title='Issues abertas' content={props.openIssues} />
+      <RepoInfosItem title='Contribuidores' content={props.contributors} />
+      <RepoInfosItem title='Commits' content={props.commits} />
     </div>
   )
 

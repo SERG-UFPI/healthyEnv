@@ -1,12 +1,14 @@
 import MetricPlot from "./MetricPlot"
 import useWindowDimensions from "../utils/useWindowDimensions"
 import styles from '../styles/PlotGrid.module.css'
+import { FC } from "react"
 
 interface PlotGridProps {
-  data: object
+  metrics: any
+  workingGroup
 }
 
-const PlotGrid = (props: PlotGridProps) => {
+const PlotGrid: FC<{ data: PlotGridProps }> = ({ data }) => {
   const { width } = useWindowDimensions()
 
   let pagePadding = width > 1280 ? ((width - 1280) / 2) + 16 : 16
@@ -14,9 +16,10 @@ const PlotGrid = (props: PlotGridProps) => {
   let plotWidth = ((width - (pagePadding * 2)) / maxPlotsPerRow);
   var style = { '--width': `${plotWidth - 10}px` } as React.CSSProperties
 
+
   const generatePlots = () => {
     const plots = []
-    props.data['metrics'].forEach((metric: object) => {
+    data.metrics.forEach((metric: object) => {
       plots.push(
         <MetricPlot
           key={metric['id'] + Math.random()}
@@ -38,10 +41,10 @@ const PlotGrid = (props: PlotGridProps) => {
     <div>{
       <div className={styles.metricCategory}>
         <span className={styles.workingGroup}>
-          {props.data['working_group']}
+          {data['working_group']}
         </span>
         <span className={styles.description}>
-          {props.data['description']}
+          {data['description']}
         </span>
       </div>
     }
