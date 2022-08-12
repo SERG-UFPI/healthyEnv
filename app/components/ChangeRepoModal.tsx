@@ -4,6 +4,7 @@ import styles from '../styles/ChangeRepoModal.module.css'
 import RepoListItemSimple from "./RepoListItemSimple";
 import { Dots } from 'react-activity'
 import "react-activity/dist/Dots.css";
+import Constants from "../utils/constants";
 
 interface ChangeRepoModalProps {
   closeModal: Function
@@ -25,19 +26,21 @@ const ChangeRepoModal = (props: ChangeRepoModalProps) => {
 
   const loadRepos = async (dataset_id: string | string[]) => {
     setIsLoading(true)
-    const response = await axios.get(`https://healthyenv.herokuapp.com/datasets/${dataset_id}/repos`)
+    const response = await axios.get(`${Constants.baseUrl}/datasets/${dataset_id}/repos`)
     const reposList = []
-    Object.keys(response.data.repositories).forEach((repoKey: string) => {
+    
+    // Object.keys(response.data.repositories).forEach((repoKey: string) => {
+    response.data.items.forEach((repo) => {
       reposList.push({
-        id: repoKey,
-        name: response.data['repositories'][repoKey]['name'],
-        language: response.data['repositories'][repoKey]['language'],
-        loc: response.data['repositories'][repoKey]['loc'],
-        stars: response.data['repositories'][repoKey]['stars'],
-        forks: response.data['repositories'][repoKey]['forks'],
-        open_issues: response.data['repositories'][repoKey]['open_issues'],
-        contributors: response.data['repositories'][repoKey]['contributors'],
-        commits: response.data['repositories'][repoKey]['commits'],
+        id: repo['id'],
+        name: repo['name'],
+        language: repo['language'],
+        loc: repo['loc'],
+        stars: repo['stars'],
+        forks: repo['forks'],
+        open_issues: repo['open_issues'],
+        contributors: repo['contributors'],
+        commits: repo['commits'],
       })
     })
     setDatasetRepoCount(response.data['repository_count'])

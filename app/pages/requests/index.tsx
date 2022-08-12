@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import styles from '../../styles/Request.module.css'
+import Constants from "../../utils/constants";
 
 const Requests = () => {
 
@@ -24,15 +25,15 @@ const Requests = () => {
     loadDatasets()
   }, [])
 
-  const loadDatasets = async () => {
+  async function loadDatasets() {
     setIsLoadingDatasets(true)
-    const response = await axios.get('https://healthyenv.herokuapp.com/datasets')
+    const response = await axios.get(`${Constants.baseUrl}/datasets`)
     const optionList = []
-    Object.keys(response.data['datasets']).forEach((key: string, index: number) => {
-      datasetsIdList.push(key)
+    response.data.items.forEach((dataset) => {
+      datasetsIdList.push(dataset.id)
       optionList.push(
-        <option value={key} key={key}>
-          {Buffer.from(response.data['datasets'][key]['name'], 'utf-8').toString()}
+        <option value={dataset.id} key={dataset.id}>
+          {Buffer.from(dataset['name'], 'utf-8').toString()}
         </option>
       )
     })
@@ -50,7 +51,7 @@ const Requests = () => {
     }
 
     const response = await axios.post(
-      `https://healthyenv.herokuapp.com/datasets/${selectedDataset}/request`,
+      `${Constants.baseUrl}/datasets/${selectedDataset}/request`,
       formData
     )
     if (response.status >= 200) {

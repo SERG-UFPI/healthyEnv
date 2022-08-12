@@ -6,38 +6,42 @@ import Header from '../components/Header'
 import { Dots } from 'react-activity'
 import "react-activity/dist/Dots.css";
 import Head from 'next/head'
+import Constants from '../utils/constants'
 
 const Datasets = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [isLoadingDatasets, setIsLoadingDatasets] = useState(true)
-  const [repos, setRepos] = useState({})
-  const [datasets, setDatasets] = useState({})
+  const [repos, setRepos] = useState([])
   const [datasetsOptions, setDatasetsOptions] = useState([])
-  const [datasetRepoCount, setDatasetRepoCount] = useState(0)
   const [selectedDataset, setSelectedDataset] = useState()
   const [nValue, setNValue] = useState(1)
+  // const [datasets, setDatasets] = useState({})
+  // const [datasetRepoCount, setDatasetRepoCount] = useState(0)
+
   const datasetsIdList = []
 
   useEffect(() => {
     loadDatasets().then(() => loadRepos(datasetsIdList[0]))
   }, [])
 
-  const loadDatasets = async () => {
+  async function loadDatasets() {
     setIsLoadingDatasets(true)
-    const response = await axios.get('https://healthyenv.herokuapp.com/datasets')
-    setDatasets(response.data)
+    const response = await axios.get(`${Constants.baseUrl}/datasets`)
+    // setDatasets(response.data)
     const optionList = []
-    Object.keys(response.data['datasets']).forEach((key: string, index: number) => {
-      datasetsIdList.push(key)
+    
+    response.data.items.forEach((dataset: object, index: number) => {
+      datasetsIdList.push(dataset['id'])
       if (index == 0) {
-        setDatasetRepoCount(response.data['datasets'][key]['repo_count'])
+        // setDatasetRepoCount(dataset['repo_count'])
       }
       optionList.push(
-        <option value={key} key={key}>
-          {Buffer.from(response.data['datasets'][key]['name'], 'utf-8').toString()}
+        <option value={dataset['id']} key={dataset['id']}>
+          {Buffer.from(dataset['name'], 'utf-8').toString()}
         </option>
       )
     })
+
     setSelectedDataset(datasetsIdList[0])
     setDatasetsOptions([...optionList])
     setIsLoadingDatasets(false)
@@ -47,15 +51,13 @@ const Datasets = () => {
     return nValue
   }
 
-  const loadRepos = async (dataset_id: string) => {
+  async function loadRepos(dataset_id: string) {
     setIsLoading(true)
-    const response = await axios.get(`https://healthyenv.herokuapp.com/datasets/${dataset_id}/repos`)
+    const response = await axios.get(`${Constants.baseUrl}/datasets/${dataset_id}/repos`)
 
-    Object.keys(response.data)
-
-    setDatasetRepoCount(response.data['repository_count'])
-    setNValue(Math.round(response.data['repository_count'] / 10))
-    setRepos(response.data['repositories'])
+    // setDatasetRepoCount(response.data['total_count'])
+    setNValue(Math.round(response.data['total_count'] / 10))
+    setRepos(response.data.items)
     setIsLoading(false)
   }
 
@@ -113,8 +115,8 @@ const Datasets = () => {
         }
         {!isLoading
           ? <div className={styles['repo-list']}>
-            {Object.keys(repos).map((key, index) => {
-              return (<RepoListItem key={repos[key]['name']} repo={repos[key]} datasetId={selectedDataset} getNValue={getNValue} />)
+            {repos.map((repo, index) => {
+              return (<RepoListItem key={repo['name']} repo={repo} datasetId={selectedDataset} getNValue={getNValue} />)
             })}
           </div>
           : (

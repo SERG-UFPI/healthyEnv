@@ -7,31 +7,32 @@ import styles from '../../styles/RequestsByEmail.module.css'
 import { Dots } from 'react-activity'
 import "react-activity/dist/Dots.css";
 import Head from 'next/head'
+import Constants from '../../utils/constants'
 
 const RequestsByEmail = () => {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(true)
-  const [requests, setRequests] = useState({})
+  const [requests, setRequests] = useState([])
 
   useEffect(() => {
     if (!router.isReady) return
     loadRequests()
   }, [router.isReady])
 
-  const loadRequests = async () => {
+  async function loadRequests() {
     setIsLoading(true)
-    const response = await axios.get(`https://healthyenv.herokuapp.com/requests/${router.query.email}`)
+    const response = await axios.get(`${Constants.baseUrl}/requests/${router.query.email}`)
     if (response.status == 200) {
-      setRequests(response.data['requests'])
+      setRequests(response.data['items'])
     }
     setIsLoading(false)
   }
 
   const renderRequests = () => {
     const requestsList = []
-    Object.keys(requests).forEach((key: string, index: number) => {
+    requests.forEach((request) => {
       requestsList.push(
-        <RequestListItem key={key} name={requests[key]['name']} email={requests[key]['email']} url={requests[key]['repo_url']} status={requests[key]['status']} />
+        <RequestListItem key={request.id} name={request['name']} email={request['email']} url={request['repo_url']} status={request['status']} />
       )
     })
 

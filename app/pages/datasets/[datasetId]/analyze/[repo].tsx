@@ -17,6 +17,7 @@ import Popup from "reactjs-popup"
 import ChangeRepoModal from "../../../../components/ChangeRepoModal"
 import ChangeNModal from "../../../../components/ChangeNModal"
 import Head from "next/head"
+import Constants from "../../../../utils/constants"
 
 enum MetricSituation {
   Ok = 'OK',
@@ -47,13 +48,13 @@ const Repo = () => {
   }, [router.isReady])
 
   // Load a repo's analysis
-  const loadRepo = async (datasetId: string | string[], repoName: string | string[], n: number) => {
+  async function loadRepo(datasetId: string | string[], repoName: string | string[], n: number) {
     setIsLoading(true)
 
     // API URLs
-    const urlResults = `https://healthyenv.herokuapp.com/datasets/${datasetId}/cluster/${repoName}?near_n=${n}`
-    const urlMetricsInfo = `https://healthyenv.herokuapp.com/metrics`
-    const urlMetricsCategories = `https://healthyenv.herokuapp.com/metrics/categories`
+    const urlResults = `${Constants.baseUrl}/datasets/${datasetId}/cluster/${repoName}?near_n=${n}`
+    const urlMetricsInfo = `${Constants.baseUrl}/metrics`
+    const urlMetricsCategories = `${Constants.baseUrl}/metrics/categories`
 
     // Make all requests and update states with the received data
     await Promise.all([axios.get(urlResults), axios.get(urlMetricsInfo), axios.get(urlMetricsCategories)]).then((values) => {
@@ -71,37 +72,39 @@ const Repo = () => {
       // Make an list with all necessary data to perform an analysis
       const metricsData = []
       let okMetricsCount = 0, reasonableMetricsCount = 0, badMetricsCount = 0
-      Object.keys(metricsCategoriesResponse['metric_categories']).forEach(categoryKey => {
+
+      metricsCategoriesResponse.items.forEach(category => {
         const metricInfo = []
-        Object.keys(metricsInfoResponse.metrics).forEach(metricKey => {
-          if (categoryKey === metricsInfoResponse.metrics[metricKey]['category_id']) {
+
+        metricsInfoResponse.items.forEach(metric => {
+          if (category.id === metric['category_id']) {
             const refMetricsValues = [], valuesArray = []
             const selected = {
               name: resultsResponse['selected']['name'],
-              value: resultsResponse['selected']['metrics'][metricKey]
+              value: resultsResponse['selected']['metrics'][metric['id']]
             }
             resultsResponse['repos'].forEach((repo: any) => {
               if (repo.near) {
                 refMetricsValues.push({
                   name: repo.name,
-                  value: repo.metrics[metricKey]
+                  value: repo.metrics[metric['id']]
                 })
-                valuesArray.push(repo.metrics[metricKey])
+                valuesArray.push(repo.metrics[metric['id']])
               }
             })
 
             const median = getMedian(valuesArray)
             const firstQuartile = getFirstQuartile(valuesArray)
             const thirdQuartile = getThirdQuartile(valuesArray)
-            // const { median, firstQuartile, thirdQuartile } = funcaoQueRetornaTodosNumObjecto(valuesArray);
+            // TODO: const { median, firstQuartile, thirdQuartile } = funcaoQueRetornaTodosNumObjecto(valuesArray);
 
             let metricSituation: MetricSituation
-            if ((resultsResponse.selected['metrics'][metricKey] > median ? true : false) == metricsInfoResponse.metrics[metricKey]['is_upper']) {
+            if ((resultsResponse.selected['metrics'][metric['id']] > median ? true : false) == metric['is_upper']) {
               metricSituation = MetricSituation.Ok
               okMetricsCount++
             } else {
-              if (metricsInfoResponse.metrics[metricKey]['is_upper']) {
-                if (resultsResponse.selected['metrics'][metricKey] >= firstQuartile) {
+              if (metric['id']['is_upper']) {
+                if (resultsResponse.selected['metrics'][metric['id']] >= firstQuartile) {
                   metricSituation = MetricSituation.Reasonable
                   reasonableMetricsCount++
                 } else {
@@ -109,7 +112,7 @@ const Repo = () => {
                   badMetricsCount++
                 }
               } else {
-                if (resultsResponse.selected['metrics'][metricKey] <= thirdQuartile) {
+                if (resultsResponse.selected['metrics'][metric['id']] <= thirdQuartile) {
                   metricSituation = MetricSituation.Reasonable
                   reasonableMetricsCount++
                 } else {
@@ -118,13 +121,13 @@ const Repo = () => {
                 }
               }
             }
-
+            
             metricInfo.push({
-              id: metricKey,
-              name: metricsInfoResponse.metrics[metricKey]['name'],
-              description: metricsInfoResponse.metrics[metricKey]['description'],
-              is_upper: metricsInfoResponse.metrics[metricKey]['is_upper'],
-              category_id: metricsInfoResponse.metrics[metricKey]['category_id'],
+              id: metric['id'],
+              name: metric['name'],
+              description: metric['description'],
+              is_upper: metric['is_upper'],
+              category_id: metric['category_id'],
               values: {
                 selected: selected,
                 reference: refMetricsValues,
@@ -134,9 +137,9 @@ const Repo = () => {
           }
         })
         if (metricInfo.length > 0) metricsData.push({
-          id: categoryKey,
-          working_group: metricsCategoriesResponse.metric_categories[categoryKey]['working_group'],
-          description: metricsCategoriesResponse.metric_categories[categoryKey]['description'],
+          id: category.id,
+          working_group: category['working_group'],
+          description: category['description'],
           metrics: metricInfo,
         })
       })
