@@ -9,6 +9,7 @@ from clustering.cluster import get_cluster
 from dotenv import load_dotenv
 from db import db
 from nanoid import generate
+from waitress import serve
 
 # Flask settings
 from flask import Flask, Response, request
@@ -159,4 +160,5 @@ def metric_categories():
 
 
 if __name__ == '__main__':
-  app.run(debug=True)
+  # app.run(debug=True)
+  serve(app, host='0.0.0.0', port=8000)
