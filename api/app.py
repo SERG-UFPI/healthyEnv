@@ -1,5 +1,6 @@
 import os
 import json
+from utils.error_responses import ErrorResponses
 from model.dataset import DatasetModel
 from model.metric import MetricModel
 from model.repository import RepositoryModel
@@ -47,35 +48,23 @@ def create_db():
 def cluters(dataset_id, repo):
   # Check if the provided dataset id matches an existent dataset
   if not DatasetModel.find_dataset(dataset_id):
-    return Response(
-      json.dumps({
-        'message': 'Bad request - non-existent dataset', 
-        'description': 'The provided dataset ID does not match any existing dataset.'
-      }, indent=2), status=400, mimetype='application/json')
+    return ErrorResponses.non_existent_dataset
+
   # Check if the provided repository name matches an existent repo
   if not RepositoryModel.find_repository(dataset_id, repo):
-    return Response(
-      json.dumps({
-        'message': 'Bad request - repository not found', 
-        'description': 'You must provide an existent repository from ' + dataset_id + ' dataset.' 
-      }, indent=2), status=400, mimetype='application/json')
+    return ErrorResponses.repo_not_found
+
   # Check if a n value was provided
   if not request.args.get('near_n'):
-    return Response(
-      json.dumps({
-        'message': 'Bad request - missing near_n', 
-        'description': "You must provide an amount for near repositories as a query param called 'near_n'."
-      }, indent=2), status=400, mimetype='application/json')
+    return ErrorResponses.missing_n
+
   near_n = request.args['near_n'] # Save n value to a variable
   repos = RepositoryModel.get_dataset_repos(dataset_id)
   repos_count = len(repos)
+  
   # Check if the provided n value is valid
   if (int(near_n) > (repos_count -1)) or (int(near_n) <= 0):
-    return Response(
-      json.dumps({
-        'message': "Bad request - invalid 'near_n'", 
-        'description': 'The amount of near repositories must be less than the dataset size, which is ' + str(repos_count) + ' and more than 0.'
-      }, indent=2), status=400, mimetype='application/json')
+    return ErrorResponses.invalid_n(repos_count)
   
   # If everything is OK, it continues the process
   results = get_cluster(repos, dataset_id, repo, int(near_n))
@@ -91,11 +80,7 @@ def dataset_repos(dataset_id):
       json.dumps(RepositoryModel.get_dataset_repos_json(dataset_id), indent=2),
       status=200, mimetype='application/json')
   else:
-    return Response(
-      json.dumps({
-        'message': 'Bad request - non-existent dataset', 
-        'description': 'The provided dataset ID does not match any existing dataset.'
-      }, indent=2), status=400, mimetype='application/json')
+    return ErrorResponses.non_existent_dataset
 
 
 # Route to get all available datasets
@@ -120,11 +105,7 @@ def analysis_request(dataset_id: str):
   # Check if the provided dataset id matches an existent dataset
   if request.method == 'POST':
     if not DatasetModel.find_dataset(dataset_id):
-      return Response(
-        json.dumps({
-          'message': 'Bad request - non-existent dataset', 
-          'description': 'The provided dataset ID does not match any existing dataset.'
-        }, indent=2), status=400, mimetype='application/json')
+      return ErrorResponses.non_existent_dataset
     
     # Get the data and save to database
     data = request.get_json(force=True)
@@ -132,11 +113,7 @@ def analysis_request(dataset_id: str):
       analysis_request = AnalysisRequestModel(generate(size=10), dataset_id, data['name'], data['email'], data['repo_url'])
       analysis_request.create_request()
     except KeyError:
-      return Response(
-        json.dumps({
-          'message': 'Bad request - missing information', 
-          'description': "The body must provide 'name', 'email' and 'repo_url' values."
-        }, indent=2), status=400, mimetype='application/json')
+      return ErrorResponses.missing_info
 
     return Response(
       json.dumps(analysis_request.json(), indent=2),

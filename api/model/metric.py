@@ -36,15 +36,16 @@ class MetricModel(db.Model):
     metrics = cls.query.all()
 
     json = {
-      'metric_count': len(metrics),
-      'metrics': {}
+      'total_count': len(metrics),
+      'items': []
     }
     for metric in metrics:
-      json['metrics'][metric.id] = {
+      json['items'].append({
+        'id': metric.id,
         'name': metric.name,
         'description': metric.description,
         'is_upper': metric.is_upper,
         'category_id': metric.category_id,
-      }
+      })
 
     return json

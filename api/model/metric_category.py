@@ -30,13 +30,14 @@ class MetricCategory(db.Model):
     metric_categories = cls.query.all()
 
     json = {
-      'metric_categories_count': len(metric_categories),
-      'metric_categories': {}
+      'total_count': len(metric_categories),
+      'items': []
     }
     for category in metric_categories:
-      json['metric_categories'][category.id] = {
+      json['items'].append({
+        'id': category.id,
         'working_group': category.working_group,
         'description': category.description,
-      }
+      })
 
     return json

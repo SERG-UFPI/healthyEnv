@@ -51,18 +51,19 @@ class AnalysisRequestModel(db.Model):
     requests = cls.query.filter_by(email=email).all()
 
     json = {
-      'requests_count': len(requests),
-      'requests': {}
+      'total_count': len(requests),
+      'items': []
     }
 
     for request in requests:
-      json['requests'][request.id] = {
-        'id_dataset': request.id_target_dataset,
+      json['items'].append({
+        'id': request.id,
+        'dataset_id': request.id_target_dataset,
         'name': request.name,
         'email': request.email,
         'repo_url': request.repo_url,
         'status': str(request.status).split('.')[1],
-      }
+      })
     
     return json
     

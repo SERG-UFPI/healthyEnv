@@ -48,12 +48,13 @@ class RepositoryModel(db.Model):
     repositories = cls.query.filter_by(dataset_id=dataset_id)
 
     json = {
-      'repository_count': repositories.count(),
-      'repositories': {},
+      'total_count': repositories.count(),
+      'items': [],
     }
 
     for repository in repositories:
-      json['repositories'][repository.id] = {
+      json['items'].append({
+        'id': repository.id,
         'name': repository.name,
         'language': repository.language,
         'loc': repository.loc,
@@ -62,7 +63,7 @@ class RepositoryModel(db.Model):
         'open_issues': repository.open_issues,
         'contributors': repository.contributors,
         'commits': repository.commits,
-      }
+      })
 
     return json
 

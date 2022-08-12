@@ -34,16 +34,17 @@ class DatasetModel(db.Model):
     datasets = cls.query.all()
 
     json = {
-      'dataset_count': len(datasets),
-      'datasets': {}
+      'total_count': len(datasets),
+      'items': []
     }
     for dataset in datasets:
-      json['datasets'][dataset.id] = {
+      json['items'].append({
+        'id': dataset.id,
         'name': dataset.name,
         'description': dataset.description,
         'repo_count': dataset.repo_count,
         'author': dataset.author,
-      }
+      })
 
     return json
 
