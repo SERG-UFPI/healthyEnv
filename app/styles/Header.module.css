@@ -1,7 +1,6 @@
 .header {
   position: sticky;
   top: 0;
-  /* width: 100vw; */
   background-color: #fafafa;
   box-shadow: 0px 2px 5px rgb(176, 176, 176);
   z-index: 1;
@@ -9,13 +8,40 @@
 
 .link {
   transition: color .3s;
-  font-size: 18px;
+  font-size: 16px;
+  font-weight: bold;
   padding-right: 28px;
   color: #585858;
 }
 
 .link:hover {
   color: #111111;
+}
+
+.loginButton {
+  transition: color .3s;
+  color: #585858;
+  font-weight: bold;
+  padding: 5px 8px 8px 8px;
+  margin-right: 10px;
+}
+
+.loginButton:hover {
+  color: #111111;
+}
+
+.signupButton {
+  transition: background-color .3s;
+  color: #FFFFFF;
+  font-weight: bold;
+  background-color: #2590DA;
+  padding: 5px 8px 8px 8px;
+  border-radius: 4px;
+  margin-right: 30px;
+}
+
+.signupButton:hover {
+  background-color: #206BA0;
 }
 
 .title {
@@ -32,4 +58,10 @@
 .icon:hover {
   transition: color .3s;
   color: #111111;
+}
+
+.options {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }

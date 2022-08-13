@@ -28,31 +28,46 @@ const Header = ({ selectedIndex }: SelectedIndex) => {
               <span className={styles.title}>HealthyEnv</span>
             </a>
           </Link>
-          <Link href='/datasets'>
+          <Link href='/how-it-works'>
             <a>
               {selectedIndex == 1
-                ? <span className={styles.link} style={{ color: '#2590DA', fontWeight: 'bold' }}>Datasets e análise</span>
-                : <span className={styles.link}>Datasets e análise</span>}
+                ? <span className={styles.link} style={{ color: '#2590DA', fontWeight: 'bold' }}>How it works</span>
+                : <span className={styles.link}>How it works</span>}
             </a>
           </Link>
-          <Link href='/requests'>
+          <Link href='/api-docs'>
             <a>
               {selectedIndex == 2
-                ? <span className={styles.link} style={{ color: '#2590DA', fontWeight: 'bold' }}>Solicitar inclusão de repositório</span>
-                : <span className={styles.link}>Solicitar inclusão de repositório</span>}
+                ? <span className={styles.link} style={{ color: '#2590DA', fontWeight: 'bold' }}>API</span>
+                : <span className={styles.link}>API</span>}
+            </a>
+          </Link>
+          <Link href='/docs'>
+            <a>
+              {selectedIndex == 3
+                ? <span className={styles.link} style={{ color: '#2590DA', fontWeight: 'bold' }}>Docs</span>
+                : <span className={styles.link}>Docs</span>}
             </a>
           </Link>
           <Link href='/about'>
             <a>
-              {selectedIndex == 3
-                ? <span className={styles.link} style={{ color: '#2590DA', fontWeight: 'bold' }}>Sobre</span>
-                : <span className={styles.link}>Sobre</span>}
+              {selectedIndex == 4
+                ? <span className={styles.link} style={{ color: '#2590DA', fontWeight: 'bold' }}>About</span>
+                : <span className={styles.link}>About</span>}
             </a>
           </Link>
         </div>
-        <a href='https://github.com/SERG-UFPI/healthyEnv' className={styles.icon}>
-          <FontAwesomeIcon icon={faGithub} />
-        </a>
+        <div className={styles.options}>
+          <Link href='/about'>
+            <a><span className={styles.loginButton}>Log in</span></a>
+          </Link>
+          <Link href='/about'>
+            <a><span className={styles.signupButton}>Sign up</span></a>
+          </Link>
+          <a href='https://github.com/SERG-UFPI/healthyEnv' className={styles.icon}>
+            <FontAwesomeIcon icon={faGithub} />
+          </a>
+        </div>
       </div>
     </div>
   )
