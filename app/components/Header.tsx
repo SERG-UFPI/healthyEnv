@@ -58,10 +58,10 @@ const Header = ({ selectedIndex }: SelectedIndex) => {
           </Link>
         </div>
         <div className={styles.options}>
-          <Link href='/about'>
+          <Link href='/auth?type=login'>
             <a><span className={styles.loginButton}>Log in</span></a>
           </Link>
-          <Link href='/about'>
+          <Link href='/auth?type=signup'>
             <a><span className={styles.signupButton}>Sign up</span></a>
           </Link>
           <a href='https://github.com/SERG-UFPI/healthyEnv' className={styles.icon}>

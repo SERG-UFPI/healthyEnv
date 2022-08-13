@@ -1,0 +1,53 @@
+.auth {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1280px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.title {
+  font-size: 22px;
+  padding-bottom: 50px;
+}
+
+.subtitle {
+  padding-bottom: 10px;
+}
+
+.option {
+  transition: background-color .3s;
+  width: 300px;
+  background-color: #b8b8b8;
+  padding: 10px;
+  margin: 4px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.option:hover {
+  background-color: #888888;
+}
+
+.optionLabel {
+  padding-left: 8px;
+  padding-bottom: 2px;
+}
+
+.changeType {
+  padding: 10px;
+}
+
+.changeTypeButton {
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
