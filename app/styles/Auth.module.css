@@ -46,6 +46,13 @@
   padding: 10px;
 }
 
+.backHomeButton {
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 20px;
+}
+
 .changeTypeButton {
   font-weight: bold;
   text-decoration: underline;

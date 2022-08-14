@@ -33,7 +33,7 @@
 .signupButton {
   transition: background-color .3s;
   color: #FFFFFF;
-  font-weight: bold;
+  /* font-weight: bold; */
   background-color: #2590DA;
   padding: 5px 8px 8px 8px;
   border-radius: 4px;
