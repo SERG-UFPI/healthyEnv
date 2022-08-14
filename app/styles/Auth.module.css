@@ -51,3 +51,44 @@
   text-decoration: underline;
   cursor: pointer;
 }
+
+.emailAuthForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.emailAuthInput {
+  padding: 12px 8px;
+  border: none;
+  background-color: #ececec;
+  margin: 5px;
+  border-radius: 6px;
+}
+
+.emailAuthFormTitle {
+  font-size: 22px;
+  padding: 6px;
+}
+
+.emailAuthFormLink {
+  text-decoration: underline;
+  font-size: 14px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.emailAuthButton {
+  transition: background-color .3s;
+  margin: 10px;
+  padding: 5px 10px;
+  border: none;
+  background-color: #2590DA;
+  color: #FFFFFF;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.emailAuthButton:hover {
+  background-color: #206bA0;
+}
