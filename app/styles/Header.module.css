@@ -65,3 +65,27 @@
   flex-direction: row;
   align-items: center;
 }
+
+.authUserArea {
+  display: flex;
+  flex-direction: row;
+}
+
+.userAvatar {
+  border-radius: 15px;
+}
+
+.authUserInfo {
+  display: flex;
+  flex-direction: column;
+  padding-left: 10px;
+}
+
+.userName {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.userEmail {
+  font-size: 11px;
+}

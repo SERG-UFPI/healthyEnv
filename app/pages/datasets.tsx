@@ -7,6 +7,7 @@ import { Dots } from 'react-activity'
 import "react-activity/dist/Dots.css";
 import Head from 'next/head'
 import Constants from '../utils/constants'
+import DashboardHeader from '../components/DashboardHeader'
 
 const Datasets = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -29,7 +30,7 @@ const Datasets = () => {
     const response = await axios.get(`${Constants.baseUrl}/datasets`)
     // setDatasets(response.data)
     const optionList = []
-    
+
     response.data.items.forEach((dataset: object, index: number) => {
       datasetsIdList.push(dataset['id'])
       if (index == 0) {
@@ -66,7 +67,7 @@ const Datasets = () => {
       <Head>
         <title>HealthyEnv - Datasets e análise</title>
       </Head>
-      <Header selectedIndex={1} />
+      <DashboardHeader selectedIndex={1} />
       <div className={styles.container}>
         <span className={styles.title}>
           Datasets e análise

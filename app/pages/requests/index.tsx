@@ -2,6 +2,7 @@ import axios from "axios";
 import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import DashboardHeader from "../../components/DashboardHeader";
 import Header from "../../components/Header";
 import styles from '../../styles/Request.module.css'
 import Constants from "../../utils/constants";
@@ -67,7 +68,7 @@ const Requests = () => {
       <Head>
         <title>HealthyEnv - Solicitar inclusão de repositório</title>
       </Head>
-      <Header selectedIndex={2} />
+      <DashboardHeader selectedIndex={2} />
       <div className={styles.requests}>
         <div className={styles.submission}>
           <div className={styles.infoSubmit}>
