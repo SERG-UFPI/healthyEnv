@@ -1,5 +1,6 @@
 import os
 import json
+import requests
 from utils.error_responses import ErrorResponses
 from model.dataset import DatasetModel
 from model.metric import MetricModel
@@ -136,6 +137,27 @@ def metric_categories():
     status=200, mimetype='application/json')
 
 
+# Route to get GitHub auth token
+@app.route('/auth/github_token')
+def auth_github():
+  if not request.args.get('code'):
+    return ErrorResponses.missing_n
+
+  code = request.args['code'] # Save the code to a variable
+
+  r = requests.post(url = 'https://github.com/login/oauth/access_token', params = {
+    'code': code,
+    'client_id': os.environ['GH_CLIENT_ID'],
+    'client_secret': os.environ['GH_CLIENT_SECRET']
+  }, headers = {
+    'Accept': 'application/json'
+  })
+
+  return Response(
+    r.text,
+    status=200, mimetype='application/json')
+
+
 if __name__ == '__main__':
-  # app.run(debug=True)
-  serve(app, host='0.0.0.0', port=8000)
+  app.run(debug=True)
+  # serve(app, host='0.0.0.0', port=8000)
