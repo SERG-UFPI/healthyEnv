@@ -20,7 +20,7 @@ const RepoListItemSimple = (props: RepoListItemSimpleProps) => {
       props.closeModal()
       props.refreshAnalysis(props.datasetId, convertedRepoName, props.n)
     }}>
-      <Link href={`/datasets/${props.datasetId}/analyze/${convertedRepoName}?near=${props.n}`}>
+      <Link href={`/dashboard/datasets/${props.datasetId}/analyze/${convertedRepoName}?near=${props.n}`}>
         <a className={styles.link}>
           <div className={styles.container}>
             <span className={styles.title}>

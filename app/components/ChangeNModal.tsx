@@ -52,7 +52,7 @@ const ChangeNModal = (props: ChangeNModalProps) => {
             props.closeModal()
             props.refreshAnalysis(props.datasetId, props.repoName.toString().replace('/', '%2F'), nValue)
           }}>
-            <Link href={`/datasets/${props.datasetId}/analyze/${props.repoName.toString().replace('/', '%2F')}?near=${nValue}`}>
+            <Link href={`/dashboard/datasets/${props.datasetId}/analyze/${props.repoName.toString().replace('/', '%2F')}?near=${nValue}`}>
               <a>Confirmar</a>
             </Link>
           </div>

@@ -9,7 +9,7 @@ const RepoListItem = ({ repo, datasetId, getNValue }) => {
 
   return (
     <>
-      <Link href={`/datasets/${datasetId}/analyze/${convertedRepoName}?near=${getNValue()}`}>
+      <Link href={`/dashboard/datasets/${datasetId}/analyze/${convertedRepoName}?near=${getNValue()}`}>
         <a className={styles.link}>
           <div className={styles.container}>
             <span className={styles.title}>

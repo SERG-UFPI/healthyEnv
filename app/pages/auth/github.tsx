@@ -48,7 +48,7 @@ export default function GitHub() {
     }))
 
 
-    Router.push('/datasets')
+    Router.push('/dashboard/datasets')
   }
 
   function saveUserInfo(key: string, value: string) {

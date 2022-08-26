@@ -1,24 +1,23 @@
 import axios from "axios"
-import Header from "../../../../components/Header"
-import styles from '../../../../styles/AnalyzeRepo.module.css'
-import PlotGrid from "../../../../components/PlotGrid"
-import RepoInfos from "../../../../components/RepoInfos"
-import NearReposPlot from '../../../../components/NearReposPlot'
+import Popup from "reactjs-popup"
+import Head from "next/head"
+import Constants from "../../../../../utils/constants"
+import PlotGrid from "../../../../../components/PlotGrid"
+import RepoInfos from "../../../../../components/RepoInfos"
+import MetricsHint from "../../../../../components/MetricsHint"
+import styles from '../../../../../styles/AnalyzeRepo.module.css'
+import ChangeNModal from "../../../../../components/ChangeNModal"
+import NearReposPlot from '../../../../../components/NearReposPlot'
+import ChangeRepoModal from "../../../../../components/ChangeRepoModal"
+import DashboardHeader from "../../../../../components/DashboardHeader"
+import AnalysisSummarySection from "../../../../../components/AnalysisSummarySection"
 import { Dots } from 'react-activity'
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import { getFirstQuartile, getMedian, getThirdQuartile } from "../../../../functions/stats"
-import "react-activity/dist/Dots.css";
-import MetricsHint from "../../../../components/MetricsHint"
-import AnalysisSummarySection from "../../../../components/AnalysisSummarySection"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowRightArrowLeft, faArrowsRotate } from "@fortawesome/free-solid-svg-icons"
-import Popup from "reactjs-popup"
-import ChangeRepoModal from "../../../../components/ChangeRepoModal"
-import ChangeNModal from "../../../../components/ChangeNModal"
-import Head from "next/head"
-import Constants from "../../../../utils/constants"
-import DashboardHeader from "../../../../components/DashboardHeader"
+import { getFirstQuartile, getMedian, getThirdQuartile } from "../../../../../functions/stats"
+import "react-activity/dist/Dots.css";
 
 enum MetricSituation {
   Ok = 'OK',

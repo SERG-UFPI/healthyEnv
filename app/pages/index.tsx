@@ -30,7 +30,7 @@ export default function Home() {
             </span>
             <div className={styles.linksList}>
               <div className={styles.button}>
-                <Link href='/datasets'>
+                <Link href='/auth'>
                   <a>Get started</a>
                 </Link>
               </div>

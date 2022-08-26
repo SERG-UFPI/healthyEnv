@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import styles from '../styles/Datasets.module.css'
-import RepoListItem from '../components/RepoListItem'
-import Header from '../components/Header'
+import styles from '../../../styles/Datasets.module.css'
+import RepoListItem from '../../../components/RepoListItem'
 import { Dots } from 'react-activity'
-import "react-activity/dist/Dots.css";
 import Head from 'next/head'
-import Constants from '../utils/constants'
-import DashboardHeader from '../components/DashboardHeader'
+import Constants from '../../../utils/constants'
+import DashboardHeader from '../../../components/DashboardHeader'
+import "react-activity/dist/Dots.css";
 
 const Datasets = () => {
   const [isLoading, setIsLoading] = useState(false)
