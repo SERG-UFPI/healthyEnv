@@ -2,6 +2,8 @@ import styles from '../styles/Header.module.css'
 import Link from 'next/link'
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 interface SelectedIndex {
   selectedIndex: number
@@ -71,6 +73,11 @@ export default function DashboardHeader({ selectedIndex }: SelectedIndex) {
             <span className={styles.userName}>{userInfo['name']}</span>
             <span className={styles.userEmail}>{userInfo['email']}</span>
           </div>
+          <FontAwesomeIcon icon={faArrowRightFromBracket} style={{
+            marginLeft: '10px',
+            fontSize: 14,
+            cursor: 'pointer',
+          }} />
         </div>
       </div>
     </div >

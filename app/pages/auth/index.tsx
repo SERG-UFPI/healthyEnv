@@ -25,14 +25,14 @@ export default function Auth() {
             </div>
           </a>
         </Link>
-        <Link href={`/auth/email?type=login`}>
+        {/* <Link href={`/auth/email?type=login`}>
           <a>
             <div className={styles.option}>
               <FontAwesomeIcon icon={faEnvelope} />
               <span className={styles.optionLabel}>Email</span>
             </div>
           </a>
-        </Link>
+        </Link> */}
         <Link href='/'>
           <a className={styles.backHomeButton}>Go back to HealthyEnv home</a>
         </Link>

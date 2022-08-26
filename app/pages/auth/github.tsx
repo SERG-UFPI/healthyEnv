@@ -2,6 +2,9 @@ import Router, { useRouter } from "next/router";
 import Head from "next/head";
 import { useEffect } from "react";
 import axios from "axios";
+import { Dots } from 'react-activity'
+import "react-activity/dist/Dots.css";
+import Constants from "../../utils/constants";
 
 export default function GitHub() {
   const router = useRouter()
@@ -19,7 +22,7 @@ export default function GitHub() {
     const code = router.query.code
 
     // Autentica o usuário para obter token
-    const response = await axios.get(`http://localhost:5000/auth/github_token?code=${code}`)
+    const response = await axios.get(`${Constants.baseUrl}/auth/github_token?code=${code}`)
 
     // TODO: verifica se obteve o token com sucesso para continuar os passos seguintes
 
@@ -62,10 +65,12 @@ export default function GitHub() {
       <div style={{
         height: '100vh',
         display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-        Hold on a sec...
+        <Dots color='#000000' size={18} speed={1} animating={true} />
+        <span>Logging you in, please wait...</span>
       </div>
     </>
   );

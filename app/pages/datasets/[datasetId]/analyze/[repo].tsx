@@ -18,6 +18,7 @@ import ChangeRepoModal from "../../../../components/ChangeRepoModal"
 import ChangeNModal from "../../../../components/ChangeNModal"
 import Head from "next/head"
 import Constants from "../../../../utils/constants"
+import DashboardHeader from "../../../../components/DashboardHeader"
 
 enum MetricSituation {
   Ok = 'OK',
@@ -121,7 +122,7 @@ const Repo = () => {
                 }
               }
             }
-            
+
             metricInfo.push({
               id: metric['id'],
               name: metric['name'],
@@ -160,7 +161,7 @@ const Repo = () => {
       <Head>
         <title>{`HealthyEnv - Análise de ${router.query.repo}`} </title>
       </Head>
-      <Header selectedIndex={1} />
+      <DashboardHeader selectedIndex={1} />
       {
         isLoading
           ? <div style={{
