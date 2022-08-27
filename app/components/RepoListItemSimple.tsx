@@ -13,12 +13,12 @@ interface RepoListItemSimpleProps {
 }
 
 const RepoListItemSimple = (props: RepoListItemSimpleProps) => {
-  const convertedRepoName = props.repo['name'].split('/')[0] + '%2F' + props.repo['name'].split('/')[1]
+  const convertedRepoName = props.repo['name'].split('/')[0] + '/' + props.repo['name'].split('/')[1]
 
   return (
     <div onClick={() => {
       props.closeModal()
-      props.refreshAnalysis(props.datasetId, convertedRepoName, props.n)
+      props.refreshAnalysis(props.datasetId, props.repo['name'].split('/')[0], props.repo['name'].split('/')[1], props.n)
     }}>
       <Link href={`/dashboard/datasets/${props.datasetId}/analyze/${convertedRepoName}?near=${props.n}`}>
         <a className={styles.link}>

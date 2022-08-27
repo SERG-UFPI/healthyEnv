@@ -9,6 +9,7 @@ interface ChangeNModalProps {
   currNValue: number
   datasetCount: number
   datasetId: string | string[]
+  userName: string | string[]
   repoName: string | string[]
 }
 
@@ -50,9 +51,9 @@ const ChangeNModal = (props: ChangeNModalProps) => {
           />
           <div className={styles.button} onClick={() => {
             props.closeModal()
-            props.refreshAnalysis(props.datasetId, props.repoName.toString().replace('/', '%2F'), nValue)
+            props.refreshAnalysis(props.datasetId, props.userName, props.repoName, nValue)
           }}>
-            <Link href={`/dashboard/datasets/${props.datasetId}/analyze/${props.repoName.toString().replace('/', '%2F')}?near=${nValue}`}>
+            <Link href={`/dashboard/datasets/${props.datasetId}/analyze/${props.userName}/${props.repoName}?near=${nValue}`}>
               <a>Confirmar</a>
             </Link>
           </div>

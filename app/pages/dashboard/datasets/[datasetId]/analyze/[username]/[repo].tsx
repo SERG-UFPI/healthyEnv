@@ -1,23 +1,23 @@
 import axios from "axios"
 import Popup from "reactjs-popup"
 import Head from "next/head"
-import Constants from "../../../../../utils/constants"
-import PlotGrid from "../../../../../components/PlotGrid"
-import RepoInfos from "../../../../../components/RepoInfos"
-import MetricsHint from "../../../../../components/MetricsHint"
-import styles from '../../../../../styles/AnalyzeRepo.module.css'
-import ChangeNModal from "../../../../../components/ChangeNModal"
-import NearReposPlot from '../../../../../components/NearReposPlot'
-import ChangeRepoModal from "../../../../../components/ChangeRepoModal"
-import DashboardHeader from "../../../../../components/DashboardHeader"
-import AnalysisSummarySection from "../../../../../components/AnalysisSummarySection"
+import Constants from "../../../../../../utils/constants"
+import styles from '../../../../../../styles/AnalyzeRepo.module.css'
 import { Dots } from 'react-activity'
 import Router, { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowRightArrowLeft, faArrowsRotate } from "@fortawesome/free-solid-svg-icons"
-import { getFirstQuartile, getMedian, getThirdQuartile } from "../../../../../functions/stats"
+import { getFirstQuartile, getMedian, getThirdQuartile } from "../../../../../../functions/stats"
 import "react-activity/dist/Dots.css";
+import PlotGrid from "../../../../../../components/PlotGrid"
+import DashboardHeader from "../../../../../../components/DashboardHeader"
+import RepoInfos from "../../../../../../components/RepoInfos"
+import NearReposPlot from "../../../../../../components/NearReposPlot"
+import MetricsHint from "../../../../../../components/MetricsHint"
+import AnalysisSummarySection from "../../../../../../components/AnalysisSummarySection"
+import ChangeRepoModal from "../../../../../../components/ChangeRepoModal"
+import ChangeNModal from "../../../../../../components/ChangeNModal"
 
 enum MetricSituation {
   Ok = 'OK',
@@ -45,7 +45,7 @@ const Repo = () => {
   useEffect(() => {
     if (!router.isReady) return
     verifyAuth()
-    loadRepo(router.query.datasetId, router.query.repo, +router.query.near)
+    loadRepo(router.query.datasetId, `${router.query.username}/${router.query.repo}`, +router.query.near)
   }, [router.isReady])
 
   function verifyAuth() {
@@ -164,8 +164,8 @@ const Repo = () => {
     setIsLoading(false)
   }
 
-  const refreshAnalysis = (dataset: string, repo: string, n: number): void => {
-    loadRepo(dataset, repo, n)
+  const refreshAnalysis = (dataset: string, user: string, repo: string, n: number): void => {
+    loadRepo(dataset, `${user}/${repo}`, n)
   }
 
   return (
@@ -266,7 +266,7 @@ const Repo = () => {
         <ChangeRepoModal closeModal={closeModalRepo} refreshAnalysis={refreshAnalysis} datasetId={router.query.datasetId} n={+router.query.near} />
       </Popup>
       <Popup open={openN} onClose={closeModalN} >
-        <ChangeNModal closeModal={closeModalN} refreshAnalysis={refreshAnalysis} currNValue={+router.query.near} datasetCount={referenceReposInfo.length} datasetId={router.query.datasetId} repoName={router.query.repo} />
+        <ChangeNModal closeModal={closeModalN} refreshAnalysis={refreshAnalysis} currNValue={+router.query.near} datasetCount={referenceReposInfo.length} datasetId={router.query.datasetId} userName={router.query.username} repoName={router.query.repo} />
       </Popup>
     </>
   )

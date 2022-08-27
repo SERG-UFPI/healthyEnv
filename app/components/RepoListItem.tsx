@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Divider from "./Divider";
 
 const RepoListItem = ({ repo, datasetId, getNValue }) => {
-  const convertedRepoName = repo['name'].split('/')[0] + '%2F' + repo['name'].split('/')[1]
+  const convertedRepoName = repo['name'].split('/')[0] + '/' + repo['name'].split('/')[1]
 
   return (
     <>
