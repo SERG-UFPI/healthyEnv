@@ -7,8 +7,10 @@ import Head from 'next/head'
 import Constants from '../../../utils/constants'
 import DashboardHeader from '../../../components/DashboardHeader'
 import "react-activity/dist/Dots.css";
+import Router, { useRouter } from 'next/router'
 
 const Datasets = () => {
+  const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [isLoadingDatasets, setIsLoadingDatasets] = useState(true)
   const [repos, setRepos] = useState([])
@@ -21,8 +23,21 @@ const Datasets = () => {
   const datasetsIdList = []
 
   useEffect(() => {
+    verifyAuth()
     loadDatasets().then(() => loadRepos(datasetsIdList[0]))
   }, [])
+
+  function verifyAuth() {
+    const data = JSON.parse(localStorage.getItem('userData'))
+
+    if (data == undefined) {
+      Router.push(`/auth?next=${router.asPath}`)
+    } else {
+      if ((Date.now() - data['timestamp']) > 86400000) {
+        Router.push(`/auth?next=${router.asPath}`)
+      }
+    }
+  }
 
   async function loadDatasets() {
     setIsLoadingDatasets(true)

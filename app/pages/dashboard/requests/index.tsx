@@ -2,13 +2,14 @@ import axios from "axios";
 import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import DashboardHeader from "../../components/DashboardHeader";
-import Header from "../../components/Header";
-import styles from '../../styles/Request.module.css'
-import Constants from "../../utils/constants";
+import DashboardHeader from "../../../components/DashboardHeader";
+import Header from "../../../components/Header";
+import styles from '../../../styles/Request.module.css'
+import Constants from "../../../utils/constants";
+import Router, { useRouter } from "next/router";
 
 const Requests = () => {
-
+  const router = useRouter()
   const [isLoadingDatasets, setIsLoadingDatasets] = useState(true)
   const [datasetsOptions, setDatasetsOptions] = useState([])
   const [selectedDataset, setSelectedDataset] = useState()
@@ -23,8 +24,21 @@ const Requests = () => {
   }
 
   useEffect(() => {
+    verifyAuth()
     loadDatasets()
   }, [])
+
+  function verifyAuth() {
+    const data = JSON.parse(localStorage.getItem('userData'))
+
+    if (data == undefined) {
+      Router.push(`/auth?next=${router.asPath}`)
+    } else {
+      if ((Date.now() - data['timestamp']) > 86400000) {
+        Router.push(`/auth?next=${router.asPath}`)
+      }
+    }
+  }
 
   async function loadDatasets() {
     setIsLoadingDatasets(true)

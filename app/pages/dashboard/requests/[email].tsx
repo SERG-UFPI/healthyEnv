@@ -1,14 +1,14 @@
 import axios from 'axios'
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import Header from '../../components/Header'
-import RequestListItem from '../../components/RequestListItem'
+import Header from '../../../components/Header'
+import RequestListItem from '../../../components/RequestListItem'
 import styles from '../../styles/RequestsByEmail.module.css'
 import { Dots } from 'react-activity'
 import "react-activity/dist/Dots.css";
 import Head from 'next/head'
-import Constants from '../../utils/constants'
-import DashboardHeader from '../../components/DashboardHeader'
+import Constants from '../../../utils/constants'
+import DashboardHeader from '../../../components/DashboardHeader'
 
 const RequestsByEmail = () => {
   const router = useRouter()
@@ -17,8 +17,21 @@ const RequestsByEmail = () => {
 
   useEffect(() => {
     if (!router.isReady) return
+    verifyAuth()
     loadRequests()
   }, [router.isReady])
+
+  function verifyAuth() {
+    const data = JSON.parse(localStorage.getItem('userData'))
+
+    if (data == undefined) {
+      Router.push(`/auth?next=${router.asPath}`)
+    } else {
+      if ((Date.now() - data['timestamp']) > 86400000) {
+        Router.push(`/auth?next=${router.asPath}`)
+      }
+    }
+  }
 
   async function loadRequests() {
     setIsLoading(true)

@@ -25,30 +25,26 @@ export default function GitHub() {
     const response = await axios.get(`${Constants.baseUrl}/auth/github_token?code=${code}`)
 
     // TODO: verifica se obteve o token com sucesso para continuar os passos seguintes
-
-    // 1. requisita algumas informações do usuário para armazenar junto do seu token no localstorage
-
     const userDataRes = await axios.get(`https://api.github.com/user`, {
       headers: {
         'Accept': 'application/vnd.github+json',
         'Authorization': `token ${response.data.access_token}`
       }
     })
-
-    // console.log(userDataRes.data)
-
     // TODO: verifica se os dados do usuário logado foram obtidos com sucesso antes de continuar
-
-    // 2. salva no local storage as informações para poder utilizar durante o uso da aplicação77
     saveUserInfo('userData', JSON.stringify({
       'token': response.data.access_token,
       'name': userDataRes.data.name,
       'email': userDataRes.data.email,
       'profilePicture': userDataRes.data.avatar_url,
+      'timestamp': Date.now(),
     }))
 
+    const path = router.query.next == 'undefined' || undefined
+      ? '/dashboard/datasets'
+      : `${router.query.next}`
 
-    Router.push('/dashboard/datasets')
+    Router.push(path)
   }
 
   function saveUserInfo(key: string, value: string) {

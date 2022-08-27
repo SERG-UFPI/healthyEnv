@@ -12,7 +12,7 @@ import ChangeRepoModal from "../../../../../components/ChangeRepoModal"
 import DashboardHeader from "../../../../../components/DashboardHeader"
 import AnalysisSummarySection from "../../../../../components/AnalysisSummarySection"
 import { Dots } from 'react-activity'
-import { useRouter } from "next/router"
+import Router, { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowRightArrowLeft, faArrowsRotate } from "@fortawesome/free-solid-svg-icons"
@@ -44,8 +44,21 @@ const Repo = () => {
 
   useEffect(() => {
     if (!router.isReady) return
+    verifyAuth()
     loadRepo(router.query.datasetId, router.query.repo, +router.query.near)
   }, [router.isReady])
+
+  function verifyAuth() {
+    const data = JSON.parse(localStorage.getItem('userData'))
+
+    if (data == undefined) {
+      Router.push(`/auth?next=${router.asPath}`)
+    } else {
+      if ((Date.now() - data['timestamp']) > 86400000) {
+        Router.push(`/auth?next=${router.asPath}`)
+      }
+    }
+  }
 
   // Load a repo's analysis
   async function loadRepo(datasetId: string | string[], repoName: string | string[], n: number) {

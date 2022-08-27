@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import Router from 'next/router';
 
 interface SelectedIndex {
   selectedIndex: number
@@ -16,13 +17,31 @@ export default function DashboardHeader({ selectedIndex }: SelectedIndex) {
   function getUserInfo() {
     if (typeof window !== "undefined") {
       const data = localStorage.getItem('userData')
-      // console.log(data)
       setUserInfo(JSON.parse(data))
     }
   }
 
-  useEffect(() => {
+  function logout() {
+    localStorage.removeItem('userData')
+    Router.push('/')
+  }
+
+  function verifyAuth() {
+    const data = JSON.parse(localStorage.getItem('userData'))
+
+    if (data == undefined) {
+      return
+    } else {
+      if ((Date.now() - data['timestamp']) > 86400000) {
+        return
+      }
+    }
+
     getUserInfo()
+  }
+
+  useEffect(() => {
+    verifyAuth()
   }, [])
 
   return (
@@ -45,21 +64,21 @@ export default function DashboardHeader({ selectedIndex }: SelectedIndex) {
               <span className={styles.title}>HealthyEnv</span>
             </a>
           </Link>
-          <Link href='/datasets'>
+          <Link href='/dashboard/datasets'>
             <a>
               {selectedIndex == 1
                 ? <span className={styles.link} style={{ color: '#2590DA', fontWeight: 'bold' }}>Repository analysis</span>
                 : <span className={styles.link}>Repository analysis</span>}
             </a>
           </Link>
-          <Link href='/requests'>
+          <Link href='/dashboard/requests'>
             <a>
               {selectedIndex == 2
                 ? <span className={styles.link} style={{ color: '#2590DA', fontWeight: 'bold' }}>Submit a repository</span>
                 : <span className={styles.link}>Submit a repository</span>}
             </a>
           </Link>
-          <Link href='/help'>
+          <Link href='/dashboard/help'>
             <a>
               {selectedIndex == 3
                 ? <span className={styles.link} style={{ color: '#2590DA', fontWeight: 'bold' }}>Help</span>
@@ -77,7 +96,7 @@ export default function DashboardHeader({ selectedIndex }: SelectedIndex) {
             marginLeft: '10px',
             fontSize: 14,
             cursor: 'pointer',
-          }} />
+          }} onClick={() => logout()} />
         </div>
       </div>
     </div >
