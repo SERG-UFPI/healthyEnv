@@ -87,7 +87,9 @@ export default function DashboardHeader({ selectedIndex }: SelectedIndex) {
           </Link>
         </div>
         <div className={styles.authUserArea}>
-          <Image src={'https://avatars.githubusercontent.com/u/24456956?v=4'} width={30} height={30} className={styles.userAvatar} alt='Profile picture' />
+          {userInfo['profilePicture'] && (
+            <Image src={userInfo['profilePicture']} width={30} height={30} className={styles.userAvatar} alt='Profile picture' />
+          )}
           <div className={styles.authUserInfo}>
             <span className={styles.userName}>{userInfo['name']}</span>
             <span className={styles.userEmail}>{userInfo['email']}</span>
