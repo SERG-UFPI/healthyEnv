@@ -36,7 +36,7 @@ const MetricPlot = (props: MetricPlotProps) => {
   }
 
   return (
-    <div className={styles.box} style={{ width: `${(props.width - 10)}px`, height: `${510}px`, backgroundColor: getColor(props.situation) }} >
+    <div className={styles.box} style={{ width: `${(props.width)}px`, height: `${510}px`, backgroundColor: getColor(props.situation) }} >
       <Plot
         data={[
           {
@@ -62,7 +62,7 @@ const MetricPlot = (props: MetricPlotProps) => {
           }
         ]}
         layout={{
-          width: (props.width - 20),
+          width: (props.width - 10),
           height: 500,
           title: props.title,
           font: {

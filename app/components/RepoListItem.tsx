@@ -27,7 +27,7 @@ const RepoListItem = ({ repo, datasetId, getNValue }) => {
           </div>
         </a >
       </Link>
-      <Divider />
+      {/* <Divider /> */}
     </>
   )
 }

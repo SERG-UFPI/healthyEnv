@@ -1,11 +1,16 @@
 .requestListItem {
+  
   display: flex;
   flex-direction: row;
-  width: 100%;
+  /* width: 100%; */
   justify-content: space-between;
   align-items: center;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  background-color: #fff;
+  /* padding-top: 8px;
+  padding-bottom: 8px; */
+  padding: 16px 20px;
+  border-radius: 6px;
+  margin: 6px 0px;
 }
 
 .info {

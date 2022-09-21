@@ -3,7 +3,7 @@ const Chip = ({ label }) => {
     <div style={{
       marginRight: '10px',
       marginTop: '5px',
-      backgroundColor: '#EAEAEA',
+      backgroundColor: '#c9cfde',
       padding: '4px 10px',
       borderRadius: '20px',
       fontSize: 14

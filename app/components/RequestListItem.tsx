@@ -35,7 +35,7 @@ const RequestListItem = (props: RequestListItemProps) => {
         </div>
         <div className={styles.status}>{translateStatus(props.status)}</div>
       </div>
-      <Divider />
+      {/* <Divider /> */}
     </>
   );
 }

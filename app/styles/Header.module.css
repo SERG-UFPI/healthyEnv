@@ -1,21 +1,22 @@
 .header {
   position: sticky;
   top: 0;
-  background-color: #fafafa;
+  background-color: #444f70;
+  color: #fafafa;
   box-shadow: 0px 2px 5px rgb(176, 176, 176);
   z-index: 1;
 }
 
 .link {
-  transition: color .3s;
+  transition: all .3s;
   font-size: 16px;
   font-weight: bold;
   padding-right: 28px;
-  color: #585858;
+  color: #c2c2c2;
 }
 
 .link:hover {
-  color: #111111;
+  color: #8fa0d4;
 }
 
 .loginButton {
@@ -55,12 +56,12 @@
 
 .icon {
   font-size: 22px;
-  color: #585858;
+  color: #fff;
 }
 
 .icon:hover {
   transition: color .3s;
-  color: #111111;
+  color: #eaeaea;
 }
 
 .options {

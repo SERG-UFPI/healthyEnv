@@ -83,51 +83,54 @@ const Datasets = () => {
       </Head>
       <DashboardHeader selectedIndex={1} />
       <div className={styles.container}>
-        <span className={styles.title}>
-          Datasets e análise
-        </span>
-        <span className={styles.subtitle}>
-          Faça a análise da saúde de um repositório baseando-se em repositórios semelhantes
-        </span>
-        <span className={styles.description}>
-          Utilizando um método semelhante a algoritmos de Aprendizado de Máquina não supervisionado,
-          o HealthyEnv obtém um grupo de repositórios semelhantes ao selecionado para análise
-          e mostra como estão suas métricas baseando-se em valores de referência formados pelas
-          métricas de tais semelhantes.
-        </span>
-        {!isLoadingDatasets
-          ? <div className={styles['repo-list-top']}>
-            <div className={styles['dataset-n']}>
-              <div className={styles['inputs-container']} style={{ paddingRight: '20px' }}>
-                {/* <label htmlFor='dataset' className={styles.labels}>Dataset </label> */}
-                <select
-                  className={styles.inputs}
-                  id='dataset'
-                  onChange={(e) => {
-                    console.log(datasetsIdList[Number(e.target.value)])
-                    setSelectedDataset(datasetsIdList[Number(e.target.value)])
-                    loadRepos(datasetsIdList[Number(e.target.value)])
-                  }}
-                  style={{ padding: '7px 5px', width: 450 }}
-                >
-                  {datasetsOptions}
-                </select>
+        <div className={styles.infoTop}>
+          <span className={styles.title}>
+            Datasets e análise
+          </span>
+          <span className={styles.subtitle}>
+            Faça a análise da saúde de um repositório baseando-se em repositórios semelhantes
+          </span>
+          <span className={styles.description}>
+            Utilizando um método semelhante a algoritmos de Aprendizado de Máquina não supervisionado,
+            o HealthyEnv obtém um grupo de repositórios semelhantes ao selecionado para análise
+            e mostra como estão suas métricas baseando-se em valores de referência formados pelas
+            métricas de tais semelhantes.
+          </span>
+
+          {!isLoadingDatasets
+            ? <div className={styles['repo-list-top']}>
+              <div className={styles['dataset-n']}>
+                <div className={styles['inputs-container']} style={{ paddingRight: '20px' }}>
+                  {/* <label htmlFor='dataset' className={styles.labels}>Dataset </label> */}
+                  <select
+                    className={styles.inputs}
+                    id='dataset'
+                    onChange={(e) => {
+                      console.log(datasetsIdList[Number(e.target.value)])
+                      setSelectedDataset(datasetsIdList[Number(e.target.value)])
+                      loadRepos(datasetsIdList[Number(e.target.value)])
+                    }}
+                    style={{ padding: '7px 5px', width: 450 }}
+                  >
+                    {datasetsOptions}
+                  </select>
+                </div>
+              </div>
+              <div className={styles['inputs-container']}>
+                {/* <label htmlFor='search' className={styles.labels}>Filtrar </label> */}
+                <input type='text' id='search' placeholder='Filtrar repositórios deste dataset...' className={styles.inputs} style={{ width: 300 }} />
               </div>
             </div>
-            <div className={styles['inputs-container']}>
-              {/* <label htmlFor='search' className={styles.labels}>Filtrar </label> */}
-              <input type='text' id='search' placeholder='Filtrar repositórios deste dataset...' className={styles.inputs} style={{ width: 300 }} />
-            </div>
-          </div>
-          : (
-            <div className={styles.loading}>
-              <Dots color='#000000' size={18} speed={1} animating={true} />
-              <span style={{
-                fontSize: 14
-              }}>Carregando datasets...</span>
-            </div>
-          )
-        }
+            : (
+              <div className={styles.loading}>
+                <Dots color='#000000' size={18} speed={1} animating={true} />
+                <span style={{
+                  fontSize: 14
+                }}>Carregando datasets...</span>
+              </div>
+            )
+          }
+        </div>
         {!isLoading
           ? <div className={styles['repo-list']}>
             {repos.map((repo, index) => {

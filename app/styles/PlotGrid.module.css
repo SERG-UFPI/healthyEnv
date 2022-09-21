@@ -15,7 +15,7 @@
 .metricCategory {
   display: flex;
   flex-direction: column;
-  padding-top: 10px;
+  padding-top: 20px;
 }
 
 .workingGroup {

@@ -57,8 +57,8 @@ const NearReposPlot = (props: NearReposPlotProps) => {
           family: 'Lato, sans-serif',
           color: '#111111'
         },
-        plot_bgcolor: '#fafafa',
-        paper_bgcolor: '#fafafa',
+        plot_bgcolor: '#ffffff',
+        paper_bgcolor: '#ffffff',
       }}
     />
   );

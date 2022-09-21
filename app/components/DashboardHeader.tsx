@@ -68,21 +68,21 @@ export default function DashboardHeader({ selectedIndex }: SelectedIndex) {
           <Link href='/dashboard/datasets'>
             <a>
               {selectedIndex == 1
-                ? <span className={styles.link} style={{ color: '#2590DA', fontWeight: 'bold' }}>Repository analysis</span>
+                ? <span className={styles.link} style={{ color: '#FFF', fontWeight: 'bold' }}>Repository analysis</span>
                 : <span className={styles.link}>Repository analysis</span>}
             </a>
           </Link>
           <Link href='/dashboard/requests'>
             <a>
               {selectedIndex == 2
-                ? <span className={styles.link} style={{ color: '#2590DA', fontWeight: 'bold' }}>Submit a repository</span>
+                ? <span className={styles.link} style={{ color: '#FFF', fontWeight: 'bold' }}>Submit a repository</span>
                 : <span className={styles.link}>Submit a repository</span>}
             </a>
           </Link>
           <Link href='/dashboard/help'>
             <a>
               {selectedIndex == 3
-                ? <span className={styles.link} style={{ color: '#2590DA', fontWeight: 'bold' }}>Help</span>
+                ? <span className={styles.link} style={{ color: '#FFF', fontWeight: 'bold' }}>Help</span>
                 : <span className={styles.link}>Help</span>}
             </a>
           </Link>

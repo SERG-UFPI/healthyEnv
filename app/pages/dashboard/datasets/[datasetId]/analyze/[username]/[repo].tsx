@@ -232,33 +232,40 @@ const Repo = () => {
               </div>
               <NearReposPlot selectedRepoInfo={selectedRepoInfo} referenceReposInfo={referenceReposInfo} />
             </div>
-            <div className={styles.sectionHeader}>
-              <span className={styles['section-title']}>Métricas aplicadas ao grupo</span>
-              <MetricsHint />
-            </div>
-            {
-              metricsData.map((metricCategory: any) => {
-                return <PlotGrid
-                  key={metricCategory['id']}
-                  data={metricCategory}
+            <div className={styles.section}>
+              <div className={styles.sectionHeader}>
+                <span className={styles['section-title']}>Métricas aplicadas ao grupo</span>
+                <MetricsHint />
+              </div>
+              {
+                metricsData.map((metricCategory: any) => {
+                  return <PlotGrid
+                    key={metricCategory['id']}
+                    data={metricCategory}
 
-                />
-              })
-            }
-            <div className={styles['section-title']}>
-              <span>Resumo da avaliação</span>
+                  />
+                })
+              }
             </div>
-            <AnalysisSummarySection metricsCount={analysisSummary} />
-            <div className={styles['section-title']}>
-              <span>Detalhes da requisição</span>
+            <div className={styles.section}>
+              <div className={styles['section-title']}>
+                <span>Resumo da avaliação</span>
+              </div>
+              <AnalysisSummarySection metricsCount={analysisSummary} />
             </div>
-            <div className={styles['request-details']}>
-              <span className={styles['request-method']}>GET</span>
-              <span className={styles['request-url']}>{requestPayloads[0].url}</span>
-            </div>
-            <div className={styles['response-body-container']}>
-              <span className={styles['body-title']}>Corpo da resposta</span>
-              <textarea rows={20} value={requestPayloads[0].payload} spellCheck={false} readOnly={true} />
+
+            <div className={styles.section}>
+              <div className={styles['section-title']}>
+                <span>Detalhes da requisição</span>
+              </div>
+              <div className={styles['request-details']}>
+                <span className={styles['request-method']}>GET</span>
+                <span className={styles['request-url']}>{requestPayloads[0].url}</span>
+              </div>
+              <div className={styles['response-body-container']}>
+                <span className={styles['body-title']}>Corpo da resposta</span>
+                <textarea rows={20} value={requestPayloads[0].payload} spellCheck={false} readOnly={true} />
+              </div>
             </div>
           </div>
       }

@@ -11,11 +11,10 @@ interface PlotGridProps {
 const PlotGrid: FC<{ data: PlotGridProps }> = ({ data }) => {
   const { width } = useWindowDimensions()
 
-  let pagePadding = width > 1280 ? ((width - 1280) / 2) + 16 : 16
-  const maxPlotsPerRow = Math.floor((width - (pagePadding * 2)) / 400);
-  let plotWidth = ((width - (pagePadding * 2)) / maxPlotsPerRow);
-  var style = { '--width': `${plotWidth - 10}px` } as React.CSSProperties
-
+  let safeWidth = width - 17 > 1280 ? 1280 - 72 : width - 17 - 72;
+  const maxPlotsPerRow = Math.floor(safeWidth / 400);
+  let plotWidth = (safeWidth - ((maxPlotsPerRow - 1) * 10)) / maxPlotsPerRow;
+  var style = { '--width': `${plotWidth}px` } as React.CSSProperties
 
   const generatePlots = () => {
     const plots = []

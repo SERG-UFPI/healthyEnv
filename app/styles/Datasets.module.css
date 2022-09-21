@@ -7,8 +7,17 @@
   flex-direction: column;
 }
 
+.infoTop {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+}
+
 .title {
-  padding-top: 10px;
+  /* padding-top: 0px; */
   font-size: 28px;
   font-weight: bold;
   color: #111111;
@@ -33,12 +42,12 @@
 }
 
 .repo-list-top {
-  padding-top: 10px;
+  /* padding-top: 10px; */
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 20px;
+  /* padding-bottom: 20px; */
 }
 
 .repo-list-top-title {
