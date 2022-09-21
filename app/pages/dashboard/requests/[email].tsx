@@ -3,7 +3,7 @@ import Router, { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import Header from '../../../components/Header'
 import RequestListItem from '../../../components/RequestListItem'
-import styles from '../../styles/RequestsByEmail.module.css'
+import styles from '../../../styles/RequestsByEmail.module.css'
 import { Dots } from 'react-activity'
 import "react-activity/dist/Dots.css";
 import Head from 'next/head'

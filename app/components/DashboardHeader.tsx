@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import Router from 'next/router';
+import AccountMenuButton from './AccountMenuButton';
 
 interface SelectedIndex {
   selectedIndex: number
@@ -86,7 +87,7 @@ export default function DashboardHeader({ selectedIndex }: SelectedIndex) {
             </a>
           </Link>
         </div>
-        <div className={styles.authUserArea}>
+        {/* <div className={styles.authUserArea}>
           {userInfo['profilePicture'] && (
             <Image src={userInfo['profilePicture']} width={30} height={30} className={styles.userAvatar} alt='Profile picture' />
           )}
@@ -99,7 +100,8 @@ export default function DashboardHeader({ selectedIndex }: SelectedIndex) {
             fontSize: 14,
             cursor: 'pointer',
           }} onClick={() => logout()} />
-        </div>
+        </div> */}
+        <AccountMenuButton profilePicture={userInfo['profilePicture']} userName={userInfo['name']} userEmail={userInfo['email']} onLogout={logout} />
       </div>
     </div >
   );
