@@ -26,12 +26,12 @@ const RequestListItem = (props: RequestListItemProps) => {
     <>
       <div className={styles.requestListItem}>
         <div className={styles.info}>
-          <div className={styles.nameAndEmail}>
+          {/* <div className={styles.nameAndEmail}>
             <span className={styles.name}>{props.name}</span>
             <span>•</span>
             <span className={styles.email}>{props.email}</span>
-          </div>
-          <span className={styles.url}>{props.url}</span>
+          </div> */}
+          <span className={styles.url}>{props.url.split('/')[props.url.split('/').length - 1]}</span>
         </div>
         <div className={styles.status}>{translateStatus(props.status)}</div>
       </div>

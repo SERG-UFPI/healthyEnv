@@ -62,9 +62,15 @@
   flex-direction: row;
 }
 
+.datasetInput {
+  display: none;
+}
+
 .inputs-container {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  margin-right: 10px;
 }
 
 .labels {
@@ -77,9 +83,23 @@
   border-color: #D8D8D8;
   border-width: 1px;
   border-radius: 4px;
+  max-width: 400px;
 }
 
 .repo-list {
   display: flex;
   flex-direction: column;
+}
+
+@media screen and (max-width: 800px){
+  .repo-list-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .inputs-container {
+    margin: 6px 0px;
+    padding: 0px;
+    
+  }
 }

@@ -11,8 +11,8 @@ interface PlotGridProps {
 const PlotGrid: FC<{ data: PlotGridProps }> = ({ data }) => {
   const { width } = useWindowDimensions()
 
-  let safeWidth = width - 17 > 1280 ? 1280 - 72 : width - 17 - 72;
-  const maxPlotsPerRow = Math.floor(safeWidth / 400);
+  let safeWidth = width > 1280 ? 1280 - 72 : width - 72;
+  const maxPlotsPerRow = safeWidth >= 400 ? Math.floor(safeWidth / 400) : 1;
   let plotWidth = (safeWidth - ((maxPlotsPerRow - 1) * 10)) / maxPlotsPerRow;
   var style = { '--width': `${plotWidth}px` } as React.CSSProperties
 

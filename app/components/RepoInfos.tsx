@@ -1,3 +1,5 @@
+import Chip from "./Chip"
+
 interface RepoInfosProps {
   language: string
   loc: string
@@ -14,15 +16,22 @@ const RepoInfos = (props: RepoInfosProps) => {
       display: 'flex',
       flexDirection: 'row',
       flexWrap: 'wrap',
-      justifyContent: 'space-between',
+      // justifyContent: 'space-between',
     }}>
-      <RepoInfosItem title='Linguagem' content={props.language} />
+      <Chip label={props.language} />
+      <Chip label={props.loc + ' LOC'} />
+      <Chip label={props.stars + ' estrelas'} />
+      <Chip label={props.forks + ' forks'} />
+      <Chip label={props.openIssues + ' issues abertas'} />
+      <Chip label={props.contributors + ' contribuidores'} />
+      <Chip label={props.commits + ' commits'} />
+      {/* <RepoInfosItem title='Linguagem' content={props.language} />
       <RepoInfosItem title='LOC' content={props.loc} />
       <RepoInfosItem title='Estrelas' content={props.stars} />
       <RepoInfosItem title='Forks' content={props.forks} />
       <RepoInfosItem title='Issues abertas' content={props.openIssues} />
       <RepoInfosItem title='Contribuidores' content={props.contributors} />
-      <RepoInfosItem title='Commits' content={props.commits} />
+      <RepoInfosItem title='Commits' content={props.commits} /> */}
     </div>
   )
 

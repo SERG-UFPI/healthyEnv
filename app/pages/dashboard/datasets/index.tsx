@@ -100,7 +100,7 @@ const Datasets = () => {
           {!isLoadingDatasets
             ? <div className={styles['repo-list-top']}>
               <div className={styles['dataset-n']}>
-                <div className={styles['inputs-container']} style={{ paddingRight: '20px' }}>
+                <div className={styles['datasetInput']}>
                   {/* <label htmlFor='dataset' className={styles.labels}>Dataset </label> */}
                   <select
                     className={styles.inputs}
@@ -110,7 +110,7 @@ const Datasets = () => {
                       setSelectedDataset(datasetsIdList[Number(e.target.value)])
                       loadRepos(datasetsIdList[Number(e.target.value)])
                     }}
-                    style={{ padding: '7px 5px', width: 450 }}
+                    style={{ padding: '7px 5px', width: '100%' }}
                   >
                     {datasetsOptions}
                   </select>
@@ -118,7 +118,7 @@ const Datasets = () => {
               </div>
               <div className={styles['inputs-container']}>
                 {/* <label htmlFor='search' className={styles.labels}>Filtrar </label> */}
-                <input type='text' id='search' placeholder='Filtrar repositórios deste dataset...' className={styles.inputs} style={{ width: 300 }} />
+                <input type='text' id='search' placeholder='Filtrar repositórios deste dataset...' className={styles.inputs} />
               </div>
             </div>
             : (

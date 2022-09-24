@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
 import PlotLoadingIndicator from './PlotLoadingIndicator';
+import useWindowDimensions from "../utils/useWindowDimensions"
 
 const Plot = dynamic(() => import('react-plotly.js'), {
   ssr: false,
@@ -12,6 +13,10 @@ interface NearReposPlotProps {
 }
 
 const NearReposPlot = (props: NearReposPlotProps) => {
+  const { width } = useWindowDimensions()
+
+  let safeWidth = width - 17 > 1280 ? 1280 - 72 : width - 17 - 72;
+
   return (
     <Plot
       data={[
@@ -44,7 +49,7 @@ const NearReposPlot = (props: NearReposPlotProps) => {
         },
       ]}
       layout={{
-        width: 600,
+        width: safeWidth,
         height: 300,
         title: 'Repositórios próximos ao selecionado',
         xaxis: {

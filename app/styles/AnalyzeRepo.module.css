@@ -21,6 +21,7 @@
   display: flex;
   flex-direction: column;
   padding-right: 10px;
+  width: 100%;
 }
 
 .repo-type-badge {
@@ -107,6 +108,7 @@
 
 .request-url {
   color: #222222;
+  word-wrap: break-word;
 }
 
 .body-title {
@@ -127,4 +129,11 @@
 .nearHint {
   margin-top: 10px;
   font-size: 18px;
+}
+
+@media screen and (max-width: 800px){
+  .sectionHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

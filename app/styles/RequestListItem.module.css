@@ -16,6 +16,9 @@
 .info {
   display: flex;
   flex-direction: column;
+  word-wrap: break-word;
+  /* overflow: hidden;
+  text-overflow: ellipsis; */
 }
 
 .nameAndEmail {
@@ -24,9 +27,20 @@
   padding-bottom: 5px;
 }
 
+.url {
+  word-wrap: break-word;
+  font-weight: bold;
+}
+
 .status {
   /* width: 70px; */
   font-size: 18px;
+  width: 120px;
+  text-align: end;
+  background-color: #c9cfde;
+  width: fit-content;
+  padding: 4px 12px;
+  border-radius: 20px;
 }
 
 .name {
@@ -39,8 +53,4 @@
 .email {
   font-size: 18px;
   padding-left: 5px;
-}
-
-.url {
-  text-decoration: underline;
 }

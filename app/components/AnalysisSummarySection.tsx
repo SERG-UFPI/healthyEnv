@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic"
 import PlotLoadingIndicator from './PlotLoadingIndicator'
 import styles from '../styles/AnalysisSummarySection.module.css'
+import useWindowDimensions from "../utils/useWindowDimensions"
 
 const Plot = dynamic(() => import('react-plotly.js'), {
   ssr: false,
@@ -12,6 +13,10 @@ interface AnalysisSummarySectionProps {
 }
 
 const AnalysisSummarySection = (props: AnalysisSummarySectionProps) => {
+  const { width } = useWindowDimensions()
+
+  let safeWidth = width - 17 > 1280 ? 1280 - 72 : width - 17 - 72;
+
   return (
     <div className={styles.analysisSummary}>
       <Plot
@@ -24,7 +29,7 @@ const AnalysisSummarySection = (props: AnalysisSummarySectionProps) => {
           type: 'pie',
         }]}
         layout={{
-          width: 600,
+          width: safeWidth,
           height: 300,
         }}
       />

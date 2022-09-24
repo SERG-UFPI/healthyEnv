@@ -203,6 +203,18 @@ const Repo = () => {
                   openIssues={selectedRepoInfo['open_issues']}
                   contributors={selectedRepoInfo['contributors']}
                   commits={selectedRepoInfo['commits']} />
+                <span className={styles['algorithm-hint']}>
+                  Algoritmo utilizado:
+                </span>
+                <span className={styles['algorithm-title']}>
+                  Semelhança baseada em distância
+                </span>
+                <span>
+                  Este algoritmo busca no dataset os repositórios mais
+                  semelhantes ao repositório selecionado, baseando-se na
+                  distância deles no plano.
+                </span>
+                <span className={styles.nearHint}>Obtendo <b>{+router.query.near}</b> projetos semelhantes.</span>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                   <div className={styles['change-algorithm-button']} onClick={() => setOpen(true)}>
                     <FontAwesomeIcon icon={faArrowRightArrowLeft} />
@@ -217,24 +229,19 @@ const Repo = () => {
                     </span>
                   </div>
                 </div>
-                <span className={styles['algorithm-hint']}>
-                  Algoritmo utilizado:
-                </span>
-                <span className={styles['algorithm-title']}>
-                  Semelhança baseada em distância
-                </span>
-                <span>
-                  Este algoritmo busca no dataset os repositórios mais
-                  semelhantes ao repositório selecionado, baseando-se na
-                  distância deles no plano.
-                </span>
-                <span className={styles.nearHint}>Obtendo <b>{+router.query.near}</b> projetos semelhantes.</span>
               </div>
-              <NearReposPlot selectedRepoInfo={selectedRepoInfo} referenceReposInfo={referenceReposInfo} />
+              {/* <NearReposPlot selectedRepoInfo={selectedRepoInfo} referenceReposInfo={referenceReposInfo} /> */}
             </div>
             <div className={styles.section}>
               <div className={styles.sectionHeader}>
-                <span className={styles['section-title']}>Métricas aplicadas ao grupo</span>
+                <span className={styles['section-title']}>Distribution</span>
+              </div>
+              <NearReposPlot selectedRepoInfo={selectedRepoInfo} referenceReposInfo={referenceReposInfo} />
+            </div>
+
+            <div className={styles.section}>
+              <div className={styles.sectionHeader}>
+                <span className={styles['section-title']}>Metrics applied</span>
                 <MetricsHint />
               </div>
               {
@@ -247,23 +254,25 @@ const Repo = () => {
                 })
               }
             </div>
+            {/* TODO: refazer esta seção, não ficou legal de nenhuma forma
+            
             <div className={styles.section}>
               <div className={styles['section-title']}>
-                <span>Resumo da avaliação</span>
+                <span>Analysis summary</span>
               </div>
               <AnalysisSummarySection metricsCount={analysisSummary} />
-            </div>
+            </div> */}
 
             <div className={styles.section}>
               <div className={styles['section-title']}>
-                <span>Detalhes da requisição</span>
+                <span>Request details</span>
               </div>
               <div className={styles['request-details']}>
                 <span className={styles['request-method']}>GET</span>
                 <span className={styles['request-url']}>{requestPayloads[0].url}</span>
               </div>
               <div className={styles['response-body-container']}>
-                <span className={styles['body-title']}>Corpo da resposta</span>
+                <span className={styles['body-title']}>Response payload</span>
                 <textarea rows={20} value={requestPayloads[0].payload} spellCheck={false} readOnly={true} />
               </div>
             </div>

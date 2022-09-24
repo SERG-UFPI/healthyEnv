@@ -35,14 +35,16 @@ const AccountMenuButton = (props: AccountMenuButtonProps) => {
         fontSize: 14,
         cursor: 'pointer',
       }} />
-      <div className={popupClassName}>
-        <div className={styles.popupButton} onClick={() => toSubmissions()}>
-          <FontAwesomeIcon icon={faHistory} />
-          <span className={styles.popupButtonLabel}>My submissions</span>
-        </div>
-        <div className={styles.popupButton} onClick={() => props.onLogout()}>
-          <FontAwesomeIcon icon={faArrowRightFromBracket} />
-          <span className={styles.popupButtonLabel}>Logout</span>
+      <div className={styles.popupContainer}>
+        <div className={popupClassName}>
+          <div className={styles.popupButton} onClick={() => toSubmissions()}>
+            <FontAwesomeIcon icon={faHistory} />
+            <span className={styles.popupButtonLabel}>My submissions</span>
+          </div>
+          <div className={styles.popupButton} onClick={() => props.onLogout()}>
+            <FontAwesomeIcon icon={faArrowRightFromBracket} />
+            <span className={styles.popupButtonLabel}>Logout</span>
+          </div>
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightFromBracket, faBars, faClose } from '@fortawesome/free-solid-svg-icons';
 import Router from 'next/router';
 import AccountMenuButton from './AccountMenuButton';
 
@@ -14,6 +14,7 @@ interface SelectedIndex {
 export default function DashboardHeader({ selectedIndex }: SelectedIndex) {
 
   const [userInfo, setUserInfo] = useState({})
+  const [showDrawer, setShowDrawer] = useState(false)
 
   function getUserInfo() {
     if (typeof window !== "undefined") {
@@ -45,8 +46,41 @@ export default function DashboardHeader({ selectedIndex }: SelectedIndex) {
     verifyAuth()
   }, [])
 
+  const drawerClassName = showDrawer ? `${styles.drawer} ${styles.show}` : styles.drawer
+
   return (
     <div className={styles.header}>
+      <div id="mySidenav" className={styles.sidenav} style={showDrawer ? { minWidth: '300px' } : { minWidth: '0px' }}>
+        <a href="javascript:void(0)" className={styles.closebtn} onClick={() => setShowDrawer(!showDrawer)}>&times;</a>
+        <Link href='/dashboard/datasets'>
+          <a>
+            {selectedIndex == 1
+              ? <span className={styles.navLink} style={{ color: '#111', fontWeight: 'bold' }}>Repository analysis</span>
+              : <span className={styles.navLink}>Repository analysis</span>}
+          </a>
+        </Link>
+        <Link href='/dashboard/requests'>
+          <a>
+            {selectedIndex == 2
+              ? <span className={styles.navLink} style={{ color: '#111', fontWeight: 'bold' }}>Submit a repository</span>
+              : <span className={styles.navLink}>Submit a repository</span>}
+          </a>
+        </Link>
+        <Link href='/dashboard/help'>
+          <a>
+            {selectedIndex == 3
+              ? <span className={styles.navLink} style={{ color: '#111', fontWeight: 'bold' }}>Help</span>
+              : <span className={styles.navLink}>Help</span>}
+          </a>
+        </Link>
+      </div>
+
+      {/* <div className={styles.drawer} style={showDrawer ? { display: 'block' } : { display: 'none' }}>
+        <div className={styles.drawerCloseButton}>
+          <FontAwesomeIcon icon={faClose} />
+        </div>
+        Diegodiegodiego
+      </div> */}
       <div style={{
         marginLeft: 'auto',
         marginRight: 'auto',
@@ -60,6 +94,9 @@ export default function DashboardHeader({ selectedIndex }: SelectedIndex) {
           display: 'flex',
           alignItems: 'center',
         }}>
+          <div className={styles.drawerButton} onClick={() => setShowDrawer(!showDrawer)}>
+            <FontAwesomeIcon icon={faBars} />
+          </div>
           <Link href='/'>
             <a>
               <span className={styles.title}>HealthyEnv</span>

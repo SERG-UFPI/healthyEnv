@@ -159,7 +159,7 @@ const Requests = () => {
                 console.log(emailCheckSubmission)
               }} />
             <div className={styles.button}>
-              <Link href={`/requests/${emailCheckSubmission}`}>
+              <Link href={`/dashboard/requests/${emailCheckSubmission}`}>
                 <a>Verificar solicitações</a>
               </Link>
             </div>
