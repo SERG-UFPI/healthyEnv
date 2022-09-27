@@ -62,26 +62,27 @@ const RequestsByEmail = () => {
       <div className={styles.requestByEmail}>
         <div className={styles.info}>
           <span className={styles.title}>
-            Acompanhar solicitações de inclusão de repositório
+            My submissions
           </span>
           <span className={styles.subtitle}>
             {router.query.email}
           </span>
           <span className={styles.description}>
-            Aqui você acompanha o status das suas solicitações. Não esqueça de verificar seu e-mail
-            para maiores informações sobre sua submissão.
+            Here you can track the status of your submissions. Don&apos;t
+            forget to check your email for more information about your
+            submission.
           </span>
         </div>
         {!isLoading
           ? Object.keys(requests).length > 0
             ? renderRequests()
-            : <span>Não existem solicitações para o e-mail informado.</span>
+            : <span>No submissions found.</span>
           : (
             <div className={styles.loading}>
               <Dots color='#000000' size={18} speed={1} animating={true} />
               <span style={{
                 fontSize: 14
-              }}>Carregando submissões...</span>
+              }}>Loading submissions...</span>
             </div>
           )}
       </div>

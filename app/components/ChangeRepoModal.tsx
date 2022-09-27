@@ -28,7 +28,7 @@ const ChangeRepoModal = (props: ChangeRepoModalProps) => {
     setIsLoading(true)
     const response = await axios.get(`${Constants.baseUrl}/datasets/${dataset_id}/repos`)
     const reposList = []
-    
+
     // Object.keys(response.data.repositories).forEach((repoKey: string) => {
     response.data.items.forEach((repo) => {
       reposList.push({
@@ -58,9 +58,9 @@ const ChangeRepoModal = (props: ChangeRepoModalProps) => {
     <div className={styles.changeRepoModal}>
       <div className={styles.popupContent}>
         <div className={styles.header}>
-          <span className={styles.title}>Trocar repositório</span>
-          <span>Selecione o repositório que deseja analisar:</span>
-          <input className={styles.input} placeholder='Filtrar repositórios...'
+          <span className={styles.title}>Change repository</span>
+          <span>Select a repository to analyze:</span>
+          <input className={styles.input} placeholder='Filter repositories'
             onChange={(e) => {
               setDisplayingRepos(
                 repos.filter((repo) => repo['name'].toLowerCase().includes(e.target.value.toLowerCase()))
@@ -70,7 +70,7 @@ const ChangeRepoModal = (props: ChangeRepoModalProps) => {
         </div>
         <div className={styles.buttonContainer}>
           <button className={styles.closeButton} onClick={() => props.closeModal()}>
-            Cancelar
+            Cancel
           </button>
         </div>
         {!isLoading ? (
@@ -91,7 +91,7 @@ const ChangeRepoModal = (props: ChangeRepoModalProps) => {
               <Dots color='#000000' size={18} speed={1} animating={true} />
               <span style={{
                 fontSize: 14
-              }}>Carregando repositórios...</span>
+              }}>Loading repositories...</span>
             </div>
           </div>
         )}

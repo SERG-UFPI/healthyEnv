@@ -20,12 +20,12 @@ const ChangeNModal = (props: ChangeNModalProps) => {
     <div className={styles.changeNModal}>
       <div className={styles.popupContent}>
         <div className={styles.header}>
-          <span className={styles.title}>Alterar quantidade de semelhantes</span>
-          <span>Defina uma quantidade para obtenção de projetos semelhantes para realizar a avaliação:</span>
+          <span className={styles.title}>Change similar amount</span>
+          <span>Set a quantity for obtaining similar projects to do the analysis:</span>
         </div>
         <div className={styles.buttonContainer}>
           <button className={styles.closeButton} onClick={() => props.closeModal()}>
-            Cancelar
+            Cancel
           </button>
         </div>
         <div style={{
@@ -54,7 +54,7 @@ const ChangeNModal = (props: ChangeNModalProps) => {
             props.refreshAnalysis(props.datasetId, props.userName, props.repoName, nValue)
           }}>
             <Link href={`/dashboard/datasets/${props.datasetId}/analyze/${props.userName}/${props.repoName}?near=${nValue}`}>
-              <a>Confirmar</a>
+              <a>Confirm</a>
             </Link>
           </div>
         </div>

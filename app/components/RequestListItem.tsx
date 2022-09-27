@@ -11,13 +11,13 @@ interface RequestListItemProps {
 const translateStatus = (status: string) => {
   switch (status) {
     case 'RECEIVED':
-      return 'Recebida'
+      return 'Received'
     case 'IN_PROGRESS':
-      return 'Em andamento'
+      return 'In progress'
     case 'DONE':
-      return 'Finalizada'
+      return 'Done'
     default:
-      return 'Status desconhecido'
+      return 'Unknown status'
   }
 }
 

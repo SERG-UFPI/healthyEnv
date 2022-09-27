@@ -51,7 +51,7 @@ const NearReposPlot = (props: NearReposPlotProps) => {
       layout={{
         width: safeWidth,
         height: 300,
-        title: 'Repositórios próximos ao selecionado',
+        title: 'Repositories next to the selected one',
         xaxis: {
           showticklabels: false,
         },

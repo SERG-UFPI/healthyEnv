@@ -24,13 +24,27 @@
   width: 100%;
 }
 
+.repoInfoTitle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: ce;
+}
+
 .repo-type-badge {
-  background-color: #2590DA;
+  background-color: #444f70;
   color: #ffffff;
   border-radius: 5px;
-  padding: 3px;
+  padding: 3px 6px;
   font-size: 12px;
   width: fit-content;
+  height: fit-content;
+  margin-bottom: 8px;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* margin: 10px; */
 }
 
 .repo-name {

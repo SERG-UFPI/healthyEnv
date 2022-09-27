@@ -29,10 +29,10 @@ const RepoListItemSimple = (props: RepoListItemSimpleProps) => {
             <div className={styles['chip-list']}>
               <ChipSimple label={props.repo['language']} />
               <ChipSimple label={props.repo['loc'] + ' LOC'} />
-              <ChipSimple label={props.repo['stars'] + ' estrelas'} />
+              <ChipSimple label={props.repo['stars'] + ' stars'} />
               <ChipSimple label={props.repo['forks'] + ' forks'} />
-              <ChipSimple label={props.repo['open_issues'] + ' issues abertas'} />
-              <ChipSimple label={props.repo['contributors'] + ' contribuidores'} />
+              <ChipSimple label={props.repo['open_issues'] + ' open issues'} />
+              <ChipSimple label={props.repo['contributors'] + ' contributors'} />
               <ChipSimple label={props.repo['commits'] + ' commits'} />
             </div>
           </div>

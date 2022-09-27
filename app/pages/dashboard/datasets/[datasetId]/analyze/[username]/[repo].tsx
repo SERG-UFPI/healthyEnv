@@ -7,7 +7,7 @@ import { Dots } from 'react-activity'
 import Router, { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faArrowRightArrowLeft, faArrowsRotate } from "@fortawesome/free-solid-svg-icons"
+import { faArrowRightArrowLeft, faArrowsRotate, faCertificate, faCheck } from "@fortawesome/free-solid-svg-icons"
 import { getFirstQuartile, getMedian, getThirdQuartile } from "../../../../../../functions/stats"
 import "react-activity/dist/Dots.css";
 import PlotGrid from "../../../../../../components/PlotGrid"
@@ -184,17 +184,20 @@ const Repo = () => {
             height: '80vh'
           }}>
             <Dots color='#000000' size={18} speed={1} animating={true} />
-            Obtendo resultados...
+            Obtaining results...
           </div>
           : <div className={styles.container}>
             <div className={styles['clustering-summary']}>
               <div className={styles['selected-repo-info']}>
-                <span className={styles['repo-type-badge']}>
-                  Repositório do dataset
-                </span>
-                <span className={styles['repo-name']}>
-                  {selectedRepoInfo['name']}
-                </span>
+                <div className={styles.repoInfoTitle}>
+                  <span className={styles['repo-name']}>
+                    {selectedRepoInfo['name']}
+                  </span>
+                  <div className={styles['repo-type-badge']}>
+                    Added by HealthyEnv
+                    <FontAwesomeIcon icon={faCheck} style={{ marginLeft: 5, height: 'match-content' }} />
+                  </div>
+                </div>
                 <RepoInfos
                   language={selectedRepoInfo['language']}
                   loc={selectedRepoInfo['loc']}
@@ -204,28 +207,28 @@ const Repo = () => {
                   contributors={selectedRepoInfo['contributors']}
                   commits={selectedRepoInfo['commits']} />
                 <span className={styles['algorithm-hint']}>
-                  Algoritmo utilizado:
+                  Algorithm used:
                 </span>
                 <span className={styles['algorithm-title']}>
-                  Semelhança baseada em distância
+                  Distance-based similarity
                 </span>
                 <span>
-                  Este algoritmo busca no dataset os repositórios mais
-                  semelhantes ao repositório selecionado, baseando-se na
-                  distância deles no plano.
+                  This algorithm searches the dataset for the repositories most
+                  similar to the selected repository, based on their distance
+                  in the plane.
                 </span>
-                <span className={styles.nearHint}>Obtendo <b>{+router.query.near}</b> projetos semelhantes.</span>
+                <span className={styles.nearHint}>Obtaining <b>{+router.query.near}</b> similar projects.</span>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                   <div className={styles['change-algorithm-button']} onClick={() => setOpen(true)}>
                     <FontAwesomeIcon icon={faArrowRightArrowLeft} />
                     <span className={styles['button-label']}>
-                      Trocar repositório
+                      Change repository
                     </span>
                   </div>
                   <div className={styles['change-algorithm-button']} onClick={() => setOpenN(true)}>
                     <FontAwesomeIcon icon={faArrowsRotate} />
                     <span className={styles['button-label']}>
-                      Alterar quantidade de semelhantes
+                      Change similar amount
                     </span>
                   </div>
                 </div>

@@ -18,10 +18,10 @@ const RepoListItem = ({ repo, datasetId, getNValue }) => {
             <div className={styles['chip-list']}>
               <Chip label={repo['language']} />
               <Chip label={repo['loc'] + ' LOC'} />
-              <Chip label={repo['stars'] + ' estrelas'} />
+              <Chip label={repo['stars'] + ' stars'} />
               <Chip label={repo['forks'] + ' forks'} />
-              <Chip label={repo['open_issues'] + ' issues abertas'} />
-              <Chip label={repo['contributors'] + ' contribuidores'} />
+              <Chip label={repo['open_issues'] + ' open issues'} />
+              <Chip label={repo['contributors'] + ' contributors'} />
               <Chip label={repo['commits'] + ' commits'} />
             </div>
           </div>

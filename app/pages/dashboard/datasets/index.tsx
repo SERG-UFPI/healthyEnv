@@ -87,16 +87,15 @@ const Datasets = () => {
       <div className={styles.container}>
         <div className={styles.infoTop}>
           <span className={styles.title}>
-            Datasets e análise
+            Repository analysis
           </span>
           <span className={styles.subtitle}>
-            Faça a análise da saúde de um repositório baseando-se em repositórios semelhantes
+            Analyze the health of a repository based on similar repositories
           </span>
           <span className={styles.description}>
-            Utilizando um método semelhante a algoritmos de Aprendizado de Máquina não supervisionado,
-            o HealthyEnv obtém um grupo de repositórios semelhantes ao selecionado para análise
-            e mostra como estão suas métricas baseando-se em valores de referência formados pelas
-            métricas de tais semelhantes.
+            Using a method similar to unsupervised Machine Learning algorithms, HealthyEnv obtains a
+            group of repositories similar to the one selected for analysis and shows how their
+            metrics are doing based on reference values formed by the metrics of these similar ones.
           </span>
 
           {!isLoadingDatasets
@@ -137,7 +136,7 @@ const Datasets = () => {
                 <Dots color='#000000' size={18} speed={1} animating={true} />
                 <span style={{
                   fontSize: 14
-                }}>Carregando datasets...</span>
+                }}>Loading datasets...</span>
               </div>
             )
           }
@@ -153,7 +152,7 @@ const Datasets = () => {
               <Dots color='#000000' size={18} speed={1} animating={true} />
               <span style={{
                 fontSize: 14
-              }}>Carregando repositórios...</span>
+              }}>Loading repositories...</span>
             </div>
           )
         }
