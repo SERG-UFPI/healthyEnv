@@ -14,6 +14,7 @@ const Datasets = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [isLoadingDatasets, setIsLoadingDatasets] = useState(true)
   const [repos, setRepos] = useState([])
+  const [displayingRepos, setDisplayingRepos] = useState([])
   const [datasetsOptions, setDatasetsOptions] = useState([])
   const [selectedDataset, setSelectedDataset] = useState()
   const [nValue, setNValue] = useState(1)
@@ -73,6 +74,7 @@ const Datasets = () => {
     // setDatasetRepoCount(response.data['total_count'])
     setNValue(Math.round(response.data['total_count'] / 10))
     setRepos(response.data.items)
+    setDisplayingRepos(response.data.items)
     setIsLoading(false)
   }
 
@@ -118,7 +120,16 @@ const Datasets = () => {
               </div>
               <div className={styles['inputs-container']}>
                 {/* <label htmlFor='search' className={styles.labels}>Filtrar </label> */}
-                <input type='text' id='search' placeholder='Filtrar repositórios deste dataset...' className={styles.inputs} />
+                <input
+                  type='text'
+                  id='search'
+                  placeholder='Filter repositories'
+                  className={styles.inputs}
+                  onChange={(e) => {
+                    setDisplayingRepos(
+                      repos.filter((repo) => repo['name'].toLowerCase().includes(e.target.value.toLowerCase()))
+                    )
+                  }} />
               </div>
             </div>
             : (
@@ -133,7 +144,7 @@ const Datasets = () => {
         </div>
         {!isLoading
           ? <div className={styles['repo-list']}>
-            {repos.map((repo, index) => {
+            {displayingRepos.map((repo, index) => {
               return (<RepoListItem key={repo['name']} repo={repo} datasetId={selectedDataset} getNValue={getNValue} />)
             })}
           </div>
