@@ -28,7 +28,7 @@ const Header = ({ selectedIndex }: SelectedIndex) => {
               <span className={styles.title}>HealthyEnv</span>
             </a>
           </Link>
-          <Link href='/how-it-works'>
+          {/* <Link href='/how-it-works'>
             <a>
               {selectedIndex == 1
                 ? <span className={styles.link} style={{ color: '#2590DA', fontWeight: 'bold' }}>How it works</span>
@@ -48,7 +48,7 @@ const Header = ({ selectedIndex }: SelectedIndex) => {
                 ? <span className={styles.link} style={{ color: '#2590DA', fontWeight: 'bold' }}>Docs</span>
                 : <span className={styles.link}>Docs</span>}
             </a>
-          </Link>
+          </Link> */}
           <Link href='/about'>
             <a>
               {selectedIndex == 4

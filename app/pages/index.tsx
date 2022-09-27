@@ -34,12 +34,12 @@ export default function Home() {
                   <a>Get started</a>
                 </Link>
               </div>
-              <div className={styles.simpleButton}>
+              {/* <div className={styles.simpleButton}>
                 <Link href='/docs'>
                   <a>See the docs</a>
                 </Link>
                 <FontAwesomeIcon icon={faChevronRight} style={{ paddingLeft: 10 }} />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

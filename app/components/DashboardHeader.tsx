@@ -66,13 +66,13 @@ export default function DashboardHeader({ selectedIndex }: SelectedIndex) {
               : <span className={styles.navLink}>Submit a repository</span>}
           </a>
         </Link>
-        <Link href='/dashboard/help'>
+        {/* <Link href='/dashboard/help'>
           <a>
             {selectedIndex == 3
               ? <span className={styles.navLink} style={{ color: '#111', fontWeight: 'bold' }}>Help</span>
               : <span className={styles.navLink}>Help</span>}
           </a>
-        </Link>
+        </Link> */}
       </div>
 
       {/* <div className={styles.drawer} style={showDrawer ? { display: 'block' } : { display: 'none' }}>
@@ -116,13 +116,13 @@ export default function DashboardHeader({ selectedIndex }: SelectedIndex) {
                 : <span className={styles.link}>Submit a repository</span>}
             </a>
           </Link>
-          <Link href='/dashboard/help'>
+          {/* <Link href='/dashboard/help'>
             <a>
               {selectedIndex == 3
                 ? <span className={styles.link} style={{ color: '#FFF', fontWeight: 'bold' }}>Help</span>
                 : <span className={styles.link}>Help</span>}
             </a>
-          </Link>
+          </Link> */}
         </div>
         {/* <div className={styles.authUserArea}>
           {userInfo['profilePicture'] && (
