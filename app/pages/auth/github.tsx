@@ -34,6 +34,7 @@ export default function GitHub() {
     // TODO: verifica se os dados do usuário logado foram obtidos com sucesso antes de continuar
     saveUserInfo('userData', JSON.stringify({
       'token': response.data.access_token,
+      'login': userDataRes.data.login,
       'name': userDataRes.data.name,
       'email': userDataRes.data.email,
       'profilePicture': userDataRes.data.avatar_url,
@@ -56,7 +57,7 @@ export default function GitHub() {
   return (
     <>
       <Head>
-        <title>Logging in...</title>
+        <title>Please wait</title>
       </Head>
       <div style={{
         height: '100vh',
@@ -66,7 +67,7 @@ export default function GitHub() {
         justifyContent: 'center',
       }}>
         <Dots color='#000000' size={18} speed={1} animating={true} />
-        <span>Logging you in, please wait...</span>
+        <span>Please wait...</span>
       </div>
     </>
   );
