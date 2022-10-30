@@ -29,9 +29,11 @@ export default function Home() {
               repository based on hundreds of other repositories in our dataset.
             </span>
             <div className={styles.linksList}>
-              <div className={styles.button}>
-                <Link href='/auth'>
-                  <a>Get started</a>
+              <div >
+                <Link href='/dashboard/datasets'>
+                  <a className={`
+                bg-blue-500 text-white px-5 py-3 rounded-full shadow-md cursor-pointer
+              `}>Explore the dataset</a>
                 </Link>
               </div>
               {/* <div className={styles.simpleButton}>

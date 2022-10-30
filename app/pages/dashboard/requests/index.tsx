@@ -23,22 +23,24 @@ const Requests = () => {
 
   async function loadRepositories() {
     if (typeof window !== "undefined") {
-      const data = localStorage.getItem('userData')
-      setUserData(JSON.parse(data))
+      try {
+        const data = localStorage.getItem('userData')
+        setUserData(JSON.parse(data))
 
-      const response = await axios.get(`https://api.github.com/users/${JSON.parse(data).login}/repos`)
+        const response = await axios.get(`https://api.github.com/users/${JSON.parse(data).login}/repos`)
 
-      if (response.status == 200) {
-        setRepositories(response.data)
-        setIsLoadingRepositories(false)
-      }
+        if (response.status == 200) {
+          setRepositories(response.data)
+          setIsLoadingRepositories(false)
+        }
+      } catch (e) { }
     }
   }
 
   useEffect(() => {
+    verifyAuth()
     loadDatasets()
     loadRepositories()
-    verifyAuth()
   }, [])
 
   function verifyAuth() {
@@ -118,8 +120,8 @@ const Requests = () => {
       </Head>
       <DashboardHeader selectedIndex={2} />
       <div className="bg-[#f0f1f3] h-full p-[16px] w-[1280px] ml-auto mr-auto">
-        <div className="bg-white rounded-md flex flex-col px-4 pt-6 pb-4 mb-4">
-          <span className="text-3xl font-bold mb-3">Repository submission</span>
+        <div className="flex flex-col px-4 pt-6 pb-4 mb-4 bg-white rounded-md">
+          <span className="mb-3 text-3xl font-bold">Repository submission</span>
           <span>Select a repository to perform an analysis and contribute to HealthyEnv dataset.</span>
         </div>
         {isLoadingRepositories ? (

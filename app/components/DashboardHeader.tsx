@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightFromBracket, faBars, faClose } from '@fortawesome/free-solid-svg-icons';
-import Router from 'next/router';
 import AccountMenuButton from './AccountMenuButton';
+import Router, { useRouter } from "next/router"
 
 interface SelectedIndex {
   selectedIndex: number
@@ -15,11 +15,17 @@ export default function DashboardHeader({ selectedIndex }: SelectedIndex) {
 
   const [userInfo, setUserInfo] = useState({})
   const [showDrawer, setShowDrawer] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  const router = useRouter()
 
   function getUserInfo() {
     if (typeof window !== "undefined") {
-      const data = localStorage.getItem('userData')
-      setUserInfo(JSON.parse(data))
+      try {
+        const data = localStorage.getItem('userData')
+        setUserInfo(JSON.parse(data))
+        setIsLoggedIn(true)
+      } catch (e) { }
     }
   }
 
@@ -43,6 +49,7 @@ export default function DashboardHeader({ selectedIndex }: SelectedIndex) {
   }
 
   useEffect(() => {
+    if (!router.isReady) return
     verifyAuth()
   }, [])
 
@@ -138,7 +145,14 @@ export default function DashboardHeader({ selectedIndex }: SelectedIndex) {
             cursor: 'pointer',
           }} onClick={() => logout()} />
         </div> */}
-        <AccountMenuButton profilePicture={userInfo['profilePicture']} userName={userInfo['name']} userEmail={userInfo['email']} onLogout={logout} />
+        {isLoggedIn ? (
+          <AccountMenuButton profilePicture={userInfo['profilePicture']} userName={userInfo['name']} userEmail={userInfo['email']} onLogout={logout} />
+        ) : (
+          <div onClick={() => Router.push(`/auth?next=${router.asPath}`)} className={`
+              bg-blue-500 px-3 py-1 rounded-md cursor-pointer
+            `}>Log in</div>
+        )
+        }
       </div>
     </div >
   );

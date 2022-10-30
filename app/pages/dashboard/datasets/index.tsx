@@ -24,21 +24,21 @@ const Datasets = () => {
   const datasetsIdList = []
 
   useEffect(() => {
-    verifyAuth()
+    // verifyAuth()
     loadDatasets().then(() => loadRepos(datasetsIdList[0]))
   }, [])
 
-  function verifyAuth() {
-    const data = JSON.parse(localStorage.getItem('userData'))
+  // function verifyAuth() {
+  //   const data = JSON.parse(localStorage.getItem('userData'))
 
-    if (data == undefined) {
-      Router.push(`/auth?next=${router.asPath}`)
-    } else {
-      if ((Date.now() - data['timestamp']) > 86400000) {
-        Router.push(`/auth?next=${router.asPath}`)
-      }
-    }
-  }
+  //   if (data == undefined) {
+  //     Router.push(`/auth?next=${router.asPath}`)
+  //   } else {
+  //     if ((Date.now() - data['timestamp']) > 86400000) {
+  //       Router.push(`/auth?next=${router.asPath}`)
+  //     }
+  //   }
+  // }
 
   async function loadDatasets() {
     setIsLoadingDatasets(true)

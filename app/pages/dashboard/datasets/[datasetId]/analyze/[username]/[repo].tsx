@@ -44,21 +44,21 @@ const Repo = () => {
 
   useEffect(() => {
     if (!router.isReady) return
-    verifyAuth()
+    // verifyAuth()
     loadRepo(router.query.datasetId, `${router.query.username}/${router.query.repo}`, +router.query.near)
   }, [router.isReady])
 
-  function verifyAuth() {
-    const data = JSON.parse(localStorage.getItem('userData'))
+  // function verifyAuth() {
+  //   const data = JSON.parse(localStorage.getItem('userData'))
 
-    if (data == undefined) {
-      Router.push(`/auth?next=${router.asPath}`)
-    } else {
-      if ((Date.now() - data['timestamp']) > 86400000) {
-        Router.push(`/auth?next=${router.asPath}`)
-      }
-    }
-  }
+  //   if (data == undefined) {
+  //     Router.push(`/auth?next=${router.asPath}`)
+  //   } else {
+  //     if ((Date.now() - data['timestamp']) > 86400000) {
+  //       Router.push(`/auth?next=${router.asPath}`)
+  //     }
+  //   }
+  // }
 
   // Load a repo's analysis
   async function loadRepo(datasetId: string | string[], repoName: string | string[], n: number) {
